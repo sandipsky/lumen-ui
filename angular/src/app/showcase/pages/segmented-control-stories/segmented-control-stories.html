@@ -1,0 +1,88 @@
+<header class="page-header">
+  <h1 class="page-header__title">Segmented Control</h1>
+  <p class="page-header__lead">
+    A single-select switch rendered as connected segments (iOS / Ant Design
+    <code>Segmented</code> style). Pass plain strings or
+    <code>{{ '{' }} label, value, disabled {{ '}' }}</code> objects, bind with
+    <code>[(ngModel)]</code> or a reactive form, and lay it out <code>horizontal</code> (default) or
+    <code>vertical</code>. Sizes <code>sm</code> / <code>md</code> / <code>lg</code>, full-width
+    mode, per-option disabling, and arrow-key navigation (the WAI-ARIA radio-group pattern) are
+    built in.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Pass a string array and two-way bind the selected value."
+    code="ranges = ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
+
+<l-segmented-control [options]=&quot;ranges&quot; [(ngModel)]=&quot;range&quot; />"
+  >
+    <div class="demo-col">
+      <l-segmented-control [options]="ranges" [(ngModel)]="range" />
+      <p class="demo-readout">Selected: {{ range() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Vertical"
+    description="orientation='vertical' stacks the segments; arrow Up/Down navigates."
+    code='<l-segmented-control [options]="ranges" orientation="vertical" [(ngModel)]="range" />'
+  >
+    <l-segmented-control [options]="ranges" orientation="vertical" [(ngModel)]="range" />
+  </app-story>
+
+  <app-story
+    title="Sizes"
+    description="sm, md (default) and lg."
+    code='<l-segmented-control [options]="sizes" size="sm" [(ngModel)]="size" />'
+  >
+    <div class="demo-col">
+      <l-segmented-control [options]="sizes" size="sm" [(ngModel)]="size" />
+      <l-segmented-control [options]="sizes" size="md" [(ngModel)]="size" />
+      <l-segmented-control [options]="sizes" size="lg" [(ngModel)]="size" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Object options + disabled"
+    description="Use { label, value, disabled } objects; disabled segments are skipped by click and keyboard."
+    code="viewOptions = [
+  { label: 'List', value: 'list' },
+  { label: 'Board', value: 'board' },
+  { label: 'Calendar', value: 'calendar' },
+  { label: 'Timeline', value: 'timeline', disabled: true },
+];
+
+<l-segmented-control [options]=&quot;viewOptions&quot; [(ngModel)]=&quot;view&quot; />"
+  >
+    <div class="demo-col">
+      <l-segmented-control [options]="viewOptions" [(ngModel)]="view" />
+      <p class="demo-readout">Selected: {{ view() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Full width"
+    description="[fullWidth]=true stretches the control and splits the segments evenly."
+    code='<l-segmented-control [options]="plans" [fullWidth]="true" [(ngModel)]="plan" />'
+  >
+    <l-segmented-control [options]="plans" [fullWidth]="true" [(ngModel)]="plan" />
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Disable the whole control with [disabled]=true."
+    code='<l-segmented-control [options]="plans" [disabled]="true" [(ngModel)]="plan" />'
+  >
+    <l-segmented-control [options]="plans" [disabled]="true" [(ngModel)]="plan" />
+  </app-story>
+
+  <app-api-table
+    component="l-segmented-control"
+    note="Works with [(ngModel)] and reactive forms — the bound value is the selected option's value. Follows the WAI-ARIA radio-group keyboard pattern."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

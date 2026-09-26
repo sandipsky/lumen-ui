@@ -1,0 +1,21 @@
+/* Scoped under .tree-stories — .demo-col/.demo-readout recur on other story
+   pages with different values, and stylesheets are global in this app. */
+
+.tree-stories .demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+}
+
+.tree-stories .demo-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.tree-stories .demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}

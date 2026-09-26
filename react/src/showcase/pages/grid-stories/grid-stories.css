@@ -1,0 +1,53 @@
+.story-page .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.demo-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.grid-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--text-white);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.grid-box--alt {
+  background: var(--accent-dark);
+}
+
+/* `align: stretch` needs the box to follow the column height.
+   (Angular targeted `l-col > .grid-box:only-child`; LUICol renders a plain div,
+   so match the box as the only child of its column wrapper instead.) */
+.story-page .grid-box:only-child {
+  min-height: 100%;
+}
+
+.grid-canvas {
+  border: 1px dashed var(--separator-dark);
+  border-radius: 8px;
+  padding: 8px;
+  min-height: 112px;
+}

@@ -1,0 +1,69 @@
+:host {
+  display: block;
+  max-width: 880px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header__title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.page-header__lead {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--text-secondary);
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+    background: var(--bg-dark);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+}
+
+.stories {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+// Content projected into the demo drawer panel (the panel itself has no padding).
+.drawer-demo {
+  padding: 24px;
+}
+
+.drawer-demo__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--text-primary);
+}
+
+.drawer-demo__body {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+
+.drawer-demo__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

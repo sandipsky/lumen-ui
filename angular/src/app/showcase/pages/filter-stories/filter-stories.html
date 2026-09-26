@@ -1,0 +1,49 @@
+<header class="page-header">
+  <h1 class="page-header__title">Filter</h1>
+  <p class="page-header__lead">
+    A toolbar combining a free-text search box with a dropdown of configurable field filters (text /
+    single-select, built on <code>l-select</code> and <code>l-menu</code>). Applied filters surface
+    as removable chips, and the whole set is emitted via <code>(filterChange)</code>. Set
+    <code>searchBy</code> to the field the search box targets; leave it empty to hide the box.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Search + field filters"
+    description="Type in the search box and press Enter, or open Filters to set text/select fields and Apply. Each applied filter becomes a removable chip; Reset clears everything."
+    code="columns = [
+  { name: 'Name', formcontrolName: 'name', type: 'text' },
+  { name: 'Status', formcontrolName: 'status', type: 'select', data: [...] },
+  { name: 'Team', formcontrolName: 'team', type: 'select', groupBy: 'group', data: [...] },
+];
+
+<l-filter
+  searchBy=&quot;name&quot;
+  [filterColumns]=&quot;columns&quot;
+  (filterChange)=&quot;onFilter($event)&quot;
+/>"
+  >
+    <div class="filter-demo">
+      <l-filter searchBy="name" [filterColumns]="columns" (filterChange)="onFilter($event)" />
+      <p class="demo-readout">Applied → {{ appliedText() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="No search box"
+    description="Leave searchBy empty to show only the Filters dropdown."
+    code='<l-filter [filterColumns]="columns" (filterChange)="onFilter($event)" />'
+  >
+    <div class="filter-demo">
+      <l-filter [filterColumns]="plainColumns" (filterChange)="onFilter($event)" />
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-filter"
+    note="Not a form control — filter state lives inside the component. FilterColumn is { name, formcontrolName, type: 'text' | 'select', value?, data?, groupBy? }; each emitted FilterChange is { field, value, displayValue }."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

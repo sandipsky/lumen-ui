@@ -1,0 +1,20 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar__brand">
+      <span class="sidebar__logo">◆</span>
+      LumenUI
+    </div>
+    <nav class="sidebar__nav">
+      <p class="sidebar__heading">Components</p>
+      @for (c of components; track c.path) {
+        <a class="sidebar__link" [routerLink]="c.path" routerLinkActive="sidebar__link--active">
+          {{ c.name }}
+        </a>
+      }
+    </nav>
+  </aside>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>

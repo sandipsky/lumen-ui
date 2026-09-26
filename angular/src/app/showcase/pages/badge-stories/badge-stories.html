@@ -1,0 +1,110 @@
+<header class="page-header">
+  <h1 class="page-header__title">Badge</h1>
+  <p class="page-header__lead">
+    A count badge applied as a directive — drop <code>lBadge</code> on any element (button, icon,
+    avatar) and a bubble is positioned at its top-right corner. Inputs are prefixed to avoid
+    clashing with native attributes: <code>lBadgeColor</code>, <code>lBadgeSize</code>,
+    <code>lBadgeOverflowCount</code>, <code>[lBadgeShowZero]</code>, <code>[lBadgeDynamic]</code>,
+    and the <code>(lBadgeClick)</code> output. Hides at zero unless <code>lBadgeShowZero</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Put [lBadge] on the element you want decorated."
+    code='<button [lBadge]="3">🔔</button>
+<span class="icon" [lBadge]="12">✉️</span>'
+  >
+    <div class="demo-row">
+      <span class="icon-box" [lBadge]="3">🔔</span>
+      <span class="icon-box" [lBadge]="12">✉️</span>
+      <l-button variant="outlined" [lBadge]="5">Inbox</l-button>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Sizes"
+    description="lBadgeSize accepts sm, md (default) and lg."
+    code='<span [lBadge]="8" lBadgeSize="sm"></span>
+<span [lBadge]="8" lBadgeSize="md"></span>
+<span [lBadge]="8" lBadgeSize="lg"></span>'
+  >
+    <div class="demo-row">
+      <span class="icon-box" [lBadge]="8" lBadgeSize="sm">🔔</span>
+      <span class="icon-box" [lBadge]="8" lBadgeSize="md">🔔</span>
+      <span class="icon-box" [lBadge]="8" lBadgeSize="lg">🔔</span>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Overflow count"
+    description="Counts above lBadgeOverflowCount render as N+."
+    code='<span [lBadge]="128" [lBadgeOverflowCount]="99"></span>'
+  >
+    <div class="demo-row">
+      <span class="icon-box" [lBadge]="128" [lBadgeOverflowCount]="99">🔔</span>
+      <span class="icon-box" [lBadge]="1200" [lBadgeOverflowCount]="999">✉️</span>
+      <span class="icon-box" [lBadge]="15" [lBadgeOverflowCount]="9">🔔</span>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Show zero"
+    description="A zero count is hidden by default; set [lBadgeShowZero]=true to keep it."
+    code='<span [lBadge]="0"></span>            <!-- hidden -->
+<span [lBadge]="0" [lBadgeShowZero]="true"></span>'
+  >
+    <div class="demo-row">
+      <span class="icon-box" [lBadge]="0">🔔</span>
+      <span class="icon-box" [lBadge]="0" [lBadgeShowZero]="true">🔔</span>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Dynamic (animates on change)"
+    description="With [lBadgeDynamic]=true the badge pops each time the count changes."
+    code='<span [lBadge]="count()" [lBadgeDynamic]="true"></span>'
+  >
+    <div class="demo-col">
+      <span class="icon-box icon-box--lg" [lBadge]="count()" [lBadgeDynamic]="true">🔔</span>
+      <div class="demo-row">
+        <l-button variant="outlined" (click)="dec()">−</l-button>
+        <l-button variant="outlined" (click)="inc()">+</l-button>
+      </div>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Color"
+    description="lBadgeColor takes any CSS color or token (default is a red shade)."
+    code='<span [lBadge]="4" lBadgeColor="var(--accent)"></span>'
+  >
+    <div class="demo-row">
+      <span class="icon-box" [lBadge]="4">🔔</span>
+      <span class="icon-box" [lBadge]="4" lBadgeColor="var(--accent)">🔔</span>
+      <span class="icon-box" [lBadge]="4" lBadgeColor="var(--success)">🔔</span>
+      <span class="icon-box" [lBadge]="4" lBadgeColor="#6741d9">🔔</span>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Click action"
+    description="(lBadgeClick) fires when the bubble is clicked, without triggering the host's own click."
+    code='<button [lBadge]="9" (lBadgeClick)="onBadgeClick()">Notifications</button>'
+  >
+    <div class="demo-col">
+      <l-button variant="outlined" [lBadge]="9" (lBadgeClick)="onBadgeClick()"
+        >Notifications</l-button
+      >
+      <p class="demo-readout">Last badge click: {{ lastClick() }}</p>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="[lBadge] (BadgeDirective)"
+    note="Attribute directive — drop it on any element that can contain a child. It appends an internal l-badge bubble positioned at the host's top-right corner and gives the host position: relative when it is static. Inputs are prefixed with lBadge to avoid clashing with native attributes (size, color)."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

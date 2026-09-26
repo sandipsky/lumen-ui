@@ -1,0 +1,47 @@
+/* Page-specific rules for the notification story page, scoped under the extra
+   `.notification-stories` root class (page CSS is global in the React port). */
+
+.notification-stories .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.notification-stories .playground {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.notification-stories .control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notification-stories .control-group__label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-quaternary);
+}
+
+.notification-stories .control-grid {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 8px;
+}
+
+.notification-stories .demo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notification-stories .demo-row--wrap {
+  flex-wrap: wrap;
+  gap: 16px;
+}

@@ -1,0 +1,48 @@
+/* Page-specific rules for the menu story page, scoped under the extra
+   `.menu-stories` root class (page CSS is global in the React port). */
+
+.menu-stories .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.menu-stories .demo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-stories .demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.menu-stories .menu-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 240px;
+  padding: 16px;
+}
+
+.menu-stories .menu-card__name {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.menu-stories .menu-card__email {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.menu-stories .menu-card__sep {
+  margin: 8px 0;
+  border: 0;
+  border-top: 1px solid var(--separator);
+}

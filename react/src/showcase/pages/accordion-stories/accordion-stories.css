@@ -1,0 +1,7 @@
+.story-page .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}

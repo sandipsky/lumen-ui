@@ -1,0 +1,58 @@
+<header class="page-header">
+  <h1 class="page-header__title">Avatar</h1>
+  <p class="page-header__lead">
+    Compact user / entity avatar. Shows <code>imageUrl</code> when provided, otherwise derives
+    initials from <code>name</code> on a solid color chip. <code>size</code> takes any CSS length,
+    and the initials chip colors come from <code>color</code> / <code>textColor</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Initials"
+    description="With no image, the first + last initial render on a colored chip."
+    code='<l-avatar name="Ada Lovelace" />
+<l-avatar name="Grace Hopper" />
+<l-avatar name="Linus" />'
+  >
+    <l-avatar name="Ada Lovelace" />
+    <l-avatar name="Grace Hopper" />
+    <l-avatar name="Linus" />
+  </app-story>
+
+  <app-story
+    title="Image"
+    description="When imageUrl is set it renders the image, cover-fit and circular."
+    code='<l-avatar [imageUrl]="url" name="Ada Lovelace" size="48px" />'
+  >
+    <l-avatar [imageUrl]="avatarImg" name="Ada Lovelace" size="48px" />
+  </app-story>
+
+  <app-story
+    title="Sizes"
+    description="size accepts any CSS length and drives both width and height."
+    code='<l-avatar name="Ada Lovelace" size="24px" />
+<l-avatar name="Ada Lovelace" size="40px" />
+<l-avatar name="Ada Lovelace" size="56px" />'
+  >
+    <l-avatar name="Ada Lovelace" size="24px" />
+    <l-avatar name="Ada Lovelace" size="40px" />
+    <l-avatar name="Ada Lovelace" size="56px" />
+  </app-story>
+
+  <app-story
+    title="Custom colors"
+    description="Tune the chip background and text color per avatar."
+    code='<l-avatar name="Sofia Reyes" color="#AB20A9" textColor="#ffffff" />'
+  >
+    <l-avatar name="Sofia Reyes" color="#AB20A9" textColor="#ffffff" size="40px" />
+    <l-avatar name="Omar Diaz" color="#00B8D9" textColor="#ffffff" size="40px" />
+    <l-avatar name="Mei Lin" color="#FFAB00" textColor="#07090F" size="40px" />
+  </app-story>
+
+  <app-api-table
+    component="l-avatar"
+    note="Purely presentational — no outputs. imageUrl is a model() (two-way bindable); a plain [imageUrl] binding works too. With no image, the first and last initials of name render on the color/textColor chip."
+    [inputs]="apiInputs"
+  />
+</div>

@@ -1,0 +1,57 @@
+/* Page-specific rules for the drawer story page, scoped under the extra
+   `.drawer-stories` root class (page CSS is global in the React port). */
+
+.drawer-stories .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.drawer-stories .demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.drawer-stories .demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.drawer-stories .demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Content rendered into the demo drawer panel (the panel itself has no padding).
+   NOT scoped under .drawer-stories — the drawer portals into document.body. */
+.drawer-demo {
+  padding: 24px;
+}
+
+.drawer-demo__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--text-primary);
+}
+
+.drawer-demo__body {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+
+.drawer-demo__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

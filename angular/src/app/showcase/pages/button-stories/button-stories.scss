@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  max-width: 880px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header__title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.page-header__lead {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--text-secondary);
+}
+
+.stories {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.width-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+}

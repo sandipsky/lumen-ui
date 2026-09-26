@@ -1,0 +1,81 @@
+<header class="page-header">
+  <h1 class="page-header__title">Textarea</h1>
+  <p class="page-header__lead">
+    Multi-line text field built on the shared <code>BaseInput</code>. Works with
+    <code>[(ngModel)]</code> and reactive forms, and supports a configurable
+    <code>rows</code> count.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Label, placeholder and a default of 4 rows."
+    code='<l-textarea label="Message" placeholder="Write something…" />'
+  >
+    <l-textarea label="Message" placeholder="Write something…" />
+  </app-story>
+
+  <app-story
+    title="Rows"
+    description="Set the visible height with [rows]."
+    code='<l-textarea label="Notes" [rows]="8" />'
+  >
+    <l-textarea label="Notes" placeholder="Taller field" [rows]="8" />
+  </app-story>
+
+  <app-story
+    title="Resizable"
+    description="The drag-to-resize handle is hidden by default; enable it with [resizable]."
+    code='<l-textarea label="Feedback" [resizable]="true" />'
+  >
+    <l-textarea label="Feedback" placeholder="Drag the bottom-right corner" [resizable]="true" />
+  </app-story>
+
+  <app-story
+    title="Two-way binding — ngModel"
+    description="Bind the value with [(ngModel)]."
+    code='<l-textarea label="Bio" [(ngModel)]="value" />'
+  >
+    <div class="demo-col">
+      <l-textarea label="Bio" placeholder="Tell us about yourself" [(ngModel)]="ngModelValue" />
+      <p class="demo-readout">Length: {{ ngModelValue().length }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Reactive forms — validation"
+    description="required + minLength(10); errors surface via the FormValidation directive once touched."
+    code='bioControl = new FormControl("", [Validators.required, Validators.minLength(10)]);
+
+<l-textarea label="Bio" [formControl]="bioControl" />'
+  >
+    <div class="demo-col">
+      <l-textarea label="Bio" placeholder="At least 10 characters" [formControl]="bioControl" />
+      <p class="demo-readout">valid: {{ bioControl.valid }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Non-interactive state."
+    code='<l-textarea label="Disabled" [disabled]="true" />'
+  >
+    <l-textarea label="Disabled" placeholder="Can't type here" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description="viewMode renders the value as plain text with line breaks preserved."
+    code="<l-textarea label='Bio' [ngModel]='bio' [viewMode]='true' />"
+  >
+    <l-textarea label="Bio" [ngModel]="viewModeValue" [viewMode]="true" />
+  </app-story>
+
+  <app-api-table
+    component="l-textarea"
+    note="Works with [(ngModel)] and reactive forms — the bound value is a string."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

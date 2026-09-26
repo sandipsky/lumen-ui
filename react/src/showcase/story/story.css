@@ -1,0 +1,48 @@
+.story {
+  display: block;
+  border: 1px solid var(--separator);
+  border-radius: 12px;
+  background: var(--bg-lightest);
+  overflow: hidden;
+}
+
+.story__header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--separator-light);
+}
+
+.story__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.story__desc {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--text-secondary);
+}
+
+.story__canvas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 20px;
+  background: var(--bg-semi-light);
+}
+
+.story__code {
+  margin: 0;
+  padding: 16px 20px;
+  border-top: 1px solid var(--separator-light);
+  background: var(--text-primary);
+  color: var(--text-white);
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 20px;
+  overflow-x: auto;
+  white-space: pre;
+}

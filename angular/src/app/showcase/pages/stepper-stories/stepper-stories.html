@@ -1,0 +1,165 @@
+<header class="page-header">
+  <h1 class="page-header__title">Stepper</h1>
+  <p class="page-header__lead">
+    A progress indicator for multi-step flows, styled after Mantine's stepper — the indicator sits
+    inline with a title/description and connecting rails run between steps. Pass an array of
+    <code>{{ '{' }} title, description, icon?, error?, completed? {{ '}' }}</code> steps and the
+    <code>active</code> index. Steps before the active one show a checkmark in the success color;
+    steps flagged <code>error</code> turn red with an alert mark. Drive <code>active</code> from
+    clickable steps or from external buttons via <code>[(active)]</code>. Lay it out
+    <code>horizontal</code> (default) or <code>vertical</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Steps before the active index are completed (checkmark + success color); the rest show their number, with rails connecting them."
+    code="steps = [
+  { title: 'First step', description: 'Create an account' },
+  { title: 'Second step', description: 'Verify email' },
+  { title: 'Final step', description: 'Get full access' },
+];
+
+<l-stepper [steps]=&quot;steps&quot; [active]=&quot;1&quot; />"
+  >
+    <l-stepper [steps]="basicSteps" [active]="1" />
+  </app-story>
+
+  <app-story
+    title="Error state"
+    description="Flag a step with error: true to mark its section invalid — it turns red with an alert mark."
+    code="steps = [
+  { title: 'Shipping', description: 'Address confirmed' },
+  { title: 'Payment', description: 'Card was declined', error: true },
+  { title: 'Confirm', description: 'Place the order' },
+];
+
+<l-stepper [steps]=&quot;steps&quot; [active]=&quot;1&quot; />"
+  >
+    <l-stepper [steps]="errorSteps" [active]="1" />
+  </app-story>
+
+  <app-story
+    title="Custom icons"
+    description="Provide an icon per step to replace the number. Completed steps still swap to a checkmark."
+    code="steps = [
+  { title: 'Cart', icon: '🛒' },
+  { title: 'Address', icon: '📦' },
+  { title: 'Payment', icon: '💳' },
+  { title: 'Complete', icon: '🎉' },
+];
+
+<l-stepper [steps]=&quot;steps&quot; [active]=&quot;2&quot; />"
+  >
+    <l-stepper [steps]="iconSteps" [active]="2" />
+  </app-story>
+
+  <app-story
+    title="Vertical"
+    description="orientation='vertical' stacks the steps with a connecting rail down the indicators."
+    code='<l-stepper [steps]="steps" orientation="vertical" [active]="1" />'
+  >
+    <l-stepper [steps]="basicSteps" orientation="vertical" [active]="1" />
+  </app-story>
+
+  <app-story
+    title="Without lines"
+    description="[showLines]=false hides the connecting rails while keeping the steps evenly spaced."
+    code='<l-stepper [steps]="steps" [showLines]="false" [active]="1" />'
+  >
+    <l-stepper [steps]="basicSteps" [showLines]="false" [active]="1" />
+  </app-story>
+
+  <app-story
+    title="Clickable"
+    description="[clickable]=true lets the user click a step to jump to it. By default only reached steps are selectable — add [allowStepSkip]=true to allow skipping ahead."
+    code='<l-stepper [steps]="steps" [clickable]="true" [allowStepSkip]="true" [(active)]="current" />'
+  >
+    <div class="demo-col">
+      <l-stepper
+        [steps]="basicSteps"
+        [clickable]="true"
+        [allowStepSkip]="true"
+        [(active)]="current"
+      />
+      <p class="demo-readout">Active step: {{ current() + 1 }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="External button control"
+    description="active is a two-way model — drive it from Next / Back buttons instead of (or alongside) clicking steps."
+    code='wizardStep = signal(0);
+next() { this.wizardStep.update((i) => Math.min(3, i + 1)); }
+back() { this.wizardStep.update((i) => Math.max(0, i - 1)); }
+
+<l-stepper [steps]="steps" [(active)]="wizardStep" />'
+  >
+    <div class="demo-col">
+      <l-stepper [steps]="wizardSteps" [(active)]="wizardStep" />
+      <div class="demo-actions">
+        <l-button variant="outlined" [disabled]="wizardStep() === 0" (click)="back()"
+          >Back</l-button
+        >
+        <l-button [disabled]="wizardStep() === wizardSteps.length - 1" (click)="next()">
+          Next
+        </l-button>
+      </div>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Form validation"
+    description="Each step guards a form section. Clicking Next validates the current step; if it fails, the step is flagged error and navigation is blocked."
+    code="isStepValid(i) { /* validate the section's fields */ }
+
+formNext() {
+  const i = this.formStep();
+  if (!this.isStepValid(i)) {
+    this.attempted.update((s) => new Set(s).add(i)); // drives error: true
+    return;
+  }
+  this.formStep.update((n) => Math.min(2, n + 1));
+}"
+  >
+    <div class="demo-col">
+      <l-stepper [steps]="formSteps()" [(active)]="formStep" />
+
+      <div class="form-panel">
+        @switch (formStep()) {
+          @case (0) {
+            <l-text-input label="Full name" placeholder="Ada Lovelace" [(ngModel)]="name" />
+            <l-text-input label="Email" placeholder="ada@example.com" [(ngModel)]="email" />
+          }
+          @case (1) {
+            <l-text-input
+              label="Username"
+              placeholder="at least 3 characters"
+              [(ngModel)]="username"
+            />
+          }
+          @case (2) {
+            <p class="demo-readout">All steps valid — ready to submit ✅</p>
+          }
+        }
+      </div>
+
+      <div class="demo-actions">
+        <l-button variant="outlined" [disabled]="formStep() === 0" (click)="formBack()">
+          Back
+        </l-button>
+        <l-button [disabled]="formStep() === formSteps().length - 1" (click)="formNext()">
+          Next
+        </l-button>
+      </div>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-stepper"
+    note="Step = { title, description?, icon?, error?, completed?, disabled? }. Steps before the active index show a checkmark, error steps an alert mark; a step's icon replaces its number otherwise."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

@@ -1,0 +1,136 @@
+<header class="page-header">
+  <h1 class="page-header__title">Box</h1>
+  <p class="page-header__lead">
+    The base building block, inspired by Mantine's <code>Box</code>. Renders a block element (or any
+    element via the <code>l-box</code> attribute) with style props for spacing (<code>m</code>/<code
+      >p</code
+    >
+    shorthands on the <code>xs</code>–<code>xl</code> scale), size
+    (<code>w</code>/<code>h</code>/<code>maw</code>…) and color (<code>bg</code>/<code>c</code>) —
+    one-off layout tweaks without a stylesheet.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Style props replace inline styles for the common cases — padding, background and text color here."
+    code='<l-box p="md" bg="var(--accent-bg)" c="var(--accent-dark)">
+  Style props: p="md" bg="var(--accent-bg)" c="var(--accent-dark)"
+</l-box>'
+  >
+    <div class="demo-col">
+      <l-box class="box-demo" p="md" bg="var(--accent-bg)" c="var(--accent-dark)">
+        Style props: p="md" bg="var(--accent-bg)" c="var(--accent-dark)"
+      </l-box>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Spacing scale"
+    description="Spacing props accept the preset scale (xs 4px, sm 8px, md 16px, lg 24px, xl 32px), a pixel number, or any CSS value."
+    code='<l-box [p]="padding()" bg="var(--bg-light)">…</l-box>'
+  >
+    <div class="demo-col">
+      <l-radio label="padding" [options]="paddingOptions" [(ngModel)]="padding" />
+      <l-box class="box-canvas" [p]="padding()" bg="var(--bg-light)">
+        <l-box class="box-demo" p="sm" bg="var(--accent)" c="var(--text-white)">
+          p = {{ padding() }}
+        </l-box>
+      </l-box>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Margin &amp; sides"
+    description="mx/my set a pair of sides, mt/mb/ml/mr a single one; explicit sides win over the pairs, which win over m."
+    code='<l-box bg="var(--bg-light)">
+  <l-box mx="xl" my="sm" p="sm" bg="var(--accent)">mx="xl" my="sm"</l-box>
+  <l-box ml="xl" mb="sm" p="sm" bg="var(--accent-dark)">ml="xl" mb="sm"</l-box>
+</l-box>'
+  >
+    <div class="demo-col">
+      <l-box class="box-canvas" bg="var(--bg-light)">
+        <l-box class="box-demo" mx="xl" my="sm" p="sm" bg="var(--accent)" c="var(--text-white)">
+          mx="xl" my="sm"
+        </l-box>
+        <l-box
+          class="box-demo"
+          ml="xl"
+          mb="sm"
+          p="sm"
+          bg="var(--accent-dark)"
+          c="var(--text-white)"
+        >
+          ml="xl" mb="sm"
+        </l-box>
+      </l-box>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Size"
+    description="w/h and the min/max variants (miw/maw, mih/mah) take pixel numbers or any CSS size."
+    code='<l-box w="100%" [maw]="320" [h]="56" bg="var(--accent-bg)">
+  w="100%" [maw]="320" [h]="56"
+</l-box>'
+  >
+    <div class="demo-col">
+      <l-box
+        class="box-demo"
+        w="100%"
+        [maw]="320"
+        [h]="56"
+        p="sm"
+        bg="var(--accent-bg)"
+        c="var(--accent-dark)"
+      >
+        w="100%" [maw]="320" [h]="56"
+      </l-box>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Any element (attribute)"
+    description="Apply l-box as an attribute to render the box as a link, button, or any other element — the element's own attributes and events keep working."
+    code='<a l-box href="https://mantine.dev" target="_blank" p="sm">
+  Renders an &lt;a&gt;
+</a>
+<button l-box type="button" p="sm" (click)="…">
+  Renders a &lt;button&gt;
+</button>'
+  >
+    <div class="demo-col">
+      <a
+        l-box
+        class="box-demo"
+        href="https://mantine.dev"
+        target="_blank"
+        rel="noreferrer"
+        p="sm"
+        bg="var(--info-bg)"
+        c="var(--info)"
+      >
+        Renders an &lt;a&gt; — click to open mantine.dev
+      </a>
+      <button
+        l-box
+        class="box-demo box-demo--button"
+        type="button"
+        p="sm"
+        bg="var(--accent)"
+        c="var(--text-white)"
+        (click)="buttonClicks.set(buttonClicks() + 1)"
+      >
+        Renders a &lt;button&gt; — clicked {{ buttonClicks() }}×
+      </button>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-box"
+    note="Style-only building block — no outputs of its own. Everything is applied to the host element, and it also works as an attribute on any element (a, button, …) — the LumenUI equivalent of Mantine's component prop."
+    [inputs]="apiInputs"
+    [outputs]="[]"
+  />
+</div>

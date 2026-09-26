@@ -1,0 +1,84 @@
+<header class="page-header">
+  <h1 class="page-header__title">Radio</h1>
+  <p class="page-header__lead">
+    A radio group driven by an <code>options</code> array of
+    <code>{{ '{' }} label, value {{ '}' }}</code
+    >. Binds with a reactive <code>FormControl</code> or <code>[(ngModel)]</code>, lays out
+    <code>inline</code> by default (or <code>stacked</code>), and supports
+    <code>labelPosition</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Reactive forms"
+    description="Bind the group to a FormControl; the option whose value matches is selected."
+    code="plans = [
+  { label: 'Free', value: 'free' },
+  { label: 'Pro', value: 'pro' },
+  { label: 'Enterprise', value: 'enterprise' },
+];
+planControl = new FormControl('free');
+
+<l-radio name='plan' [options]='plans' [formControl]='planControl' />"
+  >
+    <div class="demo-col">
+      <l-radio name="plan" [options]="plans" [formControl]="planControl" />
+      <p class="demo-readout">Selected: {{ planControl.value }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Two-way binding — ngModel"
+    description="Bind the group's value with [(ngModel)]."
+    code="<l-radio name='plan-ng' [options]='plans' [(ngModel)]='value' />"
+  >
+    <div class="demo-col">
+      <l-radio name="plan-ng" [options]="plans" [(ngModel)]="ngModelValue" />
+      <p class="demo-readout">Value: {{ ngModelValue() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Stacked"
+    description="Switch to a vertical column with orientation='stacked'."
+    code="<l-radio name='plan-stacked' [options]='plans' orientation='stacked' />"
+  >
+    <l-radio name="plan-stacked" [options]="plans" orientation="stacked" />
+  </app-story>
+
+  <app-story
+    title="Label position"
+    description="Place each option's label on the left or top of its control."
+    code="<l-radio name='plan-left' [options]='plans' labelPosition='left' />
+<l-radio name='plan-top' [options]='plans' labelPosition='top' />"
+  >
+    <div class="demo-col">
+      <l-radio name="plan-left" [options]="plans" labelPosition="left" />
+      <l-radio name="plan-top" [options]="plans" labelPosition="top" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Disable the whole group with [disabled], or a single entry via the option's disabled flag."
+    code="<l-radio name='plan-disabled' [options]='plans' [disabled]='true' />"
+  >
+    <l-radio name="plan-disabled" [options]="plans" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description="viewMode renders the selected option's label as plain text."
+    code="<l-radio label='Plan' [options]='plans' ngModel='pro' [viewMode]='true' />"
+  >
+    <l-radio label="Plan" name="plan-view" [options]="plans" ngModel="pro" [viewMode]="true" />
+  </app-story>
+
+  <app-api-table
+    component="l-radio"
+    note="Works with [(ngModel)] and reactive forms — the bound value is the selected option's value."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

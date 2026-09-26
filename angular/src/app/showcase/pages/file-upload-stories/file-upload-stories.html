@@ -1,0 +1,72 @@
+<header class="page-header">
+  <h1 class="page-header__title">File Upload</h1>
+  <p class="page-header__lead">
+    Image / file upload with a drag-and-drop dropzone (or a compact button trigger), inspired by Ant
+    Design's <code>Upload</code>. Validates by <code>accept</code>, <code>maxSizeMb</code> and
+    <code>maxCount</code>, previews images, and renders a <code>list</code> or
+    <code>grid</code> with per-file progress and a remove control. It's presentational — handle
+    <code>(added)</code> to run your real upload and report back through <code>patchFile()</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Dropzone"
+    description="Click or drag files in. Multiple files, 5 MB each."
+    code='<l-file-upload [multiple]="true" [maxSizeMb]="5" />'
+  >
+    <l-file-upload [multiple]="true" [maxSizeMb]="5" />
+  </app-story>
+
+  <app-story
+    title="Images with grid preview + simulated upload"
+    description="accept='image/*' with listType='grid'. (added) kicks off a fake upload so progress animates to done."
+    code='<l-file-upload
+  #uploader
+  accept="image/*"
+  listType="grid"
+  [maxSizeMb]="5"
+  (added)="simulate($event, uploader)"
+/>'
+  >
+    <l-file-upload
+      #uploader
+      accept="image/*"
+      listType="grid"
+      label="Drop images here or click to browse"
+      [maxSizeMb]="5"
+      (added)="simulate($event, uploader)"
+    />
+  </app-story>
+
+  <app-story
+    title="Button trigger"
+    description="variant='button' shows a compact button with the file list below."
+    code='<l-file-upload variant="button" accept=".pdf,.doc,.docx" />'
+  >
+    <l-file-upload variant="button" accept=".pdf,.doc,.docx" [maxSizeMb]="10" />
+  </app-story>
+
+  <app-story
+    title="Single file"
+    description="[multiple]=false — a new selection replaces the current file."
+    code='<l-file-upload [multiple]="false" accept="image/*" />'
+  >
+    <l-file-upload [multiple]="false" accept="image/*" />
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="[disabled]=true blocks browsing and drops."
+    code='<l-file-upload [disabled]="true" />'
+  >
+    <l-file-upload [disabled]="true" />
+  </app-story>
+
+  <app-api-table
+    component="l-file-upload"
+    note="UploadFile = { id, file, name, size, type, status, progress, url?, error? }. Presentational — handle (added) to run your real upload, report back through patchFile(id, patch), and remove everything with clear()."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

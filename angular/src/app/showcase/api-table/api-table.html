@@ -1,0 +1,90 @@
+<section class="api">
+  <header class="api__header">
+    <h2 class="api__title">
+      API — <code>{{ _displayName() }}</code>
+    </h2>
+    @if (note()) {
+      <p class="api__note">{{ note() }}</p>
+    }
+  </header>
+
+  @if (inputs().length) {
+    <h3 class="api__section">{{ inputsTitle() }}</h3>
+    <div class="api__scroll">
+      <table class="api__table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of inputs(); track row.name) {
+            <tr>
+              <td>
+                <code class="api__name">{{ row.name }}</code>
+              </td>
+              <td class="api__desc">{{ row.description }}</td>
+              <td>
+                <code>{{ row.type }}</code>
+              </td>
+              <td>
+                @if (row.default) {
+                  <code>{{ row.default }}</code>
+                } @else {
+                  <span class="api__none">—</span>
+                }
+              </td>
+              <td>
+                @if (row.example) {
+                  <code>{{ row.example }}</code>
+                } @else {
+                  <span class="api__none">—</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (outputs().length) {
+    <h3 class="api__section">Outputs</h3>
+    <div class="api__scroll">
+      <table class="api__table">
+        <thead>
+          <tr>
+            <th>Output</th>
+            <th>Description</th>
+            <th>Payload</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of outputs(); track row.name) {
+            <tr>
+              <td>
+                <code class="api__name">{{ row.name }}</code>
+              </td>
+              <td class="api__desc">{{ row.description }}</td>
+              <td>
+                <code>{{ row.type }}</code>
+              </td>
+              <td>
+                @if (row.example) {
+                  <code>{{ row.example }}</code>
+                } @else {
+                  <span class="api__none">—</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

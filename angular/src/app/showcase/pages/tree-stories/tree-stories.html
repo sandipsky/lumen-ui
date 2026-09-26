@@ -1,0 +1,70 @@
+<header class="page-header">
+  <h1 class="page-header__title">Tree View</h1>
+  <p class="page-header__lead">
+    A hierarchical tree with Reddit-style connecting rails, inspired by Ant Design's
+    <code>Tree</code>. Data-driven via <code>[nodes]</code>; a chevron expands/collapses each
+    branch, <code>[checkable]</code> adds cascading checkboxes (with indeterminate parents),
+    <code>[showLine]</code> toggles the rails, and <code>[showIcon]</code> renders per-node glyphs.
+    Expanded / checked / selected state are two-way <code>model</code>s, and
+    <code>expandAll()</code> / <code>collapseAll()</code> can be driven from external buttons via a
+    template ref.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="File tree with external controls"
+    description="expandAll() / collapseAll() called from buttons via a #tree template ref; showIcon renders each node's glyph."
+    code='<l-button (click)="tree.expandAll()">Expand all</l-button>
+<l-button (click)="tree.collapseAll()">Collapse all</l-button>
+
+<l-tree #tree [nodes]="files" [showIcon]="true" [(expandedKeys)]="filesExpanded" />'
+  >
+    <div class="demo-col">
+      <div class="demo-actions">
+        <l-button variant="outlined" size="sm" (click)="tree.expandAll()">Expand all</l-button>
+        <l-button variant="outlined" size="sm" (click)="tree.collapseAll()">Collapse all</l-button>
+      </div>
+      <l-tree #tree [nodes]="files" [showIcon]="true" [(expandedKeys)]="filesExpanded" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Reddit-style comment thread"
+    description="Nested replies connected by curved rails; collapse a thread with its chevron."
+    code='<l-tree [nodes]="comments" [(expandedKeys)]="commentsExpanded" />'
+  >
+    <l-tree [nodes]="comments" [(expandedKeys)]="commentsExpanded" />
+  </app-story>
+
+  <app-story
+    title="Checkable (cascading)"
+    description="[checkable]=true. Checking a parent checks its children; a partially-checked parent shows an indeterminate dash. Disabled nodes are skipped."
+    code='<l-tree [nodes]="permissions" [checkable]="true" [(checkedKeys)]="checked" />'
+  >
+    <div class="demo-col">
+      <l-tree
+        [nodes]="permissions"
+        [checkable]="true"
+        [selectable]="false"
+        [(checkedKeys)]="checked"
+      />
+      <p class="demo-readout">Checked: {{ checked().join(', ') || '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Without lines"
+    description="[showLine]=false drops the rails for a plain indented tree."
+    code='<l-tree [nodes]="files" [showLine]="false" [showIcon]="true" />'
+  >
+    <l-tree [nodes]="files" [showLine]="false" [showIcon]="true" [expandedKeys]="['src', 'app']" />
+  </app-story>
+
+  <app-api-table
+    component="l-tree"
+    note="TreeNode = { key, label, children?, icon?, disabled?, disableCheckbox? } — key must be unique across the whole tree. Rows render through an internal l-tree-item; expandAll() / collapseAll() are callable via a template ref."
+    [inputs]="treeApiInputs"
+    [outputs]="treeApiOutputs"
+  />
+</div>

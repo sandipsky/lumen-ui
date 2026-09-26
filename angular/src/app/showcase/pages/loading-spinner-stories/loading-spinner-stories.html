@@ -1,0 +1,38 @@
+<header class="page-header">
+  <h1 class="page-header__title">Loading Spinner</h1>
+  <p class="page-header__lead">
+    A full-screen loading overlay driven by <code>SpinnerService</code>. Place one
+    <code>&lt;l-loading-spinner /&gt;</code> near the app root, then call <code>show()</code> /
+    <code>hide()</code> from anywhere. Calls are reference-counted, so overlapping requests keep the
+    overlay up until the last one finishes.
+  </p>
+</header>
+
+<!-- One overlay instance for the page; normally this lives at the app root. -->
+<l-loading-spinner />
+
+<div class="stories">
+  <app-story
+    title="Service-driven overlay"
+    description="Triggering the spinner dims the whole page and centers the wheel. This demo shows it for 1.5 seconds."
+    code="constructor(private spinner: SpinnerService) {}
+
+load() {
+  this.spinner.show();
+  try {
+    await fetchData();
+  } finally {
+    this.spinner.hide();
+  }
+}"
+  >
+    <l-button variant="primary" (click)="demo()">Show for 1.5s</l-button>
+  </app-story>
+
+  <app-api-table
+    component="l-loading-spinner"
+    note="The element takes no inputs or outputs — place a single instance near the app root and drive the overlay by injecting SpinnerService. show()/hide() calls are reference-counted, so overlapping operations keep the overlay up until the last one finishes."
+    inputsTitle="SpinnerService API"
+    [inputs]="apiService"
+  />
+</div>

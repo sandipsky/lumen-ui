@@ -1,0 +1,83 @@
+<header class="page-header">
+  <h1 class="page-header__title">Checkbox</h1>
+  <p class="page-header__lead">
+    A custom-styled boolean checkbox. Binds with <code>[(ngModel)]</code> or a reactive
+    <code>FormControl</code>, supports <code>labelPosition</code>, and works with
+    <code>Validators.requiredTrue</code> via the FormValidation directive.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Label sits on the right by default."
+    code='<l-checkbox label="Remember me" />'
+  >
+    <l-checkbox label="Remember me" />
+  </app-story>
+
+  <app-story
+    title="Label position"
+    description="Place the label on the left, right or top of the box."
+    code='<l-checkbox label="Left label" labelPosition="left" />
+<l-checkbox label="Right label" labelPosition="right" />
+<l-checkbox label="Top label" labelPosition="top" />'
+  >
+    <div class="demo-row">
+      <l-checkbox label="Left label" labelPosition="left" />
+      <l-checkbox label="Right label" labelPosition="right" />
+      <l-checkbox label="Top label" labelPosition="top" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Two-way binding — ngModel"
+    description="Bind the checked state with [(ngModel)]."
+    code='<l-checkbox label="Subscribe" [(ngModel)]="checked" />'
+  >
+    <div class="demo-col">
+      <l-checkbox label="Subscribe to the newsletter" [(ngModel)]="ngModelValue" />
+      <p class="demo-readout">Value: {{ ngModelValue() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Reactive forms — requiredTrue"
+    description="Must be checked to be valid. The error appears once touched."
+    code='termsControl = new FormControl(false, [Validators.requiredTrue]);
+
+<l-checkbox label="I accept the terms" [formControl]="termsControl" />'
+  >
+    <div class="demo-col">
+      <l-checkbox label="I accept the terms" [formControl]="termsControl" />
+      <p class="demo-readout">valid: {{ termsControl.valid }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Non-interactive state."
+    code='<l-checkbox label="Disabled" [disabled]="true" />'
+  >
+    <l-checkbox label="Disabled" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description='viewMode renders the state as plain "Yes"/"No" text.'
+    code='<l-checkbox label="Remember me" [ngModel]="true" [viewMode]="true" />
+<l-checkbox label="Subscribe" [viewMode]="true" />'
+  >
+    <div class="demo-row">
+      <l-checkbox label="Remember me" [ngModel]="true" [viewMode]="true" />
+      <l-checkbox label="Subscribe" [viewMode]="true" />
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-checkbox"
+    note="Works with [(ngModel)] and reactive forms — the bound value is the boolean checked state. Pair with Validators.requiredTrue for must-accept fields."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

@@ -1,0 +1,24 @@
+<div class="layout">
+  <l-sidebar #sidebar>
+    <div class="layout__brand">L</div>
+    <nav class="layout__nav">
+      <span class="layout__nav-item"></span>
+      <span class="layout__nav-item"></span>
+      <span class="layout__nav-item"></span>
+      <span class="layout__nav-item"></span>
+    </nav>
+  </l-sidebar>
+
+  <div class="layout__main">
+    <l-header (menuToggle)="sidebar.toggle()">
+      <span class="layout__title">LumenUI</span>
+      <a class="layout__back" routerLink="/sidebar">← Back to docs</a>
+    </l-header>
+
+    <main class="layout__content">
+      <p>
+        Full-mode layout. Use the hamburger to collapse the rail (or open the drawer below 768px).
+      </p>
+    </main>
+  </div>
+</div>

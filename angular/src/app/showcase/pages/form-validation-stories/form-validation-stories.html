@@ -1,0 +1,82 @@
+<header class="page-header">
+  <h1 class="page-header__title">Form Validation</h1>
+  <p class="page-header__lead">
+    The <code>FormValidation</code> directive is applied to every input via
+    <code>hostDirectives</code>, so any bound <code>FormControl</code> gets a required
+    <code>*</code> on its label, an error state on the field, and an inline message once it is
+    touched or dirty — no extra markup in the consumer.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Single field — required + minLength"
+    description="Focus then blur the field while empty, or type fewer than 3 characters, to reveal the message. The asterisk is added automatically because the control has Validators.required."
+    code='nameControl = new FormControl("", [Validators.required, Validators.minLength(3)]);
+
+<l-text-input label="Name" [formControl]="nameControl" />'
+  >
+    <div class="demo-col">
+      <l-text-input label="Name" placeholder="At least 3 characters" [formControl]="nameControl" />
+      <p class="demo-readout">
+        valid: {{ nameControl.valid }} · touched: {{ nameControl.touched }}
+      </p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Full form — validate on submit"
+    description="Submitting an incomplete form calls markAllAsTouched(), which reveals every field's error at once."
+    code='signupForm = new FormGroup({
+  fullName: new FormControl("", [Validators.required, Validators.minLength(3)]),
+  email: new FormControl("", [Validators.required]),
+  password: new FormControl("", [Validators.required, Validators.minLength(8)]),
+});
+
+submit() {
+  if (this.signupForm.invalid) {
+    this.signupForm.markAllAsTouched();
+    return;
+  }
+  // ... use this.signupForm.getRawValue()
+}'
+  >
+    <form class="demo-form" [formGroup]="signupForm">
+      <l-text-input label="Full name" placeholder="Jane Doe" formControlName="fullName" />
+      <l-email-input label="Email" placeholder="you@example.com" formControlName="email" />
+      <l-password-input
+        label="Password"
+        placeholder="At least 8 characters"
+        formControlName="password"
+      />
+
+      <div class="demo-form__actions">
+        <l-button variant="primary" (click)="submit()">Create account</l-button>
+        <l-button variant="outlined" (click)="reset()">Reset</l-button>
+      </div>
+
+      <pre class="demo-readout demo-readout--block">{{ submittedValue() }}</pre>
+    </form>
+  </app-story>
+
+  <app-story
+    title="Opt out — useValidation"
+    description='Set [useValidation]="false" to suppress the inline UI for a single field even when it is bound to a validated control.'
+    code='<l-text-input label="Name" [formControl]="nameControl" [useValidation]="false" />'
+  >
+    <div class="demo-col">
+      <l-text-input
+        label="Name (no inline validation)"
+        placeholder="Required, but stays quiet"
+        [formControl]="quietControl"
+        [useValidation]="false"
+      />
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="[useValidation] (FormValidation directive)"
+    note="Applied automatically to every LumenUI input via hostDirectives (with useValidation forwarded), and its selector also matches native input / textarea elements bound with formControl, formControlName, or ngModel. For a control with validators it adds a required asterisk to the label, an error class on the field, and an inline message below it once the control is touched or dirty. No outputs."
+    [inputs]="apiInputs"
+  />
+</div>

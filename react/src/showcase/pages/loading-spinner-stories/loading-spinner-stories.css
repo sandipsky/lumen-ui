@@ -1,0 +1,11 @@
+/* Page-specific rules for the loading-spinner story page, scoped under the
+   extra `.loading-spinner-stories` root class (page CSS is global in the React
+   port). Layout classes come from the shared story-page.css. */
+
+.loading-spinner-stories .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}

@@ -1,0 +1,352 @@
+<header class="page-header">
+  <h1 class="page-header__title">Select</h1>
+  <p class="page-header__lead">
+    A single-select dropdown inspired by Ant Design. Accepts a plain array of values or an array of
+    objects mapped via <code>bindValue</code>/<code>bindLabel</code>, with optional in-place
+    <code>searchable</code> filtering, <code>groupBy</code> headers, an async-friendly loading
+    state, and a <code>virtualScroll</code> mode for large datasets. Per-option disabling is driven
+    by <code>bindDisabled</code>. Turn on <code>multiple</code> for tag-based multi-select with
+    <code>maxCount</code>, <code>maxTagCount</code> and <code>clearable</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic (primitive array)"
+    description="Pass a plain string/number array — no binding props needed."
+    code="fruits = ['Apple', 'Banana', 'Cherry', 'Mango', 'Pineapple'];
+
+<l-select label=&quot;Fruit&quot; [items]=&quot;fruits&quot; [(ngModel)]=&quot;fruit&quot; />"
+  >
+    <div class="demo-col">
+      <l-select label="Fruit" [items]="fruits" [(ngModel)]="fruit" />
+      <p class="demo-readout">Value: {{ fruit() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Object array"
+    description="Map objects with bindValue (the patched value) and bindLabel (the shown text). Options flagged disabled are skipped by keyboard and click."
+    code='<l-select
+  label="Assignee"
+  [items]="users"
+  bindValue="id"
+  bindLabel="name"
+  [(ngModel)]="userId"
+/>'
+  >
+    <div class="demo-col">
+      <l-select
+        label="Assignee"
+        [items]="users"
+        bindValue="id"
+        bindLabel="name"
+        [(ngModel)]="userId"
+      />
+      <p class="demo-readout">Selected id: {{ userId() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Searchable"
+    description="Set [searchable]=true to filter options by label from an in-dropdown search box."
+    code='<l-select
+  label="Assignee"
+  [items]="users"
+  bindValue="id"
+  bindLabel="name"
+  [searchable]="true"
+  [(ngModel)]="searchableUserId"
+/>'
+  >
+    <div class="demo-col">
+      <l-select
+        label="Assignee"
+        [items]="users"
+        bindValue="id"
+        bindLabel="name"
+        [searchable]="true"
+        [(ngModel)]="searchableUserId"
+      />
+      <p class="demo-readout">Selected id: {{ searchableUserId() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Grouped + per-option disabled"
+    description="groupBy renders options under group headers derived from that property. bindDisabled flags individual options (greyed out, skipped by click and keyboard)."
+    code='<l-select
+  label="Teammate"
+  [items]="users"
+  bindValue="id"
+  bindLabel="name"
+  groupBy="team"
+  bindDisabled="disabled"
+  [searchable]="true"
+  [(ngModel)]="groupedUserId"
+/>'
+  >
+    <div class="demo-col">
+      <l-select
+        label="Teammate"
+        [items]="users"
+        bindValue="id"
+        bindLabel="name"
+        groupBy="team"
+        bindDisabled="disabled"
+        [searchable]="true"
+        [(ngModel)]="groupedUserId"
+      />
+      <p class="demo-readout">Selected id: {{ groupedUserId() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Multiple"
+    description="Set [multiple]=true to select several options. The value becomes an array and picks render as removable tags; the dropdown stays open and shows a check on selected rows."
+    code='<l-select
+  label="Fruits"
+  [items]="fruits"
+  [multiple]="true"
+  [(ngModel)]="multiFruits"
+/>'
+  >
+    <div class="demo-col">
+      <l-select label="Fruits" [items]="fruits" [multiple]="true" [(ngModel)]="multiFruits" />
+      <p class="demo-readout">Value: {{ multiFruits().join(', ') || '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Tag overflow (maxTagCount)"
+    description="maxTagCount defaults to 'responsive' — tags fill the trigger width, then collapse into a +N badge. Pass a number to cap the visible tags instead."
+    code='<!-- responsive (default): fit, then +N -->
+<l-select [items]="users" bindValue="id" bindLabel="name"
+  [multiple]="true" [(ngModel)]="multiUserIds" />
+
+<!-- fixed: at most 2 tags, then +N -->
+<l-select [items]="users" bindValue="id" bindLabel="name"
+  [multiple]="true" [maxTagCount]="2" [(ngModel)]="multiUserIds" />'
+  >
+    <div class="demo-col">
+      <l-select
+        label="Responsive"
+        [items]="users"
+        bindValue="id"
+        bindLabel="name"
+        [multiple]="true"
+        [(ngModel)]="multiUserIds"
+      />
+      <l-select
+        label="maxTagCount = 2"
+        [items]="users"
+        bindValue="id"
+        bindLabel="name"
+        [multiple]="true"
+        [maxTagCount]="2"
+        [(ngModel)]="multiUserIds"
+      />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Max selections (maxCount)"
+    description="maxCount caps how many options can be picked. Once reached, the remaining unselected options are disabled until you remove one."
+    code='<l-select
+  label="Pick up to 3"
+  [items]="fruits"
+  [multiple]="true"
+  [maxCount]="3"
+  [(ngModel)]="cappedFruits"
+/>'
+  >
+    <div class="demo-col">
+      <l-select
+        label="Pick up to 3"
+        [items]="fruits"
+        [multiple]="true"
+        [maxCount]="3"
+        [(ngModel)]="cappedFruits"
+      />
+      <p class="demo-readout">{{ cappedFruits().length }}/3 selected</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Clearable"
+    description="[clearable]=true adds an × affix that empties the selection in one click. Works for single and multi-select."
+    code='<l-select
+  label="Fruits"
+  [items]="fruits"
+  [multiple]="true"
+  [clearable]="true"
+  [(ngModel)]="clearableFruits"
+/>'
+  >
+    <div class="demo-col">
+      <l-select
+        label="Fruits"
+        [items]="fruits"
+        [multiple]="true"
+        [clearable]="true"
+        [(ngModel)]="clearableFruits"
+      />
+      <l-select label="Single fruit" [items]="fruits" [clearable]="true" [(ngModel)]="fruit" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Async search + loading"
+    description="Wire (search) to an API call and toggle [showLoading] while it's in flight. This demo debounces 600ms against an in-memory list."
+    code='onSearch(term: string) {
+  this.loading.set(true);
+  // …debounce + call API, then set items + loading=false
+}
+
+<l-select
+  label="Search users"
+  [items]="remoteUsers()"
+  bindValue="id"
+  bindLabel="name"
+  [searchable]="true"
+  [showLoading]="loadingRemote()"
+  (search)="onRemoteSearch($event)"
+  [(ngModel)]="remoteUserId"
+/>'
+  >
+    <div class="demo-col">
+      <l-select
+        label="Search users"
+        placeholder="Type a name…"
+        [items]="remoteUsers()"
+        bindValue="id"
+        bindLabel="name"
+        [searchable]="true"
+        [showLoading]="loadingRemote()"
+        (search)="onRemoteSearch($event)"
+        [(ngModel)]="remoteUserId"
+      />
+      <p class="demo-readout">Selected id: {{ remoteUserId() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Paged loading (scrollToEnd)"
+    description="(scrollToEnd) fires when the list scrolls near the bottom — append the next page to items for infinite scroll. This demo loads 25 cities at a time with a simulated 400ms fetch."
+    code='loadNextPage() {
+  // …fetch the next page, then append it to items
+  this.pagedCities.set(ALL_CITIES.slice(0, this.pagedCities().length + PAGE_SIZE));
+}
+
+<l-select
+  label="City"
+  [items]="pagedCities()"
+  bindValue="id"
+  bindLabel="label"
+  (scrollToEnd)="loadNextPage()"
+  [(ngModel)]="pagedCityId"
+/>'
+  >
+    <div class="demo-col">
+      <l-select
+        label="City (paged)"
+        [items]="pagedCities()"
+        bindValue="id"
+        bindLabel="label"
+        (scrollToEnd)="loadNextPage()"
+        [(ngModel)]="pagedCityId"
+      />
+      <p class="demo-readout">
+        Loaded {{ pagedCities().length }}/{{ cities.length }} · selected id:
+        {{ pagedCityId() ?? '—' }}
+      </p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Virtual scroll"
+    description="With [virtualScroll]=true only the visible rows render, so a 5,000-item list stays smooth. Best for large, ungrouped lists."
+    code='<l-select
+  label="City"
+  [items]="cities"
+  bindValue="id"
+  bindLabel="label"
+  [searchable]="true"
+  [virtualScroll]="true"
+  [(ngModel)]="cityId"
+/>'
+  >
+    <div class="demo-col">
+      <l-select
+        label="City (5,000 options)"
+        [items]="cities"
+        bindValue="id"
+        bindLabel="label"
+        [searchable]="true"
+        [virtualScroll]="true"
+        [(ngModel)]="cityId"
+      />
+      <p class="demo-readout">Selected id: {{ cityId() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="No arrow"
+    description="Hide the chevron affix with [showArrow]=false."
+    code='<l-select [items]="fruits" [showArrow]="false" [(ngModel)]="fruit" />'
+  >
+    <l-select label="Fruit" [items]="fruits" [showArrow]="false" [(ngModel)]="fruit" />
+  </app-story>
+
+  <app-story
+    title="Reactive forms"
+    description="Binds a FormControl; the required error surfaces via the FormValidation directive once touched."
+    code="countryControl = new FormControl<string | null>(null, [Validators.required]);
+
+<l-select label=&quot;Country&quot; [items]=&quot;['Nepal', 'India', 'Japan']&quot; [formControl]=&quot;countryControl&quot; />"
+  >
+    <div class="demo-col">
+      <l-select
+        label="Country"
+        [items]="['Nepal', 'India', 'Japan', 'Bhutan']"
+        [formControl]="countryControl"
+      />
+      <p class="demo-readout">
+        valid: {{ countryControl.valid }} · value: {{ countryControl.value ?? '—' }}
+      </p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Non-interactive state."
+    code='<l-select label="Fruit" [items]="fruits" [(ngModel)]="fruit" [disabled]="true" />'
+  >
+    <l-select label="Fruit" [items]="fruits" [(ngModel)]="fruit" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description="viewMode renders the selected option label(s) as plain text — comma-separated in multiple mode."
+    code="<l-select label='Fruit' [items]='fruits' ngModel='Mango' [viewMode]='true' />
+<l-select label='Fruits' [items]='fruits' [multiple]='true' [ngModel]='viewFruits' [viewMode]='true' />"
+  >
+    <div class="demo-col">
+      <l-select label="Fruit" [items]="fruits" ngModel="Mango" [viewMode]="true" />
+      <l-select
+        label="Fruits"
+        [items]="fruits"
+        [multiple]="true"
+        [ngModel]="viewFruits"
+        [viewMode]="true"
+      />
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-select"
+    note="Works with [(ngModel)] and reactive forms — the bound value is the selected option's value (the whole item when bindValue is unset), or an array of values when multiple."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

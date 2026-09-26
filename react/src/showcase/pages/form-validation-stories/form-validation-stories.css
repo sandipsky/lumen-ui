@@ -1,0 +1,36 @@
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.demo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.demo-form__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.demo-readout--block {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  background: var(--bg-dark);
+  padding: 8px 10px;
+  border-radius: 8px;
+}

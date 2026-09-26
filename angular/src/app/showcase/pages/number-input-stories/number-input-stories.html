@@ -1,0 +1,116 @@
+<header class="page-header">
+  <h1 class="page-header__title">Number Input</h1>
+  <p class="page-header__lead">
+    A numeric field whose form value stays a plain <code>number</code>. Only numeric keystrokes are
+    accepted, and an optional <code>prefix</code> and <code>suffix</code> are shown as static,
+    non-editable adornments that never change the stored value.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Letters and symbols are blocked outright — only digits can be typed."
+    code='<l-number-input label="Quantity" [(ngModel)]="quantity" />'
+  >
+    <div class="demo-col">
+      <l-number-input label="Quantity" placeholder="0" [(ngModel)]="quantity" />
+      <p class="demo-readout">Value: {{ quantity() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Decimal places"
+    description="0 forbids decimals (the dot key is blocked); a positive number rounds to that many places; unset allows any."
+    code='<l-number-input label="Integer" [decimalPlaces]="0" [(ngModel)]="quantity" />
+<l-number-input label="Two places" [decimalPlaces]="2" [(ngModel)]="quantity" />
+<l-number-input label="Any" [(ngModel)]="quantity" />'
+  >
+    <div class="demo-col">
+      <l-number-input label="Integer (0)" [decimalPlaces]="0" [(ngModel)]="quantity" />
+      <l-number-input label="Two places (2)" [decimalPlaces]="2" [(ngModel)]="quantity" />
+      <l-number-input label="Any (unset)" [(ngModel)]="quantity" />
+      <p class="demo-readout">Shared value: {{ quantity() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Prefix & suffix"
+    description="Display-only adornments that stay visible (and uneditable) while you type."
+    code='<l-number-input label="Amount" prefix="Rs." [decimalPlaces]="2" [(ngModel)]="amount" />
+<l-number-input label="Discount" suffix="%" [decimalPlaces]="2" [(ngModel)]="quantity" />'
+  >
+    <div class="demo-col">
+      <l-number-input label="Amount" prefix="Rs." [decimalPlaces]="2" [(ngModel)]="amount" />
+      <l-number-input label="Discount" suffix="%" [decimalPlaces]="2" [(ngModel)]="quantity" />
+      <p class="demo-readout">
+        Raw values — amount: {{ amount() ?? '—' }}, discount: {{ quantity() ?? '—' }}
+      </p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Allow negative"
+    description="Off by default, so the minus key is blocked. Turn it on to permit negatives."
+    code='<l-number-input label="Temperature" [allowNegative]="true" [decimalPlaces]="1" suffix="°C" [(ngModel)]="quantity" />'
+  >
+    <l-number-input
+      label="Temperature"
+      [allowNegative]="true"
+      [decimalPlaces]="1"
+      suffix="°C"
+      [(ngModel)]="quantity"
+    />
+  </app-story>
+
+  <app-story
+    title="Disallow zero"
+    description="With [allowZero]=false, typing a bare 0 is blocked (use .5 for fractions below one)."
+    code='<l-number-input label="Headcount" [allowZero]="false" [decimalPlaces]="0" [(ngModel)]="quantity" />'
+  >
+    <l-number-input
+      label="Headcount"
+      [allowZero]="false"
+      [decimalPlaces]="0"
+      [(ngModel)]="quantity"
+    />
+  </app-story>
+
+  <app-story
+    title="Reactive forms"
+    description="Binds a numeric FormControl; required errors surface via the FormValidation directive."
+    code='priceControl = new FormControl<number | null>(null, [Validators.required]);
+
+<l-number-input label="Price" prefix="Rs." [decimalPlaces]="2" [formControl]="priceControl" />'
+  >
+    <div class="demo-col">
+      <l-number-input label="Price" prefix="Rs." [decimalPlaces]="2" [formControl]="priceControl" />
+      <p class="demo-readout">
+        valid: {{ priceControl.valid }} · value: {{ priceControl.value ?? '—' }}
+      </p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Non-interactive state."
+    code='<l-number-input label="Disabled" prefix="Rs." [(ngModel)]="amount" [disabled]="true" />'
+  >
+    <l-number-input label="Disabled" prefix="Rs." [(ngModel)]="amount" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description="viewMode renders the value — including prefix/suffix — as plain text."
+    code="<l-number-input label='Price' prefix='Rs. ' [ngModel]='1500' [viewMode]='true' />"
+  >
+    <l-number-input label="Price" prefix="Rs. " [ngModel]="1500" [viewMode]="true" />
+  </app-story>
+
+  <app-api-table
+    component="l-number-input"
+    note="Works with [(ngModel)] and reactive forms — the bound value is a plain number (or null while empty), never a formatted string."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

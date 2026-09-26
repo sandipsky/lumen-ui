@@ -1,0 +1,41 @@
+.story-page .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.flex-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  height: 40px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--text-white);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.flex-box--alt {
+  background: var(--accent-dark);
+}
+
+.flex-canvas {
+  border: 1px dashed var(--separator-dark);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.flex-canvas--tall {
+  min-height: 104px;
+}

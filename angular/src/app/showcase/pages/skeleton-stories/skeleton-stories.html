@@ -1,0 +1,101 @@
+<header class="page-header">
+  <h1 class="page-header__title">Skeleton</h1>
+  <p class="page-header__lead">
+    A loading placeholder inspired by Mantine. Use it standalone as a sized block via
+    <code>height</code> / <code>width</code> / <code>radius</code> (or <code>[circle]</code>), or
+    wrap real content and toggle <code>[visible]</code> — while visible, an opaque pulsing overlay
+    covers the content and reveals it once loading finishes. Disable the pulse with
+    <code>[animate]="false"</code>; recolor it through the <code>--l-skeleton-base</code> /
+    <code>--l-skeleton-overlay</code> CSS variables.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Text lines"
+    description="Stack a few blocks with different widths to mimic a paragraph."
+    code='<l-skeleton height="1rem" />
+<l-skeleton height="1rem" width="80%" />
+<l-skeleton height="1rem" width="60%" />'
+  >
+    <div class="demo-lines">
+      <l-skeleton height="1rem" />
+      <l-skeleton height="1rem" width="80%" />
+      <l-skeleton height="1rem" width="60%" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Circle & shapes"
+    description="[circle]=true makes a circle whose diameter is the height — great for avatars. Set radius for pills."
+    code='<l-skeleton [circle]="true" height="56px" />
+<l-skeleton height="40px" radius="20px" width="160px" />'
+  >
+    <div class="demo-row">
+      <l-skeleton [circle]="true" height="56px" />
+      <l-skeleton height="40px" radius="20px" width="160px" />
+      <l-skeleton height="80px" width="80px" radius="14px" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="User card"
+    description="Compose blocks to preview a whole component while its data loads."
+    code='<div class="row">
+  <l-skeleton [circle]="true" height="48px" />
+  <div class="col">
+    <l-skeleton height="0.9rem" width="40%" />
+    <l-skeleton height="0.8rem" width="70%" />
+  </div>
+</div>'
+  >
+    <div class="demo-card">
+      <l-skeleton [circle]="true" height="48px" />
+      <div class="demo-card__body">
+        <l-skeleton height="0.9rem" width="40%" />
+        <l-skeleton height="0.8rem" width="70%" />
+      </div>
+    </div>
+  </app-story>
+
+  <app-story
+    title="No animation"
+    description="Set [animate]=false for a static placeholder (also respects prefers-reduced-motion automatically)."
+    code='<l-skeleton height="1rem" [animate]="false" />'
+  >
+    <div class="demo-lines">
+      <l-skeleton height="1rem" [animate]="false" />
+      <l-skeleton height="1rem" width="70%" [animate]="false" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Wrapping content (visible)"
+    description="Wrap real markup and bind [visible] to your loading flag. The overlay covers the content until loading is done."
+    code='<l-skeleton [visible]="loading()">
+  <p>Loaded content goes here.</p>
+</l-skeleton>'
+  >
+    <div class="demo-col">
+      <l-button variant="outlined" (click)="toggleLoading()">
+        {{ loading() ? 'Finish loading' : 'Reload' }}
+      </l-button>
+
+      <l-skeleton [visible]="loading()" radius="10px">
+        <div class="demo-loaded">
+          <h3>Aurora Borealis</h3>
+          <p>
+            The northern lights are a natural display of shifting colour caused by charged particles
+            meeting the upper atmosphere. This content is hidden behind the skeleton while loading.
+          </p>
+        </div>
+      </l-skeleton>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-skeleton"
+    note="Style-only placeholder — no outputs. Use it standalone as a sized block, or wrap real content and toggle [visible]. Recolor via the --l-skeleton-base and --l-skeleton-overlay CSS variables."
+    [inputs]="apiInputs"
+  />
+</div>

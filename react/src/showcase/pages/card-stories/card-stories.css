@@ -1,0 +1,11 @@
+/* Scoped under .card-stories: demo layout helpers for the card page. */
+.card-stories .demo-card {
+    max-width: 480px;
+}
+
+.card-stories .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    align-items: start;
+}

@@ -1,0 +1,122 @@
+<header class="page-header">
+  <h1 class="page-header__title">Date Input</h1>
+  <p class="page-header__lead">
+    An Ant Design-inspired date picker with a dual-calendar twist: the popup renders in either the
+    Gregorian (<code>AD</code>) or Bikram Sambat (<code>BS</code>) system, switchable from a toggle
+    in the panel footer. The model value is always a JS <code>Date</code>, whichever calendar is
+    shown. Supports typing (<code>YYYY-MM-DD</code>, <code>DD/MM/YYYY</code>, …), month/year
+    drill-down views, keyboard navigation, <code>min</code>/<code>max</code> bounds, a custom
+    <code>format</code>, and Nepali-language rendering via <code>lang="np"</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Starts in the AD calendar. Open the popup and use the AD/BS toggle in the footer to flip the calendar system — the bound value stays the same JS Date."
+    code='<l-date-input label="Birthday" [(ngModel)]="birthday" />'
+  >
+    <div class="demo-col">
+      <l-date-input label="Birthday" [(ngModel)]="birthday" />
+      <p class="demo-readout">Value: {{ birthday()?.toDateString() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="BS calendar by default"
+    description='Set calendar="bs" to open in Bikram Sambat. The input shows the BS date (e.g. 2083-03-19) while the model stays an AD Date.'
+    code='<l-date-input label="Date (BS)" calendar="bs" [(ngModel)]="bsDate" />'
+  >
+    <div class="demo-col">
+      <l-date-input label="Date (BS)" calendar="bs" [(ngModel)]="bsDate" />
+      <p class="demo-readout">Model (AD): {{ bsDate()?.toDateString() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Nepali language"
+    description='lang="np" renders Nepali month names, weekdays and digits in BS mode.'
+    code='<l-date-input label="मिति" calendar="bs" lang="np" [(ngModel)]="npDate" />'
+  >
+    <div class="demo-col">
+      <l-date-input label="मिति" calendar="bs" lang="np" [(ngModel)]="npDate" />
+      <p class="demo-readout">Model (AD): {{ npDate()?.toDateString() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Custom format"
+    description="The format string uses the same tokens in both calendars: YYYY, MM/MMM/MMMM, DD, dd/ddd."
+    code='<l-date-input label="Published" format="ddd DD, MMMM YYYY" [(ngModel)]="formatted" />'
+  >
+    <div class="demo-col">
+      <l-date-input label="Published" format="ddd DD, MMMM YYYY" [(ngModel)]="formatted" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Min / max bounds"
+    description="Dates outside [min, max] are disabled in the grid and rejected when typed — in both calendar systems."
+    code='<l-date-input label="Booking date" [min]="today" [max]="in30Days" [(ngModel)]="bounded" />'
+  >
+    <div class="demo-col">
+      <l-date-input label="Booking date" [min]="today" [max]="in30Days" [(ngModel)]="bounded" />
+      <p class="demo-readout">Value: {{ bounded()?.toDateString() ?? '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Required (reactive forms)"
+    description="Works with reactive forms; pair with Validators.required and the shared FormValidation directive surfaces the error on blur."
+    code='appointmentControl = new FormControl<Date | null>(null, [Validators.required]);
+
+<l-date-input label="Appointment" [formControl]="appointmentControl" />'
+  >
+    <div class="demo-col">
+      <l-date-input label="Appointment" [formControl]="appointmentControl" />
+      <p class="demo-readout">
+        Status: {{ appointmentControl.valid ? 'valid' : 'invalid' }} — value:
+        {{ appointmentControl.value?.toDateString() ?? '—' }}
+      </p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Focus, typing & icon options"
+    description="openCalendarOnFocus opens the popup as soon as the field gains focus (tab into it). [typableDateInput]=false makes the field picker-only — typing is blocked and the cursor turns into a pointer. showCalendarIcon hides the affix icon."
+    code='<l-date-input label="Opens on focus" [openCalendarOnFocus]="true" [(ngModel)]="focusOpened" />
+<l-date-input label="Picker only" [typableDateInput]="false" [(ngModel)]="pickerOnly" />
+<l-date-input label="No icon" [showCalendarIcon]="false" [(ngModel)]="noIcon" />'
+  >
+    <div class="demo-col">
+      <l-date-input label="Opens on focus" [openCalendarOnFocus]="true" [(ngModel)]="focusOpened" />
+      <l-date-input label="Picker only" [typableDateInput]="false" [(ngModel)]="pickerOnly" />
+      <l-date-input label="No icon" [showCalendarIcon]="false" [(ngModel)]="noIcon" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Standard disabled treatment — no popup, reduced opacity."
+    code='<l-date-input label="Locked" [disabled]="true" />'
+  >
+    <div class="demo-col">
+      <l-date-input label="Locked" [disabled]="true" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description="viewMode renders the formatted date as plain text — no picker."
+    code="<l-date-input label='Joined' ngModel='2026-08-07' [viewMode]='true' />"
+  >
+    <l-date-input label="Joined" ngModel="2026-08-07" [viewMode]="true" />
+  </app-story>
+
+  <app-api-table
+    component="l-date-input"
+    note="Works with [(ngModel)] and reactive forms — the bound value is always a JS Date (local midnight), regardless of the calendar displayed. writeValue also accepts an ISO string."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

@@ -1,0 +1,20 @@
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}

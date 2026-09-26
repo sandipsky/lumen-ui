@@ -1,0 +1,85 @@
+<header class="page-header">
+  <h1 class="page-header__title">Toggle</h1>
+  <p class="page-header__lead">
+    A boolean switch built on the shared slider styles. Binds with <code>[(ngModel)]</code> or a
+    reactive <code>FormControl</code>, and the label can sit on either side via
+    <code>labelPosition</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Label sits on the right by default."
+    code='<l-toggle label="Wi-Fi" />'
+  >
+    <l-toggle label="Wi-Fi" />
+  </app-story>
+
+  <app-story
+    title="Label position"
+    description="Place the label on the left, right or top of the switch."
+    code='<l-toggle label="Left label" labelPosition="left" />
+<l-toggle label="Right label" labelPosition="right" />
+<l-toggle label="Top label" labelPosition="top" />'
+  >
+    <div class="demo-row">
+      <l-toggle label="Left label" labelPosition="left" />
+      <l-toggle label="Right label" labelPosition="right" />
+      <l-toggle label="Top label" labelPosition="top" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Two-way binding — ngModel"
+    description="Bind the checked state with [(ngModel)]."
+    code='<l-toggle label="Notifications" [(ngModel)]="enabled" />'
+  >
+    <div class="demo-col">
+      <l-toggle label="Notifications" [(ngModel)]="ngModelValue" />
+      <p class="demo-readout">Value: {{ ngModelValue() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Reactive forms — formControl"
+    description="Bind a boolean FormControl directly."
+    code='notificationsControl = new FormControl(false);
+
+<l-toggle label="Email me" [formControl]="notificationsControl" />'
+  >
+    <div class="demo-col">
+      <l-toggle label="Email me" [formControl]="notificationsControl" />
+      <p class="demo-readout">Control value: {{ notificationsControl.value }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Non-interactive state."
+    code='<l-toggle label="Disabled" [disabled]="true" />'
+  >
+    <l-toggle label="Disabled" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description='viewMode renders the state as plain "Yes"/"No" text; viewValue overrides it.'
+    code='<l-toggle label="Wi-Fi" [ngModel]="true" [viewMode]="true" />
+<l-toggle label="Bluetooth" [viewMode]="true" />
+<l-toggle label="Status" [ngModel]="true" [viewMode]="true" viewValue="Enabled" />'
+  >
+    <div class="demo-row">
+      <l-toggle label="Wi-Fi" [ngModel]="true" [viewMode]="true" />
+      <l-toggle label="Bluetooth" [viewMode]="true" />
+      <l-toggle label="Status" [ngModel]="true" [viewMode]="true" viewValue="Enabled" />
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-toggle"
+    note="Works with [(ngModel)] and reactive forms — the bound value is the boolean checked state."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

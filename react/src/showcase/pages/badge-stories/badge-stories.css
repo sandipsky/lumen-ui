@@ -1,0 +1,48 @@
+/* Inline code chips in the page lead (page-specific; the shared header rules
+   live in src/showcase/story-page.css). */
+.story-page .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.demo-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* A simple square surface to host an icon + badge in the demos. */
+.icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--separator);
+  border-radius: 10px;
+  background: var(--bg-lightest);
+  font-size: 18px;
+}
+
+.icon-box--lg {
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+}

@@ -1,0 +1,72 @@
+<header class="page-header">
+  <h1 class="page-header__title">Username Input</h1>
+  <p class="page-header__lead">
+    Text field with a user icon, built on the shared <code>BaseInput</code>. Validation is the
+    consumer's job (e.g. <code>Validators.pattern</code>) — the shared inline validation UI surfaces
+    the message under the field.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Label, placeholder and user icon."
+    code='<l-username-input label="Username" placeholder="jane.doe" />'
+  >
+    <l-username-input label="Username" placeholder="jane.doe" />
+  </app-story>
+
+  <app-story
+    title="Two-way binding — ngModel"
+    description="Bind the value with [(ngModel)]."
+    code='<l-username-input label="Username" [(ngModel)]="value" />'
+  >
+    <div class="demo-col">
+      <l-username-input label="Username" placeholder="jane.doe" [(ngModel)]="ngModelValue" />
+      <p class="demo-readout">Value: {{ ngModelValue() || '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Reactive forms — validation"
+    description="Type an invalid username and blur to see the inline error, driven by the control's validators."
+    code='usernameControl = new FormControl("", [
+  Validators.required,
+  Validators.minLength(3),
+  Validators.pattern(/^[a-zA-Z0-9._-]+$/),
+]);
+
+<l-username-input label="Username" [formControl]="usernameControl" />'
+  >
+    <div class="demo-col">
+      <l-username-input label="Username" placeholder="jane.doe" [formControl]="usernameControl" />
+      <p class="demo-readout">
+        valid: {{ usernameControl.valid }} · errors:
+        {{ (usernameControl.errors | json) ?? 'null' }}
+      </p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Non-interactive state."
+    code='<l-username-input label="Username" [disabled]="true" />'
+  >
+    <l-username-input label="Username" placeholder="jane.doe" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description="viewMode renders the value as plain text — no input container."
+    code="<l-username-input label='Username' ngModel='jane.doe' [viewMode]='true' />"
+  >
+    <l-username-input label="Username" ngModel="jane.doe" [viewMode]="true" />
+  </app-story>
+
+  <app-api-table
+    component="l-username-input"
+    note="Works with [(ngModel)] and reactive forms — the bound value is a string. There is no built-in format validator: add Validators (pattern, minLength, …) on the bound control and the inline message appears once the field is touched."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

@@ -1,0 +1,141 @@
+<header class="page-header">
+  <h1 class="page-header__title">Tabs</h1>
+  <p class="page-header__lead">
+    A tab set with a sliding active indicator, laid out <code>horizontal</code> (default) or
+    <code>vertical</code> via the <code>orientation</code> input. Project
+    <code>&lt;l-tab&gt;</code> children with a <code>label</code> (and optional <code>icon</code>);
+    the active panel fades in. Two visual styles — <code>line</code> (underline / side bar) and
+    <code>pills</code> — plus sizes <code>sm</code>/<code>md</code>/<code>lg</code>, equal-width
+    <code>grow</code>, disabled tabs, two-way <code>[(value)]</code>, and arrow-key navigation
+    (WAI-ARIA tabs pattern).
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Horizontal (line)"
+    description="The default: an underline indicator that slides between tabs."
+    code='<l-tabs [(value)]="active">
+  <l-tab label="Profile" value="profile">…</l-tab>
+  <l-tab label="Settings" value="settings">…</l-tab>
+  <l-tab label="Notifications" value="notifications">…</l-tab>
+</l-tabs>'
+  >
+    <l-tabs [(value)]="active">
+      <l-tab label="Profile" icon="👤" value="profile">
+        <p>Manage your public profile, avatar, and bio.</p>
+      </l-tab>
+      <l-tab label="Settings" icon="⚙️" value="settings">
+        <p>Configure preferences, language, and theme.</p>
+      </l-tab>
+      <l-tab label="Notifications" icon="🔔" value="notifications">
+        <p>Choose which events send you an email or push alert.</p>
+      </l-tab>
+      <l-tab label="Archived" value="archived" [disabled]="true">
+        <p>Archived items.</p>
+      </l-tab>
+    </l-tabs>
+  </app-story>
+
+  <app-story
+    title="Vertical"
+    description='orientation="vertical" puts the strip on the left with a sliding side bar; Up/Down navigates.'
+    code='<l-tabs orientation="vertical">…</l-tabs>'
+  >
+    <l-tabs orientation="vertical">
+      <l-tab label="Overview" icon="📊">
+        <p>A high-level summary of your workspace activity this week.</p>
+      </l-tab>
+      <l-tab label="Members" icon="👥">
+        <p>Invite teammates and manage their roles and permissions.</p>
+      </l-tab>
+      <l-tab label="Billing" icon="💳">
+        <p>Review invoices, update your plan, and manage payment methods.</p>
+      </l-tab>
+    </l-tabs>
+  </app-story>
+
+  <app-story
+    title="Pills"
+    description='variant="pills" fills the active tab with a sliding accent pill.'
+    code='<l-tabs variant="pills">…</l-tabs>'
+  >
+    <l-tabs variant="pills">
+      <l-tab label="Day">
+        <p>Today's schedule at a glance.</p>
+      </l-tab>
+      <l-tab label="Week">
+        <p>The full week laid out.</p>
+      </l-tab>
+      <l-tab label="Month">
+        <p>A month-long calendar view.</p>
+      </l-tab>
+    </l-tabs>
+  </app-story>
+
+  <app-story
+    title="Vertical pills"
+    description="Pills also work vertically."
+    code='<l-tabs variant="pills" orientation="vertical">…</l-tabs>'
+  >
+    <l-tabs variant="pills" orientation="vertical">
+      <l-tab label="General" icon="🧭">
+        <p>General application settings.</p>
+      </l-tab>
+      <l-tab label="Security" icon="🔒">
+        <p>Password, two-factor authentication, and active sessions.</p>
+      </l-tab>
+      <l-tab label="Integrations" icon="🧩">
+        <p>Connect third-party apps and services.</p>
+      </l-tab>
+    </l-tabs>
+  </app-story>
+
+  <app-story
+    title="Full width (grow)"
+    description="[grow]=true stretches horizontal tabs to equal widths."
+    code='<l-tabs [grow]="true">…</l-tabs>'
+  >
+    <l-tabs [grow]="true">
+      <l-tab label="Description">
+        <p>The full product description.</p>
+      </l-tab>
+      <l-tab label="Reviews">
+        <p>What customers are saying.</p>
+      </l-tab>
+      <l-tab label="Shipping">
+        <p>Delivery options and return policy.</p>
+      </l-tab>
+    </l-tabs>
+  </app-story>
+
+  <app-story
+    title="Sizes"
+    description="sm, md (default) and lg."
+    code='<l-tabs size="lg">…</l-tabs>'
+  >
+    <div class="demo-col">
+      <l-tabs size="sm">
+        <l-tab label="One"><p>Small tabs.</p></l-tab>
+        <l-tab label="Two"><p>Second panel.</p></l-tab>
+      </l-tabs>
+      <l-tabs size="lg">
+        <l-tab label="One"><p>Large tabs.</p></l-tab>
+        <l-tab label="Two"><p>Second panel.</p></l-tab>
+      </l-tabs>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-tabs"
+    note="Project l-tab children — the strip renders from their label/icon and the active tab's projected panel is shown. WAI-ARIA tabs pattern with roving arrow-key navigation."
+    [inputs]="tabsApiInputs"
+    [outputs]="tabsApiOutputs"
+  />
+
+  <app-api-table
+    component="l-tab"
+    note="One tab inside l-tabs. Panel content is projected and shown while active; the parent tab set owns the active state. No outputs."
+    [inputs]="tabApiInputs"
+  />
+</div>

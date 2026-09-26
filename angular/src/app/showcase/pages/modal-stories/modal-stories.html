@@ -1,0 +1,122 @@
+<header class="page-header">
+  <h1 class="page-header__title">Modal</h1>
+  <p class="page-header__lead">
+    An imperative, <code>MatDialog</code>-style overlay opened through <code>ModalService</code>.
+    Open either an <code>&lt;ng-template&gt;</code> or a component, get a <code>ModalRef</code> back
+    (<code>close()</code> / <code>afterClosed()</code> / <code>componentInstance</code>), and play
+    pure-CSS enter/leave animations. The backdrop click and <code>Esc</code> close by default and
+    body scroll is locked while open.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Open a template as the panel content. The template context exposes data and modalRef."
+    code='private modal = inject(ModalService);
+
+open() {
+  this.modal.open(this.demoTpl(), { data: { title: &apos;Hi&apos; } });
+}
+
+<ng-template #demoTpl let-data let-ref="modalRef">
+  <h2 [textContent]="data.title"></h2>
+  <l-button (click)="ref.close()">Got it</l-button>
+</ng-template>'
+  >
+    <l-button (click)="openBasic()">Open modal</l-button>
+  </app-story>
+
+  <app-story
+    title="Animations"
+    description="slideUp (default), slideDown, slideLeft, slideRight, fade, zoom and none — applied to both enter and leave."
+    code="this.modal.open(tpl, { animation: 'zoom' });"
+  >
+    <div class="demo-row">
+      @for (anim of animations; track anim) {
+        <l-button variant="secondary" (click)="openAnimation(anim)">{{ anim }}</l-button>
+      }
+    </div>
+  </app-story>
+
+  <app-story
+    title="Sizing"
+    description="Set an explicit width; the panel still caps at maxWidth (90vw by default)."
+    code="this.modal.open(tpl, { width: '640px' });"
+  >
+    <div class="demo-row">
+      <l-button variant="outlined" (click)="openSized('360px')">360px</l-button>
+      <l-button variant="outlined" (click)="openSized('640px')">640px</l-button>
+      <l-button variant="outlined" (click)="openSized('80vw')">80vw</l-button>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Backdrop & close behavior"
+    description="Hide the dimmed backdrop, or disable closing on backdrop click / Esc so the user must act."
+    code="this.modal.open(tpl, { backdrop: false });
+this.modal.open(tpl, { disableClose: true });"
+  >
+    <div class="demo-row">
+      <l-button variant="outlined" (click)="openNoBackdrop()">No backdrop</l-button>
+      <l-button variant="outlined" (click)="openDisableClose()">Disable close</l-button>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Confirm dialog (component content)"
+    description="Open the ConfirmDialog component; afterClosed() resolves to true (confirmed) or false (cancelled)."
+    code="const ref = this.modal.open(ConfirmDialog, {
+  data: { title: 'Delete project?', message: '…' },
+});
+ref.afterClosed().subscribe((ok) => …);"
+  >
+    <div class="demo-col">
+      <l-button variant="danger" (click)="openConfirm()">Delete project…</l-button>
+      <p class="demo-readout">Last result: {{ lastResult() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Async confirm"
+    description="Pass onConfirm returning an Observable — the dialog shows a loading state and only closes once it resolves."
+    code="this.modal.open(ConfirmDialog, {
+  data: {
+    title: 'Save changes?',
+    confirmText: 'Save',
+    confirmVariant: 'primary',
+    onConfirm: () => this.api.save(),
+  },
+});"
+  >
+    <div class="demo-col">
+      <l-button variant="primary" (click)="openAsyncConfirm()">Save changes…</l-button>
+      <p class="demo-readout">Last result: {{ lastResult() }}</p>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="ModalService (ModalConfig)"
+    note="Service-based — inject ModalService and call open(component | template, config); it returns a ModalRef. Component content reads data through the MODAL_DATA injection token; template content receives it on the template context."
+    inputsTitle="ModalConfig options"
+    [inputs]="apiConfig"
+  />
+
+  <app-api-table
+    component="ModalService / ModalRef"
+    note="Public methods on the service and on the ModalRef handle returned by open()."
+    inputsTitle="Methods"
+    [inputs]="apiMethods"
+    [outputs]="apiOutputs"
+  />
+</div>
+
+<ng-template #demoTpl let-data let-ref="modalRef">
+  <div class="modal-demo">
+    <h2 class="modal-demo__title">{{ data?.title || 'Hello from LumenUI' }}</h2>
+    <p class="modal-demo__body">{{ data?.body || 'A simple modal panel.' }}</p>
+    <div class="modal-demo__actions">
+      <l-button variant="primary" (click)="ref.close()">Got it</l-button>
+    </div>
+  </div>
+</ng-template>

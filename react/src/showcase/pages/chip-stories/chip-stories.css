@@ -1,0 +1,30 @@
+/* Inline code chips in the page lead (page-specific; the shared header rules
+   live in src/showcase/story-page.css). */
+.story-page .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* Scoped under .chip-stories: other pages define .demo-row with a wider gap. */
+.chip-stories .demo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.chip-stories .demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.chip-stories .demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}

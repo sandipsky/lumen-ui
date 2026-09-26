@@ -1,0 +1,79 @@
+<header class="page-header">
+  <h1 class="page-header__title">Chip</h1>
+  <p class="page-header__lead">
+    A pill-shaped label for statuses, tags and filters. Tinted per
+    <code>variant</code>, with an optional leading status <code>dot</code> and an optional remove
+    button (<code>[removable]</code> + <code>(removed)</code>) for dismissible tags.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Variants"
+    description="Seven tints: default, primary, success, error, warn, info and premium."
+    code='<l-chip>default</l-chip>
+<l-chip variant="success">success</l-chip>
+<l-chip variant="error">error</l-chip>'
+  >
+    <div class="demo-row">
+      @for (variant of variants; track variant) {
+        <l-chip [variant]="variant">{{ variant }}</l-chip>
+      }
+    </div>
+  </app-story>
+
+  <app-story
+    title="Status dot"
+    description="[dot] adds a leading dot in the variant color — handy for live statuses."
+    code='<l-chip variant="success" [dot]="true">Active</l-chip>
+<l-chip variant="error" [dot]="true">Failed</l-chip>'
+  >
+    <div class="demo-row">
+      <l-chip [dot]="true">Draft</l-chip>
+      <l-chip variant="success" [dot]="true">Active</l-chip>
+      <l-chip variant="warn" [dot]="true">Pending</l-chip>
+      <l-chip variant="error" [dot]="true">Failed</l-chip>
+      <l-chip variant="info" [dot]="true">Syncing</l-chip>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Sizes"
+    description="sm, md (default) and lg."
+    code='<l-chip size="sm">Small</l-chip>
+<l-chip>Medium</l-chip>
+<l-chip size="lg">Large</l-chip>'
+  >
+    <div class="demo-row">
+      <l-chip variant="primary" size="sm">Small</l-chip>
+      <l-chip variant="primary">Medium</l-chip>
+      <l-chip variant="primary" size="lg">Large</l-chip>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Removable"
+    description="[removable] shows a close button; (removed) fires and the consumer drops the chip."
+    [code]="removableCode"
+  >
+    <div class="demo-col">
+      <div class="demo-row">
+        @for (tag of tags(); track tag) {
+          <l-chip [removable]="true" [removeLabel]="'Remove ' + tag" (removed)="remove(tag)">
+            {{ tag }}
+          </l-chip>
+        } @empty {
+          <p class="demo-readout">All tags removed.</p>
+        }
+      </div>
+      <l-button variant="outlined" size="sm" (click)="reset()">Reset</l-button>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-chip"
+    note="Content is projected — anything between the tags becomes the label. Variant colors resolve into the --l-chip-bg / --l-chip-color custom properties, so a theme can restyle chips by overriding that pair."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

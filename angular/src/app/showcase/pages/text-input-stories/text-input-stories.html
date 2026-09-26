@@ -1,0 +1,92 @@
+<header class="page-header">
+  <h1 class="page-header__title">Text Input</h1>
+  <p class="page-header__lead">
+    Single-line text field built on the shared <code>BaseInput</code>. Works with
+    <code>[(ngModel)]</code> and reactive forms, and emits the native input events.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Label and placeholder."
+    code='<l-text-input label="Full name" placeholder="Jane Doe" />'
+  >
+    <l-text-input label="Full name" placeholder="Jane Doe" />
+  </app-story>
+
+  <app-story
+    title="Two-way binding — ngModel"
+    description="Bind the value with [(ngModel)]."
+    code='<l-text-input label="Email" placeholder="you@example.com" [(ngModel)]="value" />'
+  >
+    <div class="demo-col">
+      <l-text-input label="Email" placeholder="you@example.com" [(ngModel)]="ngModelValue" />
+      <p class="demo-readout">Value: {{ ngModelValue() || '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Reactive forms — formControl"
+    description="Bind a FormControl directly."
+    code='nameControl = new FormControl("");
+
+<l-text-input label="Name" [formControl]="nameControl" />'
+  >
+    <div class="demo-col">
+      <l-text-input label="Name" placeholder="Type something" [formControl]="nameControl" />
+      <p class="demo-readout">Control value: {{ nameControl.value || '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Disable via input, or automatically when a disabled FormControl is bound."
+    code='<l-text-input label="Disabled" placeholder="Can&apos;t type here" [disabled]="true" />'
+  >
+    <l-text-input label="Disabled" placeholder="Can't type here" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="Events"
+    description="Outputs: input, change, keyup, keydown, keypress, enter."
+    code='<l-text-input
+  label="Search"
+  (input)="onInput($event)"
+  (enter)="onEnter($event)"
+/>'
+  >
+    <div class="demo-col">
+      <l-text-input
+        label="Search"
+        placeholder="Type, then press Enter"
+        (input)="lastEvent.set('input')"
+        (change)="lastEvent.set('change')"
+        (keyup)="lastEvent.set('keyup')"
+        (keydown)="lastEvent.set('keydown')"
+        (keypress)="lastEvent.set('keypress')"
+        (enter)="lastEvent.set('enter ⏎')"
+      />
+      <p class="demo-readout">Last event: {{ lastEvent() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description="viewMode renders the value as plain text — no input container. viewValue overrides what is displayed."
+    code='<l-text-input label="Full name" [ngModel]="&apos;Jane Doe&apos;" [viewMode]="true" />
+<l-text-input label="Nickname" [ngModel]="&apos;Jane Doe&apos;" [viewMode]="true" viewValue="Janie" />'
+  >
+    <div class="demo-col">
+      <l-text-input label="Full name" [ngModel]="'Jane Doe'" [viewMode]="true" />
+      <l-text-input label="Nickname" [ngModel]="'Jane Doe'" [viewMode]="true" viewValue="Janie" />
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-text-input"
+    note="Works with [(ngModel)] and reactive forms — the bound value is a string."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

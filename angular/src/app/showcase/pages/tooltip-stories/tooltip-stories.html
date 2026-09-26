@@ -1,0 +1,115 @@
+<header class="page-header">
+  <h1 class="page-header__title">Tooltip</h1>
+  <p class="page-header__lead">
+    A text hint that floats beside any element, inspired by Ant Design's <code>Tooltip</code>. Apply
+    the <code>[lTooltip]</code> directive to a target; it shows on hover and keyboard focus (or
+    <code>click</code>), renders in a fixed layer that escapes ancestor <code>overflow</code>
+    clipping, flips when it would overflow the viewport, and points an arrow at the trigger. Twelve
+    placements, custom color, open/close delays, and Esc-to-dismiss are built in.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Hover or tab to the button. Shows on hover and focus by default."
+    code='<button [lTooltip]=""Delete item"">🗑 Delete</button>'
+  >
+    <l-button lTooltip="Delete item" variant="outlined">Hover me</l-button>
+  </app-story>
+
+  <app-story
+    title="Placements"
+    description="Twelve placements: each side plus start / center / end alignment."
+    code='<button lTooltip="Tooltip" lTooltipPlacement="top">Top</button>
+<button lTooltip="Tooltip" lTooltipPlacement="bottomLeft">Bottom left</button>'
+  >
+    <div class="placement-grid">
+      <l-button lTooltip="topLeft" lTooltipPlacement="topLeft" variant="outlined">TL</l-button>
+      <l-button lTooltip="top" lTooltipPlacement="top" variant="outlined">Top</l-button>
+      <l-button lTooltip="topRight" lTooltipPlacement="topRight" variant="outlined">TR</l-button>
+
+      <l-button lTooltip="leftTop" lTooltipPlacement="leftTop" variant="outlined">LT</l-button>
+      <span class="placement-spacer"></span>
+      <l-button lTooltip="rightTop" lTooltipPlacement="rightTop" variant="outlined">RT</l-button>
+
+      <l-button lTooltip="left" lTooltipPlacement="left" variant="outlined">Left</l-button>
+      <span class="placement-spacer"></span>
+      <l-button lTooltip="right" lTooltipPlacement="right" variant="outlined">Right</l-button>
+
+      <l-button lTooltip="leftBottom" lTooltipPlacement="leftBottom" variant="outlined"
+        >LB</l-button
+      >
+      <span class="placement-spacer"></span>
+      <l-button lTooltip="rightBottom" lTooltipPlacement="rightBottom" variant="outlined"
+        >RB</l-button
+      >
+
+      <l-button lTooltip="bottomLeft" lTooltipPlacement="bottomLeft" variant="outlined"
+        >BL</l-button
+      >
+      <l-button lTooltip="bottom" lTooltipPlacement="bottom" variant="outlined">Bottom</l-button>
+      <l-button lTooltip="bottomRight" lTooltipPlacement="bottomRight" variant="outlined"
+        >BR</l-button
+      >
+    </div>
+  </app-story>
+
+  <app-story
+    title="Click trigger"
+    description='lTooltipTrigger="click" toggles on click; click elsewhere or press Esc to dismiss.'
+    code='<button lTooltip="Copied!" lTooltipTrigger="click">Copy link</button>'
+  >
+    <l-button lTooltip="Copied to clipboard!" lTooltipTrigger="click">Click me</l-button>
+  </app-story>
+
+  <app-story
+    title="Custom color"
+    description="lTooltipColor accepts any CSS color or token."
+    code='<button lTooltip="Danger zone" lTooltipColor="var(--error)">Delete</button>'
+  >
+    <div class="demo-row">
+      <l-button lTooltip="Looks good" lTooltipColor="var(--success)" variant="outlined">
+        Success
+      </l-button>
+      <l-button lTooltip="Danger zone" lTooltipColor="var(--error)" variant="outlined">
+        Error
+      </l-button>
+      <l-button lTooltip="Heads up" lTooltipColor="var(--warn)" variant="outlined">Warn</l-button>
+    </div>
+  </app-story>
+
+  <app-story
+    title="No arrow / long text"
+    description="[lTooltipArrow]=false hides the arrow; text wraps at lTooltipMaxWidth (default 240px)."
+    code='<span [lTooltipArrow]="false" lTooltip="A longer hint…">Info</span>'
+  >
+    <l-button
+      lTooltip="Tooltips wrap onto multiple lines once they reach their max width, keeping long hints readable."
+      [lTooltipArrow]="false"
+      variant="outlined"
+    >
+      Long tooltip
+    </l-button>
+  </app-story>
+
+  <app-story
+    title="On plain text"
+    description="The directive works on any element, not just buttons."
+    code='<span lTooltip="I am a hint">underlined term</span>'
+  >
+    <p class="demo-text">
+      Hover the
+      <span class="term" lTooltip="An abbreviation shown on hover" lTooltipPlacement="top">
+        abbr.
+      </span>
+      to see its meaning.
+    </p>
+  </app-story>
+
+  <app-api-table
+    component="[lTooltip]"
+    note="Attribute directive — apply [lTooltip] to any element. The bubble renders in a body-level fixed layer, so it escapes ancestor overflow clipping, flips when it would overflow the viewport, and dismisses on Esc. No outputs."
+    [inputs]="apiInputs"
+  />
+</div>

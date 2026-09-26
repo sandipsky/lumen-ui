@@ -1,0 +1,40 @@
+/* Inline code chips in the page lead (page-specific; the shared header rules
+   live in src/showcase/story-page.css). */
+.stepper-stories .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.stepper-stories .demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.stepper-stories .demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.stepper-stories .demo-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.stepper-stories .form-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+  padding: 20px;
+  border: 1px solid var(--separator);
+  border-radius: 12px;
+  background: var(--bg-lightest);
+}

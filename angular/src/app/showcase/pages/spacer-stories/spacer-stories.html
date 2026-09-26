@@ -1,0 +1,77 @@
+<header class="page-header">
+  <h1 class="page-header__title">Spacer</h1>
+  <p class="page-header__lead">
+    Empty block that adds fixed space between elements — inspired by Mantine's Space. Use
+    <code>h</code> for vertical gaps and <code>w</code> for horizontal ones; it never shrinks inside
+    flex layouts.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Vertical"
+    description="Push siblings apart in a stack with h."
+    code='<div class="box">First</div>
+<l-spacer h="md" />
+<div class="box">Second</div>'
+  >
+    <div class="spacer-demo-col">
+      <div class="spacer-demo-box">First</div>
+      <l-spacer h="md" />
+      <div class="spacer-demo-box">Second</div>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Horizontal"
+    description="Separate items in a row with w."
+    code='<l-flex align="center">
+  <l-button>Save</l-button>
+  <l-spacer [w]="24" />
+  <l-button variant="outlined">Cancel</l-button>
+</l-flex>'
+  >
+    <l-flex align="center">
+      <l-button>Save</l-button>
+      <l-spacer [w]="24" />
+      <l-button variant="outlined">Cancel</l-button>
+    </l-flex>
+  </app-story>
+
+  <app-story
+    title="Preset sizes"
+    description="The five presets — xs 4px, sm 8px, md 16px, lg 24px, xl 32px."
+    code='<l-spacer h="xs" /> … <l-spacer h="xl" />'
+  >
+    <div class="spacer-demo-col">
+      @for (size of presets; track size) {
+        <div class="spacer-demo-row">
+          <span class="spacer-demo-label">{{ size }}</span>
+          <l-spacer [w]="size" class="spacer-demo-visual" />
+        </div>
+      }
+    </div>
+  </app-story>
+
+  <app-story
+    title="Custom sizes"
+    description="A number is pixels; any CSS size string also works."
+    code='<l-spacer [h]="40" />
+<l-spacer h="3rem" />'
+  >
+    <div class="spacer-demo-col">
+      <div class="spacer-demo-box">40px below</div>
+      <l-spacer [h]="40" />
+      <div class="spacer-demo-box">3rem below</div>
+      <l-spacer h="3rem" />
+      <div class="spacer-demo-box">End</div>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-spacer"
+    note="Renders an empty aria-hidden block with the given width/height and flex-shrink: 0. For repeated equal gaps prefer l-flex's gap; reach for l-spacer when a single one-off space is clearer."
+    [inputs]="apiInputs"
+    [outputs]="[]"
+  />
+</div>

@@ -1,0 +1,16 @@
+.story-page .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* Scoped under .tabs-stories — .demo-col recurs on other story pages with
+   different values, and stylesheets are global in this app. */
+.tabs-stories .demo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}

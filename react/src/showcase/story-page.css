@@ -1,0 +1,32 @@
+/* Shared layout for every *-stories page. In the Angular source these rules were
+   repeated per page under :host view encapsulation; here they live once, globally.
+   A story page's root element carries `.story-page`. */
+
+.story-page {
+  display: block;
+  max-width: 880px;
+}
+
+.story-page .page-header {
+  margin-bottom: 32px;
+}
+
+.story-page .page-header__title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.story-page .page-header__lead {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--text-secondary);
+}
+
+.story-page .stories {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}

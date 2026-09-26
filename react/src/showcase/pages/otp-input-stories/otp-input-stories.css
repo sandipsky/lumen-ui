@@ -1,0 +1,18 @@
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.demo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}

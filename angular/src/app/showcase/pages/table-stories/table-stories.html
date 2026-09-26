@@ -1,0 +1,90 @@
+<header class="page-header">
+  <h1 class="page-header__title">Table</h1>
+  <p class="page-header__lead">
+    A data table styled from the app's <code>_table.scss</code>, with click-to-sort column headers
+    that cycle ascending → descending → unsorted. Cells render <code>row[key]</code> by default, or
+    a custom <code>&lt;ng-template lTableCell="key"&gt;</code>. Sort <strong>locally</strong> (the
+    table reorders <code>data</code>) or let the <strong>server</strong> sort (<code
+      >[serverSort]="true"</code
+    >
+    — the table only emits <code>(sortChange)</code> and you pass sorted data back).
+    <code>sort</code> is a two-way <code>model</code>.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Local sorting"
+    description="Click Name / Role / Signups / Status headers to sort in place. A custom template renders the Status column as a colored pill."
+    code='columns = [
+  { key: &apos;name&apos;, header: &apos;Name&apos;, sortable: true },
+  { key: &apos;signups&apos;, header: &apos;Signups&apos;, sortable: true, align: &apos;right&apos; },
+  …
+];
+
+<l-table [columns]="columns" [data]="users" [(sort)]="sort">
+  <ng-template lTableCell="status" let-value="value">
+    <span class="status" [class]="value"><span class="circle"></span> … </span>
+  </ng-template>
+</l-table>'
+  >
+    <l-table [columns]="columns" [data]="localData" [(sort)]="localSort">
+      <ng-template lTableCell="status" let-value="value">
+        <span class="status" [class]="value">
+          <span class="circle"></span>
+          {{ statusLabel[value] }}
+        </span>
+      </ng-template>
+    </l-table>
+  </app-story>
+
+  <app-story
+    title="Server-side sorting"
+    description="[serverSort]=true. The header cycles and (sortChange) fires; here a fake API sorts after a 700ms delay while a loading overlay shows."
+    code='<l-table
+  [columns]="columns"
+  [data]="serverData()"
+  [serverSort]="true"
+  [loading]="loading()"
+  [(sort)]="serverSort"
+  (sortChange)="fetch($event)"
+/>'
+  >
+    <l-table
+      [columns]="columns"
+      [data]="serverData()"
+      [serverSort]="true"
+      [loading]="loading()"
+      [(sort)]="serverSort"
+      (sortChange)="_fetch($event)"
+    >
+      <ng-template lTableCell="status" let-value="value">
+        <span class="status" [class]="value">
+          <span class="circle"></span>
+          {{ statusLabel[value] }}
+        </span>
+      </ng-template>
+    </l-table>
+  </app-story>
+
+  <app-story
+    title="Empty state"
+    description="With no rows, the header stays and the no-data message shows."
+    code='<l-table [columns]="columns" [data]="[]" emptyText="No users found" />'
+  >
+    <l-table [columns]="columns" [data]="[]" emptyText="No users found" />
+  </app-story>
+
+  <app-api-table
+    component="l-table"
+    note="TableColumn = { key, header, sortable?, align?, width? } — key is the property read from each row and the sort key. Header clicks cycle ascending → descending → unsorted. TableSort = { key, direction }."
+    [inputs]="tableApiInputs"
+    [outputs]="tableApiOutputs"
+  />
+
+  <app-api-table
+    component="ng-template[lTableCell]"
+    note="Marks an ng-template as the custom cell renderer for a column. The template context exposes the row ($implicit / row), the cell value, the column and the row index."
+    [inputs]="cellApiInputs"
+  />
+</div>

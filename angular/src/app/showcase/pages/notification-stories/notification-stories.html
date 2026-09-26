@@ -1,0 +1,117 @@
+<header class="page-header">
+  <h1 class="page-header__title">Notification</h1>
+  <p class="page-header__lead">
+    Imperative toasts opened through <code>NotificationService</code>, mirroring
+    <code>ModalService</code>. Four types (<code>success</code>, <code>info</code>,
+    <code>warn</code>, <code>error</code>), six positions, an auto-dismiss
+    <code>duration</code> with an optional shrinking <code>showProgress</code> bar that
+    <code>pauseOnHover</code> freezes, plus <code>showClose</code> and
+    <code>withIcon</code> toggles. Tune the options below, then fire one.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Playground"
+    description="Adjust the options, pick a position, then fire a notification of each type."
+    code="private notify = inject(NotificationService);
+
+this.notify.success('Changes saved', 'Your profile has been updated.');
+this.notify.show({
+  type: 'info',
+  title: 'Heads up',
+  message: '…',
+  position: 'topRight',
+  duration: 4000,
+  pauseOnHover: true,
+  showProgress: true,
+  showClose: true,
+  withIcon: true,
+});"
+  >
+    <div class="playground">
+      <div class="control-group">
+        <span class="control-group__label">Position</span>
+        <div class="control-grid">
+          @for (pos of positions; track pos) {
+            <l-button
+              [variant]="position() === pos ? 'primary' : 'outlined'"
+              (click)="setPosition(pos)"
+            >
+              {{ pos }}
+            </l-button>
+          }
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-group__label">Duration</span>
+        <div class="demo-row">
+          <l-button
+            [variant]="duration() === 2000 ? 'primary' : 'outlined'"
+            (click)="duration.set(2000)"
+            >2s</l-button
+          >
+          <l-button
+            [variant]="duration() === 4000 ? 'primary' : 'outlined'"
+            (click)="duration.set(4000)"
+            >4s</l-button
+          >
+          <l-button [variant]="duration() === 0 ? 'primary' : 'outlined'" (click)="duration.set(0)"
+            >Persist</l-button
+          >
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-group__label">Options</span>
+        <div class="demo-row demo-row--wrap">
+          <l-toggle
+            label="Pause on hover"
+            [ngModel]="pauseOnHover()"
+            (ngModelChange)="pauseOnHover.set($event)"
+          />
+          <l-toggle
+            label="Show progress"
+            [ngModel]="showProgress()"
+            (ngModelChange)="showProgress.set($event)"
+          />
+          <l-toggle
+            label="Show close"
+            [ngModel]="showClose()"
+            (ngModelChange)="showClose.set($event)"
+          />
+          <l-toggle
+            label="With icon"
+            [ngModel]="withIcon()"
+            (ngModelChange)="withIcon.set($event)"
+          />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-group__label">Fire</span>
+        <div class="demo-row">
+          @for (type of types; track type) {
+            <l-button variant="outlined" (click)="fire(type)">{{ type }}</l-button>
+          }
+          <l-button variant="secondary" (click)="clearAll()">Clear all</l-button>
+        </div>
+      </div>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="NotificationService (NotificationOptions)"
+    note="Service-based — inject NotificationService and call show(options) or a type shortcut (success / error / warn / info); every call returns a NotificationRef. Options merge over the defaults shown below."
+    inputsTitle="NotificationOptions"
+    [inputs]="apiOptions"
+  />
+
+  <app-api-table
+    component="NotificationService / NotificationRef"
+    note="Public methods on the service and on the NotificationRef handle returned by every call."
+    inputsTitle="Methods"
+    [inputs]="apiMethods"
+  />
+</div>

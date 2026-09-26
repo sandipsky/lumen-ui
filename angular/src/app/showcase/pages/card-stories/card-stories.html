@@ -1,0 +1,98 @@
+<header class="page-header">
+  <h1 class="page-header__title">Card</h1>
+  <p class="page-header__lead">
+    A surface container for grouping related content — the shared page-section style as a component.
+    Optional <code>title</code>/<code>[card-extra]</code> header and
+    <code>[card-footer]</code> slots, with <code>padding</code>, <code>shadow</code>,
+    <code>bordered</code> and <code>hoverable</code> presentation inputs.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Projected content renders in the card body."
+    code="<l-card>
+  Any content goes here.
+</l-card>"
+  >
+    <l-card class="demo-card">
+      A plain card — 12px padding, 12px radius, 1px separator border on the lightest background.
+    </l-card>
+  </app-story>
+
+  <app-story
+    title="Header and footer"
+    description="title renders a header (left), [card-extra] sits on its right, [card-footer] gets a top divider."
+    code='<l-card title="Project settings">
+  <l-button card-extra variant="ghost" size="sm">Edit</l-button>
+  Body content.
+  <span card-footer>Updated 2 days ago</span>
+</l-card>'
+  >
+    <l-card class="demo-card" title="Project settings">
+      <l-button card-extra variant="ghost" size="sm">Edit</l-button>
+      Configure the project name, visibility and default branch. The header and footer are separated
+      from the body by full-width dividers.
+      <span card-footer>Updated 2 days ago</span>
+    </l-card>
+  </app-story>
+
+  <app-story
+    title="Variants"
+    description="default sits on the lightest background; dark uses the darker section tint."
+    code='<l-card title="Default">...</l-card>
+<l-card variant="dark" title="Dark">...</l-card>'
+  >
+    <div class="demo-grid">
+      <l-card title="Default">Lightest surface (--bg-lightest).</l-card>
+      <l-card variant="dark" title="Dark">Darker surface (--bg-light).</l-card>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Padding"
+    description="none, sm, md (default) and lg — applied to each region so dividers stay full-width."
+    code='<l-card padding="none">...</l-card>
+<l-card padding="lg">...</l-card>'
+  >
+    <div class="demo-grid">
+      @for (padding of paddings; track padding) {
+        <l-card [padding]="padding" [title]="'padding=' + padding">Body content.</l-card>
+      }
+    </div>
+  </app-story>
+
+  <app-story
+    title="Shadow"
+    description="Four elevations, from flat (none, the default) to lg."
+    code='<l-card shadow="sm">...</l-card>
+<l-card shadow="lg" [bordered]="false">...</l-card>'
+  >
+    <div class="demo-grid">
+      @for (shadow of shadows; track shadow) {
+        <l-card [shadow]="shadow" [title]="'shadow=' + shadow">Body content.</l-card>
+      }
+    </div>
+  </app-story>
+
+  <app-story
+    title="Hoverable"
+    description="[hoverable] lifts the card on hover — pair it with (click) for clickable cards."
+    [code]="hoverableCode"
+  >
+    <div class="demo-grid">
+      <l-card [hoverable]="true" title="Quarterly report" (click)="clicks.set(clicks() + 1)">
+        <l-chip card-extra variant="success" [dot]="true">Ready</l-chip>
+        Click anywhere on the card to open it.
+        <span card-footer>Opened {{ clicks() }} time{{ clicks() === 1 ? '' : 's' }}</span>
+      </l-card>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-card"
+    note="Un-slotted content becomes the card body. Region padding resolves into the --l-card-pad custom property, so a theme can restyle spacing by overriding it."
+    [inputs]="apiInputs"
+  />
+</div>

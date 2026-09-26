@@ -1,0 +1,66 @@
+<header class="page-header">
+  <h1 class="page-header__title">Email Input</h1>
+  <p class="page-header__lead">
+    Email field built on the shared <code>BaseInput</code>, with a mail icon and built-in
+    email-format validation (exposed via <code>NG_VALIDATORS</code> and an inline message).
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Type an invalid address and blur to see the inline error."
+    code='<l-email-input label="Email" placeholder="you@example.com" />'
+  >
+    <l-email-input label="Email" placeholder="you@example.com" />
+  </app-story>
+
+  <app-story
+    title="Two-way binding — ngModel"
+    description="Bind the value with [(ngModel)]."
+    code='<l-email-input label="Email" [(ngModel)]="value" />'
+  >
+    <div class="demo-col">
+      <l-email-input label="Email" placeholder="you@example.com" [(ngModel)]="ngModelValue" />
+      <p class="demo-readout">Value: {{ ngModelValue() || '—' }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Reactive forms — validity"
+    description="The bound FormControl reflects the email + required errors."
+    code='emailControl = new FormControl("", [Validators.required]);
+
+<l-email-input label="Email" [formControl]="emailControl" />'
+  >
+    <div class="demo-col">
+      <l-email-input label="Email" placeholder="you@example.com" [formControl]="emailControl" />
+      <p class="demo-readout">
+        valid: {{ emailControl.valid }} · errors: {{ (emailControl.errors | json) ?? 'null' }}
+      </p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Non-interactive state."
+    code='<l-email-input label="Email" [disabled]="true" />'
+  >
+    <l-email-input label="Email" placeholder="you@example.com" [disabled]="true" />
+  </app-story>
+
+  <app-story
+    title="View mode"
+    description="viewMode renders the value as plain text — no input container."
+    code="<l-email-input label='Email' ngModel='jane@example.com' [viewMode]='true' />"
+  >
+    <l-email-input label="Email" ngModel="jane@example.com" [viewMode]="true" />
+  </app-story>
+
+  <app-api-table
+    component="l-email-input"
+    note="Works with [(ngModel)] and reactive forms — the bound value is a string. Also registers as a validator (NG_VALIDATORS): an invalid address adds an email error to the bound control and shows an inline message once the field is touched."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

@@ -1,0 +1,80 @@
+<header class="page-header">
+  <h1 class="page-header__title">Button</h1>
+  <p class="page-header__lead">
+    Clickable action element. Configurable by variant, size, width, rounded and disabled state.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Variants"
+    description="primary, secondary, outlined, outlined-primary, danger and ghost."
+    code='<l-button variant="primary">Primary</l-button>
+<l-button variant="secondary">Secondary</l-button>
+<l-button variant="outlined">Outlined</l-button>
+<l-button variant="outlined-primary">Outlined Primary</l-button>
+<l-button variant="danger">Danger</l-button>
+<l-button variant="ghost">Ghost</l-button>'
+  >
+    <l-button variant="primary">Primary</l-button>
+    <l-button variant="secondary">Secondary</l-button>
+    <l-button variant="outlined">Outlined</l-button>
+    <l-button variant="outlined-primary">Outlined Primary</l-button>
+    <l-button variant="danger">Danger</l-button>
+    <l-button variant="ghost">Ghost</l-button>
+  </app-story>
+
+  <app-story
+    title="Sizes"
+    description="sm (4×8), md (6×12, default) and lg (8×16)."
+    code='<l-button size="sm">Small</l-button>
+<l-button size="md">Medium</l-button>
+<l-button size="lg">Large</l-button>'
+  >
+    <l-button size="sm">Small</l-button>
+    <l-button size="md">Medium</l-button>
+    <l-button size="lg">Large</l-button>
+  </app-story>
+
+  <app-story
+    title="Width"
+    description="auto fits content (default); full fills the parent."
+    code='<l-button width="auto">Auto (fits content)</l-button>
+<l-button width="full">Full width</l-button>'
+  >
+    <div class="width-demo">
+      <l-button width="auto">Auto (fits content)</l-button>
+      <l-button width="full">Full width</l-button>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Rounded"
+    description="Circular icon button with size-matched dimensions."
+    code='<l-button size="sm" [rounded]="true">+</l-button>
+<l-button size="md" [rounded]="true">+</l-button>
+<l-button size="lg" [rounded]="true">+</l-button>
+<l-button variant="outlined" [rounded]="true">×</l-button>'
+  >
+    <l-button size="sm" [rounded]="true">+</l-button>
+    <l-button size="md" [rounded]="true">+</l-button>
+    <l-button size="lg" [rounded]="true">+</l-button>
+    <l-button variant="outlined" [rounded]="true">×</l-button>
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="Non-interactive state across variants."
+    code='<l-button variant="primary" [disabled]="true">Primary</l-button>
+<l-button variant="outlined" [disabled]="true">Outlined</l-button>'
+  >
+    <l-button variant="primary" [disabled]="true">Primary</l-button>
+    <l-button variant="outlined" [disabled]="true">Outlined</l-button>
+  </app-story>
+
+  <app-api-table
+    component="l-button"
+    note="Wraps a native button element — no outputs; listen with the regular (click) binding on the host. The label and any icons are projected via ng-content."
+    [inputs]="apiInputs"
+  />
+</div>

@@ -1,0 +1,77 @@
+<header class="page-header">
+  <h1 class="page-header__title">Icon</h1>
+  <p class="page-header__lead">
+    Inline SVG icon fed by the files in <code>public/svg/</code>. Hardcoded fills and strokes are
+    rebound to <code>currentColor</code>, so icons tint via the <code>color</code> input —
+    defaulting to <code>var(--text-tertiary)</code> (#646663), the gray they were drawn with.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Default 20px in the default gray (var(--text-tertiary))."
+    code='<l-icon name="user" />'
+  >
+    <l-icon name="user" />
+  </app-story>
+
+  <app-story
+    title="Size"
+    description="A number is pixels; any CSS size string also works."
+    code='<l-icon name="settings" [size]="16" />
+<l-icon name="settings" />
+<l-icon name="settings" [size]="32" />
+<l-icon name="settings" size="3rem" />'
+  >
+    <div class="icon-row">
+      <l-icon name="settings" [size]="16" />
+      <l-icon name="settings" />
+      <l-icon name="settings" [size]="32" />
+      <l-icon name="settings" size="3rem" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="Color"
+    description='Any CSS color or design token; color="inherit" follows the surrounding text color.'
+    code='<l-icon name="notification" color="var(--accent)" />
+<l-icon name="trash" color="var(--error)" />
+<l-icon name="lock" color="var(--warn)" />
+<span style="color: var(--info)">
+  <l-icon name="download" color="inherit" /> inherits
+</span>'
+  >
+    <div class="icon-row">
+      <l-icon name="notification" color="var(--accent)" />
+      <l-icon name="trash" color="var(--error)" />
+      <l-icon name="lock" color="var(--warn)" />
+      <span class="icon-inherit-demo" style="color: var(--info)">
+        <l-icon name="download" color="inherit" /> inherits
+      </span>
+    </div>
+  </app-story>
+
+  <app-story
+    title="All icons"
+    description="Every file in public/svg/ ({{
+      iconNames.length
+    }}) — the name input is the file name."
+    code='<l-icon name="dashboard" />'
+  >
+    <div class="icon-gallery">
+      @for (name of iconNames; track name) {
+        <div class="icon-gallery__cell" [title]="name">
+          <l-icon [name]="name" [size]="24" />
+          <span class="icon-gallery__name">{{ name }}</span>
+        </div>
+      }
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="l-icon"
+    note="Renders the svg inline inside the host element (aria-hidden by default). Dropping a new .svg file into public/svg/ makes it available immediately; L_ICON_NAMES exports the full sorted list of bundled names."
+    [inputs]="apiInputs"
+  />
+</div>

@@ -1,0 +1,59 @@
+/* Page-specific rules for the modal story page, scoped under the extra
+   `.modal-stories` root class (page CSS is global in the React port). */
+
+.modal-stories .page-header__lead code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: var(--bg-dark);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.modal-stories .demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.modal-stories .demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.modal-stories .demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Content rendered into the demo modal panel (the panel itself has no padding).
+   NOT scoped under .modal-stories — the modal portals into document.body. */
+.modal-demo {
+  width: 420px;
+  max-width: 100%;
+  padding: 24px;
+}
+
+.modal-demo__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--text-primary);
+}
+
+.modal-demo__body {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+
+.modal-demo__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

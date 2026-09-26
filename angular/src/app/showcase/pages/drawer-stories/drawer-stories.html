@@ -1,0 +1,85 @@
+<header class="page-header">
+  <h1 class="page-header__title">Drawer</h1>
+  <p class="page-header__lead">
+    An imperative, edge-anchored overlay opened through <code>DrawerService</code>. Dock it to the
+    <code>left</code>, <code>right</code>, or <code>bottom</code>; the slide animation follows the
+    position (left slides in to the right and out to the left, and so on). Open either an
+    <code>&lt;ng-template&gt;</code> or a component, get a <code>DrawerRef</code> back (<code
+      >close()</code
+    >
+    / <code>afterClosed()</code> / <code>componentInstance</code>). Backdrop click and
+    <code>Esc</code> close by default and body scroll is locked while open.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Positions"
+    description="left, right (default) and bottom. Each enters from its edge and reverses on close."
+    code='private drawer = inject(DrawerService);
+
+open() {
+  this.drawer.open(this.demoTpl(), { position: &apos;left&apos; });
+}
+
+<ng-template #demoTpl let-data let-ref="drawerRef">
+  <h2 [textContent]="data.title"></h2>
+  <l-button (click)="ref.close()">Close</l-button>
+</ng-template>'
+  >
+    <div class="demo-row">
+      @for (pos of positions; track pos) {
+        <l-button variant="secondary" (click)="openPosition(pos)">{{ pos }}</l-button>
+      }
+    </div>
+  </app-story>
+
+  <app-story
+    title="Sizing"
+    description="size sets the panel's sliding-axis extent — width for left/right, height for bottom."
+    code="this.drawer.open(tpl, { position: 'right', size: '480px' });"
+  >
+    <div class="demo-row">
+      <l-button variant="outlined" (click)="openSized('320px')">320px</l-button>
+      <l-button variant="outlined" (click)="openSized('480px')">480px</l-button>
+      <l-button variant="outlined" (click)="openSized('30vw')">30vw</l-button>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Backdrop & close behavior"
+    description="Hide the dimmed backdrop, or disable closing on backdrop click / Esc so the user must act."
+    code="this.drawer.open(tpl, { backdrop: false });
+this.drawer.open(tpl, { disableClose: true });"
+  >
+    <div class="demo-row">
+      <l-button variant="outlined" (click)="openNoBackdrop()">No backdrop</l-button>
+      <l-button variant="outlined" (click)="openDisableClose()">Disable close</l-button>
+    </div>
+  </app-story>
+
+  <app-api-table
+    component="DrawerService (DrawerConfig)"
+    note="Service-based — inject DrawerService and call open(component | template, config); it returns a DrawerRef. Component content reads data through the DRAWER_DATA injection token; template content receives it on the template context."
+    inputsTitle="DrawerConfig options"
+    [inputs]="apiConfig"
+  />
+
+  <app-api-table
+    component="DrawerService / DrawerRef"
+    note="Public methods on the service and on the DrawerRef handle returned by open()."
+    inputsTitle="Methods"
+    [inputs]="apiMethods"
+    [outputs]="apiOutputs"
+  />
+</div>
+
+<ng-template #demoTpl let-data let-ref="drawerRef">
+  <div class="drawer-demo">
+    <h2 class="drawer-demo__title">{{ data?.title || 'Hello from LumenUI' }}</h2>
+    <p class="drawer-demo__body">{{ data?.body || 'A simple drawer panel.' }}</p>
+    <div class="drawer-demo__actions">
+      <l-button variant="primary" (click)="ref.close()">Close</l-button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,99 @@
+<header class="page-header">
+  <h1 class="page-header__title">OTP / PIN Input</h1>
+  <p class="page-header__lead">
+    A row of single-character boxes for one-time codes and PINs, in the spirit of Ant Design's
+    <code>Input.OTP</code> and Mantine's <code>PinInput</code>. Typing advances to the next box,
+    Backspace walks back, arrow keys move between boxes, and pasting a code distributes it across
+    them. Set <code>[mask]="true"</code> to hide the entered characters,
+    <code>type="number"</code> to restrict to digits, and bind with <code>[(ngModel)]</code> or a
+    reactive form. Sizes <code>sm</code> / <code>md</code> / <code>lg</code>, error state, and an
+    optional separator are built in.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Six digit boxes bound with [(ngModel)]. (completed) fires once every box is filled."
+    code='code = signal(&apos;&apos;);
+
+<l-otp-input [length]="6" [(ngModel)]="code" (completed)="onCompleted($event)" />'
+  >
+    <div class="demo-col">
+      <l-otp-input [length]="6" [(ngModel)]="code" (completed)="onCompleted($event)" />
+      <p class="demo-readout">Value: {{ code() || '—' }}</p>
+      @if (lastCompleted()) {
+        <p class="demo-readout">Completed: {{ lastCompleted() }}</p>
+      }
+    </div>
+  </app-story>
+
+  <app-story
+    title="Masked (PIN)"
+    description="[mask]=true hides the characters as dots — for PINs and secrets."
+    code='<l-otp-input [length]="4" [mask]="true" type="number" [(ngModel)]="pin" />'
+  >
+    <l-otp-input [length]="4" [mask]="true" type="number" [(ngModel)]="pin" />
+  </app-story>
+
+  <app-story
+    title="Show / hide toggle"
+    description="Bind mask to a signal to let users reveal what they typed."
+    code='masked = signal(true);
+
+<l-otp-input [length]="6" [mask]="masked()" [(ngModel)]="secret" />
+<l-button variant="ghost" (click)="toggleMask()">…</l-button>'
+  >
+    <div class="demo-row">
+      <l-otp-input [length]="6" [mask]="masked()" [(ngModel)]="secret" />
+      <l-button variant="outlined" size="sm" (click)="toggleMask()">
+        {{ masked() ? 'Show' : 'Hide' }}
+      </l-button>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Sizes"
+    description="sm, md (default) and lg."
+    code='<l-otp-input size="sm" [length]="4" />
+<l-otp-input size="md" [length]="4" />
+<l-otp-input size="lg" [length]="4" />'
+  >
+    <div class="demo-col">
+      <l-otp-input size="sm" [length]="4" [(ngModel)]="sized" />
+      <l-otp-input size="md" [length]="4" [(ngModel)]="sized" />
+      <l-otp-input size="lg" [length]="4" [(ngModel)]="sized" />
+    </div>
+  </app-story>
+
+  <app-story
+    title="With separator"
+    description="[separator]=true drops a dash between every box, e.g. 123-456."
+    code='<l-otp-input [length]="6" [separator]="true" />'
+  >
+    <l-otp-input [length]="6" [separator]="true" />
+  </app-story>
+
+  <app-story
+    title="Error"
+    description="[error]=true paints the boxes in the error color — e.g. after a failed verification."
+    code='<l-otp-input [length]="6" [error]="true" [(ngModel)]="code" />'
+  >
+    <l-otp-input [length]="6" [error]="true" [(ngModel)]="code" />
+  </app-story>
+
+  <app-story
+    title="Disabled"
+    description="[disabled]=true blocks all input."
+    code='<l-otp-input [length]="6" [disabled]="true" />'
+  >
+    <l-otp-input [length]="6" [disabled]="true" />
+  </app-story>
+
+  <app-api-table
+    component="l-otp-input"
+    note="Works with [(ngModel)] and reactive forms — the bound value is the concatenated string of all boxes, with empty boxes contributing nothing."
+    [inputs]="apiInputs"
+    [outputs]="apiOutputs"
+  />
+</div>

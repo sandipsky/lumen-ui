@@ -1,0 +1,39 @@
+.icon-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-inherit-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.icon-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+
+.icon-gallery__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  border: 1px solid var(--separator-light);
+  border-radius: 6px;
+  background: var(--bg-lightest);
+}
+
+.icon-gallery__name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--text-secondary);
+}

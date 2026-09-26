@@ -1,0 +1,142 @@
+<header class="page-header">
+  <h1 class="page-header__title">Grid</h1>
+  <p class="page-header__lead">
+    A 12-column grid, Bootstrap-style, built from <code>Row</code>/<code>Col</code>. Rows are flex
+    containers that hand their <code>gutter</code> to child columns; columns take
+    <code>span</code>/<code>offset</code>/<code>order</code> plus mobile-first responsive overrides
+    (<code>xs</code> <code>sm</code> <code>md</code> <code>lg</code> <code>xl</code>
+    <code>xxl</code> — a number or <code>&#123; span, offset, order &#125;</code>).
+    <code>span=0</code> hides a column and <code>flex</code> makes fill or fixed-width columns.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="Spans are fractions of 12: 12 is full width, 6 a half, 4 a third, 3 a quarter."
+    code='<l-row><l-col [span]="12">12</l-col></l-row>
+<l-row><l-col [span]="6">6</l-col><l-col [span]="6">6</l-col></l-row>
+<l-row><l-col [span]="4">4</l-col> ×3</l-row>
+<l-row><l-col [span]="3">3</l-col> ×4</l-row>'
+  >
+    <div class="demo-rows">
+      <l-row>
+        <l-col [span]="12"><div class="grid-box">12</div></l-col>
+      </l-row>
+      <l-row>
+        <l-col [span]="6"><div class="grid-box">6</div></l-col>
+        <l-col [span]="6"><div class="grid-box grid-box--alt">6</div></l-col>
+      </l-row>
+      <l-row>
+        <l-col [span]="4"><div class="grid-box">4</div></l-col>
+        <l-col [span]="4"><div class="grid-box grid-box--alt">4</div></l-col>
+        <l-col [span]="4"><div class="grid-box">4</div></l-col>
+      </l-row>
+      <l-row>
+        <l-col [span]="3"><div class="grid-box">3</div></l-col>
+        <l-col [span]="3"><div class="grid-box grid-box--alt">3</div></l-col>
+        <l-col [span]="3"><div class="grid-box">3</div></l-col>
+        <l-col [span]="3"><div class="grid-box grid-box--alt">3</div></l-col>
+      </l-row>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Gutter"
+    description="A number spaces columns horizontally; an [h, v] pair also spaces wrapped lines."
+    code='<l-row [gutter]="[16, 16]">
+  <l-col [span]="6" [md]="3">…</l-col>
+  ×4
+</l-row>'
+  >
+    <l-row [gutter]="[16, 16]">
+      @for (i of [1, 2, 3, 4]; track i) {
+        <l-col [span]="6" [md]="3">
+          <div class="grid-box" [class.grid-box--alt]="i % 2 === 0">col</div>
+        </l-col>
+      }
+    </l-row>
+  </app-story>
+
+  <app-story
+    title="Responsive"
+    description="Resize the window: full width below sm (576px), halves up to lg (992px), quarters beyond. Overrides cascade up from the smallest breakpoint."
+    code='<l-col [xs]="12" [sm]="6" [lg]="3">…</l-col>'
+  >
+    <l-row [gutter]="[12, 12]">
+      @for (i of [1, 2, 3, 4]; track i) {
+        <l-col [xs]="12" [sm]="6" [lg]="3">
+          <div class="grid-box" [class.grid-box--alt]="i % 2 === 0">xs 12 · sm 6 · lg 3</div>
+        </l-col>
+      }
+    </l-row>
+  </app-story>
+
+  <app-story
+    title="Offset & order"
+    description="offset skips columns on the left; order rearranges without touching the markup."
+    code='<l-col [span]="4" [offset]="4">4, offset 4</l-col>
+
+<l-col [span]="3" [order]="4">1st in markup</l-col> …'
+  >
+    <div class="demo-rows">
+      <l-row>
+        <l-col [span]="4"><div class="grid-box">4</div></l-col>
+        <l-col [span]="4" [offset]="4"><div class="grid-box grid-box--alt">4, offset 4</div></l-col>
+      </l-row>
+      <l-row>
+        <l-col [span]="3" [order]="4"><div class="grid-box">1 → order 4</div></l-col>
+        <l-col [span]="3" [order]="3">
+          <div class="grid-box grid-box--alt">2 → order 3</div>
+        </l-col>
+        <l-col [span]="3" [order]="2"><div class="grid-box">3 → order 2</div></l-col>
+        <l-col [span]="3" [order]="1">
+          <div class="grid-box grid-box--alt">4 → order 1</div>
+        </l-col>
+      </l-row>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Row justify & align"
+    description="Distribute and align columns that don't fill the full 12 tracks."
+    code='<l-row [justify]="justify()" [align]="align()">…</l-row>'
+  >
+    <div class="demo-col">
+      <l-radio label="justify" [options]="justifyOptions" [(ngModel)]="justify" />
+      <l-radio label="align" [options]="alignOptions" [(ngModel)]="align" />
+      <l-row class="grid-canvas" [justify]="justify()" [align]="align()">
+        <l-col [span]="2"><div class="grid-box" style="height: 32px">2</div></l-col>
+        <l-col [span]="2"><div class="grid-box grid-box--alt" style="height: 64px">2</div></l-col>
+        <l-col [span]="2"><div class="grid-box" style="height: 48px">2</div></l-col>
+        <l-col [span]="2"><div class="grid-box grid-box--alt" style="height: 80px">2</div></l-col>
+      </l-row>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Fill & fixed columns (flex)"
+    description='flex="auto" fills the remaining space; a bare length ("120px") makes a fixed-width column.'
+    code='<l-row [gutter]="12">
+  <l-col flex="120px">fixed</l-col>
+  <l-col flex="auto">fill</l-col>
+</l-row>'
+  >
+    <l-row [gutter]="12">
+      <l-col flex="120px"><div class="grid-box">120px</div></l-col>
+      <l-col flex="auto"><div class="grid-box grid-box--alt">auto — fills the rest</div></l-col>
+    </l-row>
+  </app-story>
+
+  <app-api-table
+    component="l-row"
+    note="Flex container for l-col children — no outputs. Hands its horizontal gutter to the columns via DI."
+    [inputs]="rowApiInputs"
+  />
+
+  <app-api-table
+    component="l-col"
+    note="Column on a 12-track grid — no outputs. Base span/offset/order are overridden per breakpoint by xs…xxl, mobile-first (the largest matching breakpoint wins). ColSize = { span?, offset?, order? }."
+    [inputs]="colApiInputs"
+  />
+</div>

@@ -1,0 +1,37 @@
+.spacer-demo-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 360px;
+}
+
+.spacer-demo-box {
+  padding: 8px 12px;
+  border: 1px solid var(--separator);
+  border-radius: 6px;
+  background: var(--bg-light);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.spacer-demo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.spacer-demo-label {
+  width: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+/* Make the (normally invisible) spacer visible for the preset demo. */
+.spacer-demo-visual {
+  height: 16px;
+  border-radius: 3px;
+  background: var(--accent-bg);
+  outline: 1px dashed var(--accent);
+}

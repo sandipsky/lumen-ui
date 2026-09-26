@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  max-width: 880px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header__title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.page-header__lead {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--text-secondary);
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+    background: var(--bg-dark);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+}
+
+.stories {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+}
+
+.demo-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.demo-readout {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}

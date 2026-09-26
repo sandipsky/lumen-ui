@@ -1,0 +1,126 @@
+<header class="page-header">
+  <h1 class="page-header__title">Accordion</h1>
+  <p class="page-header__lead">
+    A stack of collapsible sections composed from <code>&lt;l-accordion&gt;</code> and
+    <code>&lt;l-accordion-item&gt;</code>. Single-open by default; set <code>[multiple]</code> to
+    keep several panels open. Choose the <code>contained</code> or <code>separated</code> variant,
+    place the chevron with <code>iconPosition</code>, and project any markup into a panel. Headers
+    are real buttons with full keyboard support (Arrow keys, Home/End, Enter/Space) and the panel
+    height animates with a pure-CSS grid transition.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic (single-open)"
+    description="Opening one section collapses the others. Each item starts closed; set [expanded] to open one initially."
+    code='<l-accordion>
+  <l-accordion-item title="What is LumenUI?" [expanded]="true">
+    A polished Angular component library.
+  </l-accordion-item>
+  <l-accordion-item title="Is it themeable?">
+    Yes — every color and spacing is a token.
+  </l-accordion-item>
+</l-accordion>'
+  >
+    <l-accordion>
+      <l-accordion-item title="What is LumenUI?" [expanded]="true">
+        A polished, signal-based Angular component library built for Angular 22 — standalone
+        components, OnPush everywhere, themeable through SCSS tokens.
+      </l-accordion-item>
+      <l-accordion-item title="Is it themeable?">
+        Yes. Colors, spacing, radius and typography are all driven by CSS custom properties, so a
+        single token change re-themes the whole library.
+      </l-accordion-item>
+      <l-accordion-item title="Does it support dark mode?">
+        Tokens flip with the active theme, so components adapt without per-component edits.
+      </l-accordion-item>
+    </l-accordion>
+  </app-story>
+
+  <app-story
+    title="Multiple open"
+    description="With [multiple]=true any number of panels can be open at once."
+    code='<l-accordion [multiple]="true">…</l-accordion>'
+  >
+    <l-accordion [multiple]="true">
+      <l-accordion-item title="Shipping" [expanded]="true">
+        Orders ship within two business days via your selected carrier.
+      </l-accordion-item>
+      <l-accordion-item title="Returns" [expanded]="true">
+        Free returns within 30 days — no questions asked.
+      </l-accordion-item>
+      <l-accordion-item title="Warranty">
+        Every product is covered by a two-year limited warranty.
+      </l-accordion-item>
+    </l-accordion>
+  </app-story>
+
+  <app-story
+    title="Separated variant"
+    description="[variant]='separated' renders each item as its own spaced card."
+    code='<l-accordion variant="separated">…</l-accordion>'
+  >
+    <l-accordion variant="separated">
+      <l-accordion-item title="Step one — Install">
+        Add the package and import the standalone components you need.
+      </l-accordion-item>
+      <l-accordion-item title="Step two — Compose">
+        Drop <code>&lt;l-accordion-item&gt;</code> elements inside an accordion.
+      </l-accordion-item>
+      <l-accordion-item title="Step three — Theme">
+        Override the design tokens to match your brand.
+      </l-accordion-item>
+    </l-accordion>
+  </app-story>
+
+  <app-story
+    title="Icon on the left + disabled item"
+    description="iconPosition='left' moves the chevron ahead of the title. A disabled item can't be toggled and is skipped by keyboard nav."
+    code='<l-accordion iconPosition="left">
+  <l-accordion-item title="Available">…</l-accordion-item>
+  <l-accordion-item title="Coming soon" [disabled]="true">…</l-accordion-item>
+</l-accordion>'
+  >
+    <l-accordion iconPosition="left">
+      <l-accordion-item title="Available now"> This section toggles normally. </l-accordion-item>
+      <l-accordion-item title="Coming soon" [disabled]="true">
+        Locked until release.
+      </l-accordion-item>
+      <l-accordion-item title="Also available"> Another open-able section. </l-accordion-item>
+    </l-accordion>
+  </app-story>
+
+  <app-story
+    title="Rich projected content"
+    description="Project any markup — including other LumenUI components — into a panel, and a custom header via the title slot."
+    code='<l-accordion-item>
+  <span slot="title">Custom <strong>header</strong></span>
+  <p>Any content goes here.</p>
+</l-accordion-item>'
+  >
+    <l-accordion variant="separated">
+      <l-accordion-item>
+        <span slot="title">⭐ Featured section</span>
+        <p>The header above is projected markup rather than a plain string.</p>
+        <p>Panels can hold paragraphs, lists, forms, or nested components.</p>
+      </l-accordion-item>
+      <l-accordion-item title="Plain header">
+        Mix projected and string headers freely within the same accordion.
+      </l-accordion-item>
+    </l-accordion>
+  </app-story>
+
+  <app-api-table
+    component="l-accordion"
+    note="Container that owns the open state — single-open unless [multiple]. Headers support Arrow/Home/End roving focus. No outputs; listen on each item's openedChange."
+    [inputs]="accordionApiInputs"
+  />
+
+  <app-api-table
+    component="l-accordion-item"
+    note="One collapsible section. Panel content is projected; a custom header goes into the title slot. Open state lives on the parent accordion — this component only reflects it."
+    [inputs]="itemApiInputs"
+    [outputs]="itemApiOutputs"
+  />
+</div>

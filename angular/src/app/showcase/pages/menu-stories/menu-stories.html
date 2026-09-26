@@ -1,0 +1,95 @@
+<header class="page-header">
+  <h1 class="page-header__title">Menu</h1>
+  <p class="page-header__lead">
+    A lightweight dropdown / popover. Project the trigger via <code>[dropdown-display]</code> and
+    the panel via <code>[dropdown-item]</code> / <code>[dropdown-content]</code>. The panel renders
+    in a fixed layer anchored to the trigger, so it escapes any <code>overflow</code> clipping,
+    flips above the trigger when there isn't room below, and stays anchored while the page scrolls —
+    the same behavior as the <code>l-select</code> dropdown. Scroll this page so a trigger sits near
+    the bottom edge and the panel opens upward.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic"
+    description="A trigger plus items. By default the menu closes when an item is clicked."
+    code='<l-menu>
+  <l-button dropdown-display variant="outlined">Actions</l-button>
+  <div dropdown-item (click)="pick(&apos;Edit&apos;)">Edit</div>
+  <div dropdown-item (click)="pick(&apos;Duplicate&apos;)">Duplicate</div>
+  <div dropdown-item (click)="pick(&apos;Archive&apos;)">Archive</div>
+</l-menu>'
+  >
+    <div class="demo-col">
+      <l-menu>
+        <l-button dropdown-display variant="outlined">Actions</l-button>
+        <div dropdown-item (click)="pick('Edit')">Edit</div>
+        <div dropdown-item (click)="pick('Duplicate')">Duplicate</div>
+        <div dropdown-item (click)="pick('Archive')">Archive</div>
+      </l-menu>
+      <p class="demo-readout">Last action: {{ lastAction() }}</p>
+    </div>
+  </app-story>
+
+  <app-story
+    title="Right aligned"
+    description="mode='right' anchors the panel's right edge to the trigger — for menus that sit near the right edge of a toolbar."
+    code='<l-menu mode="right">
+  <l-button dropdown-display variant="outlined">Options</l-button>
+  <div dropdown-item>Profile</div>
+  <div dropdown-item>Settings</div>
+  <div dropdown-item>Sign out</div>
+</l-menu>'
+  >
+    <l-menu mode="right">
+      <l-button dropdown-display variant="outlined">Options</l-button>
+      <div dropdown-item>Profile</div>
+      <div dropdown-item>Settings</div>
+      <div dropdown-item>Sign out</div>
+    </l-menu>
+  </app-story>
+
+  <app-story
+    title="Active item"
+    description="Add the 'active' class to an item to mark the current choice."
+    code='<l-menu>
+  <l-button dropdown-display variant="outlined">Sort by</l-button>
+  <div dropdown-item class="active">Newest</div>
+  <div dropdown-item>Oldest</div>
+  <div dropdown-item>A–Z</div>
+</l-menu>'
+  >
+    <l-menu>
+      <l-button dropdown-display variant="outlined">Sort by</l-button>
+      <div dropdown-item class="active">Newest</div>
+      <div dropdown-item>Oldest</div>
+      <div dropdown-item>A–Z</div>
+    </l-menu>
+  </app-story>
+
+  <app-story
+    title="Custom content (stays open)"
+    description="Project arbitrary markup via [dropdown-content], and set [closeOnItemClick]=false + [contentMode]=true so clicks inside don't dismiss it and the default padding is dropped."
+    code='<l-menu [closeOnItemClick]="false" [contentMode]="true">
+  <l-button dropdown-display variant="outlined">Account</l-button>
+  <div dropdown-content class="card"> … custom panel … </div>
+</l-menu>'
+  >
+    <l-menu [closeOnItemClick]="false" [contentMode]="true">
+      <l-button dropdown-display variant="outlined">Account</l-button>
+      <div dropdown-content class="menu-card">
+        <p class="menu-card__name">Ada Lovelace</p>
+        <p class="menu-card__email">ada@lumen.ui</p>
+        <hr class="menu-card__sep" />
+        <l-button variant="primary" width="full">Manage account</l-button>
+      </div>
+    </l-menu>
+  </app-story>
+
+  <app-api-table
+    component="l-menu"
+    note="No outputs — content is projected instead: the trigger via [dropdown-display], clickable rows via [dropdown-item], arbitrary panels via [dropdown-content]. The component also exposes toggle() / close() methods and a readonly isOpen signal, reachable through a template reference."
+    [inputs]="apiInputs"
+  />
+</div>

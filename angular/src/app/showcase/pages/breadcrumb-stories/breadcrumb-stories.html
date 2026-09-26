@@ -1,0 +1,49 @@
+<header class="page-header">
+  <h1 class="page-header__title">Breadcrumb</h1>
+  <p class="page-header__lead">
+    Presentational breadcrumb trail. Pass the crumbs as <code>items</code> — the last one renders as
+    the current page (<code>aria-current="page"</code>), while earlier crumbs link via
+    <code>routerLink</code> when they carry a <code>link</code>. An optional <code>title</code>
+    renders above the trail.
+  </p>
+</header>
+
+<div class="stories">
+  <app-story
+    title="Basic trail"
+    description="Earlier crumbs are links; the last is the current page."
+    code="items = [
+  { label: 'Home', link: '/' },
+  { label: 'Components', link: '/components' },
+  { label: 'Breadcrumb' },
+];
+
+<l-breadcrumb [items]=&quot;items&quot; />"
+  >
+    <l-breadcrumb [items]="trail" />
+  </app-story>
+
+  <app-story
+    title="With page title"
+    description="Set title to render a page heading above the trail."
+    code='<l-breadcrumb title="Breadcrumb" [items]="items" />'
+  >
+    <l-breadcrumb title="Breadcrumb" [items]="trail" />
+  </app-story>
+
+  <app-story
+    title="Short trail"
+    description="Any depth works; a crumb without a link renders as plain text."
+    code="items = [{ label: 'Docs', link: '/' }, { label: 'Getting started' }];
+
+<l-breadcrumb [items]=&quot;items&quot; />"
+  >
+    <l-breadcrumb [items]="shortTrail" />
+  </app-story>
+
+  <app-api-table
+    component="l-breadcrumb"
+    note="Presentational — no outputs. BreadcrumbItem is { label: string; link?: string | unknown[] }: label is the visible crumb text and link is an optional router link (omit it for the current page)."
+    [inputs]="apiInputs"
+  />
+</div>

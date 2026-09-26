@@ -1,0 +1,32 @@
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.placement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(80px, auto));
+  gap: 12px;
+  justify-content: center;
+  width: fit-content;
+  margin: 24px auto;
+}
+
+.placement-spacer {
+  display: block;
+}
+
+.demo-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--text-secondary);
+}
+
+.term {
+  color: var(--accent-dark);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: help;
+}

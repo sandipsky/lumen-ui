@@ -1,0 +1,7 @@
+/* The status pill inside table cells comes from the global table.css `.status`
+   styles. Page-specific: the pill sits inside a centered cell — keep it
+   centered too. */
+.text-center .status,
+td[class*='text-center'] .status {
+  margin: 0 auto;
+}
