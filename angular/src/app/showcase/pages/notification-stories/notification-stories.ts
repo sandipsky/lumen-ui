@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Button } from '../../../shared/components/ui/button/button';
-import { Toggle } from '../../../shared/components/ui/input/toggle/toggle';
 import {
+  Button,
+  Toggle,
   NotificationPosition,
   NotificationType,
-} from '../../../shared/components/ui/notification/notification.config';
-import { NotificationService } from '../../../shared/components/ui/notification/notification.service';
+  NotificationService,
+} from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

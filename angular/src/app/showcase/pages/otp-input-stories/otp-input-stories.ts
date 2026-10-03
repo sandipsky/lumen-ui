@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Button } from '../../../shared/components/ui/button/button';
-import { OtpInput } from '../../../shared/components/ui/input/otp-input/otp-input';
+import { Button, OtpInput } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

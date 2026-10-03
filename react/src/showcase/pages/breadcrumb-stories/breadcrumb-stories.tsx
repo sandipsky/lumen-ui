@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import {
   LUIBreadcrumb,
   type BreadcrumbItem,
@@ -28,10 +29,18 @@ const apiInputs: ApiTableRow[] = [
   {
     name: 'items',
     description:
-      'The crumb trail, in order; the last item is treated as the current page, earlier ones link via TanStack Router Link when they carry a link.',
+      'The crumb trail, in order; the last item is treated as the current page, earlier ones link when they carry a link.',
     type: 'BreadcrumbItem[]',
     default: '[]',
     example: 'items={trail}',
+  },
+  {
+    name: 'linkComponent',
+    description:
+      'Renders the linked crumbs. Defaults to a plain <a href>; pass a router link (TanStack Router or React Router Link, which both take to) for client-side navigation.',
+    type: 'ComponentType<LUIBreadcrumbLinkProps>',
+    default: '<a href>',
+    example: 'linkComponent={Link}',
   },
 ];
 
@@ -42,8 +51,9 @@ export default function BreadcrumbStories() {
         <h1 className="page-header__title">Breadcrumb</h1>
         <p className="page-header__lead">
           Presentational breadcrumb trail. Pass the crumbs as <code>items</code> — the last one
-          renders as the current page (<code>aria-current="page"</code>), while earlier crumbs link
-          via TanStack Router <code>Link</code> when they carry a <code>link</code>. An optional{' '}
+          renders as the current page (<code>aria-current="page"</code>), while earlier crumbs render
+          through <code>linkComponent</code> (a plain <code>&lt;a href&gt;</code>, or your router's{' '}
+          <code>Link</code>) when they carry a <code>link</code>. An optional{' '}
           <code>title</code> renders above the trail.
         </p>
       </header>
@@ -58,17 +68,17 @@ export default function BreadcrumbStories() {
   { label: 'Breadcrumb' },
 ];
 
-<LUIBreadcrumb items={items} />`}
+<LUIBreadcrumb items={items} linkComponent={Link} />`}
         >
-          <LUIBreadcrumb items={trail} />
+          <LUIBreadcrumb items={trail} linkComponent={Link} />
         </Story>
 
         <Story
           title="With page title"
           description="Set title to render a page heading above the trail."
-          code={`<LUIBreadcrumb title="Breadcrumb" items={items} />`}
+          code={`<LUIBreadcrumb title="Breadcrumb" items={items} linkComponent={Link} />`}
         >
-          <LUIBreadcrumb title="Breadcrumb" items={trail} />
+          <LUIBreadcrumb title="Breadcrumb" items={trail} linkComponent={Link} />
         </Story>
 
         <Story
@@ -76,14 +86,14 @@ export default function BreadcrumbStories() {
           description="Any depth works; a crumb without a link renders as plain text."
           code={`const items = [{ label: 'Docs', link: '/' }, { label: 'Getting started' }];
 
-<LUIBreadcrumb items={items} />`}
+<LUIBreadcrumb items={items} linkComponent={Link} />`}
         >
-          <LUIBreadcrumb items={shortTrail} />
+          <LUIBreadcrumb items={shortTrail} linkComponent={Link} />
         </Story>
 
         <ApiTable
           component="LUIBreadcrumb"
-          note="Presentational — no callbacks. BreadcrumbItem is { label: string; link?: string }: label is the visible crumb text and link is an optional router path (omit it for the current page)."
+          note="Presentational — no callbacks. BreadcrumbItem is { label: string; link?: string }: label is the visible crumb text and link is an optional link target (omit it for the current page)."
           inputs={apiInputs}
         />
       </div>

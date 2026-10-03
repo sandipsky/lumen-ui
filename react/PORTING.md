@@ -14,7 +14,11 @@ Follow these rules exactly so all ports are consistent.
 - React 19 + TypeScript + Vite (React Compiler enabled — write plain idiomatic
   function components; do NOT use `React.memo`, `useCallback`, or `useMemo`
   unless semantically required).
-- react-router-dom v7, react-hook-form, zod, @hookform/resolvers are installed.
+- @tanstack/react-router, react-hook-form, zod and @hookform/resolvers are
+  devDependencies for the showcase and stories only. Library code under
+  `src/components/` ships as `@lumen-ui/react` and may import nothing but
+  `react` / `react-dom` (its peer dependencies) — e.g. the breadcrumb takes a
+  `linkComponent` prop instead of importing a router.
 - Plain CSS (no sass, no CSS modules). One `.css` file per component, imported
   by its `.tsx` file.
 
@@ -27,9 +31,11 @@ Follow these rules exactly so all ports are consistent.
 
 ## File layout & naming
 
-- Angular `src/app/shared/components/ui/<name>/<name>.ts|html|scss`
+- Angular `projects/lumen-ui/src/lib/components/ui/<name>/<name>.ts|html|scss`
   → React `src/components/ui/<name>/<name>.tsx` + `<name>.css`.
   Keep kebab-case file/dir names identical to the Angular tree.
+- Export every new public component from the library barrel
+  `src/components/index.ts` — anything not exported there doesn't ship.
 - Components are **named exports** prefixed `LUI`: `l-button` → `LUIButton`,
   `l-text-input` → `LUITextInput`, `l-loading-spinner` → `LUILoadingSpinner`.
 - Props interface is exported as `LUI<Name>Props`. Re-export supporting types
@@ -175,7 +181,10 @@ registry entry into `showcase.data.ts` as a single follow-up step.
 ## Definition of done (per component batch)
 
 1. Component(s) + CSS ported under `src/components/ui/...`.
-2. Story page(s) + CSS ported under `src/showcase/pages/...` with default export.
+2. Story page(s) + CSS ported under `src/showcase/pages/...` with default export,
+   and a Storybook story in `src/stories/<name>.stories.tsx` (mirror the
+   Angular story in `angular/projects/lumen-ui/stories/`: same title and
+   story export names).
 3. `npx tsc -b --noEmit`-clean for your files (you may not be able to run the
    full build if other batches are mid-flight — at minimum ensure your imports
    resolve and types check in isolation).

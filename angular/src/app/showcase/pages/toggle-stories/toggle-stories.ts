@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Toggle } from '../../../shared/components/ui/input/toggle/toggle';
+import { Toggle } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

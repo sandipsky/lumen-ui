@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Button } from '../../../shared/components/ui/button/button';
-import { Card, CardPadding, CardShadow } from '../../../shared/components/ui/card/card';
-import { Chip } from '../../../shared/components/ui/chip/chip';
+import { Button, Card, CardPadding, CardShadow, Chip } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

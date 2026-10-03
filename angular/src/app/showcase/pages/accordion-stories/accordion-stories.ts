@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Accordion } from '../../../shared/components/ui/accordion/accordion';
-import { AccordionItem } from '../../../shared/components/ui/accordion/accordion-item';
+import { Accordion, AccordionItem } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

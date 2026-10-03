@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Button } from '../../../shared/components/ui/button/button';
-import { Tree, TreeNode } from '../../../shared/components/ui/tree/tree';
+import { Button, Tree, TreeNode } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Button } from '../../../shared/components/ui/button/button';
-import { TooltipDirective } from '../../../shared/components/ui/tooltip/tooltip.directive';
+import { Button, TooltipDirective } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

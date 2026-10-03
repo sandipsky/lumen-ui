@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
-import { Table, TableColumn, TableSort } from '../../../shared/components/ui/table/table';
-import { TableCellDirective } from '../../../shared/components/ui/table/table-cell.directive';
+import { Table, TableColumn, TableSort, TableCellDirective } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

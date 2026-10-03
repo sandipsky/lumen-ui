@@ -1,0 +1,32 @@
+{
+  "name": "@lumen-ui/angular",
+  "version": "0.1.0",
+  "description": "LumenUI component library for Angular: standalone, signal-based, OnPush components.",
+  "license": "UNLICENSED",
+  "keywords": [
+    "angular",
+    "components",
+    "ui",
+    "lumen-ui"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/router": "^22.0.0",
+    "rxjs": "^7.8.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "exports": {
+    "./styles": {
+      "sass": "./styles/lumen-ui.scss"
+    },
+    "./styles/*": {
+      "sass": "./styles/*"
+    }
+  },
+  "sideEffects": false
+}

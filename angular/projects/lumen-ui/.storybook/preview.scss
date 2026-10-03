@@ -1,0 +1,17 @@
+// Global styles for the Storybook canvas: the library's own global stylesheet
+// (what consumers include) plus the same base reset the showcase app uses.
+@use '../src/lib/styles/lumen-ui';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 400;
+  background: var(--bg-lightest);
+}

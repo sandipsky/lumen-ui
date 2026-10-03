@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Button } from '../../../shared/components/ui/button/button';
-import { LoadingSpinner } from '../../../shared/components/ui/loading-spinner/loading-spinner';
-import { SpinnerService } from '../../../shared/services/spinner.service';
+import { Button, LoadingSpinner, SpinnerService } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

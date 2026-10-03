@@ -6,9 +6,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { Button } from '../../../shared/components/ui/button/button';
-import { DrawerPosition } from '../../../shared/components/ui/drawer/drawer.config';
-import { DrawerService } from '../../../shared/components/ui/drawer/drawer.service';
+import { Button, DrawerPosition, DrawerService } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

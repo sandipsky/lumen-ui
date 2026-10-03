@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { BadgeDirective } from '../../../shared/components/ui/badge/badge.directive';
-import { Button } from '../../../shared/components/ui/button/button';
+import { BadgeDirective, Button } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

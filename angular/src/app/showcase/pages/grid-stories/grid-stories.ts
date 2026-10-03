@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Radio } from '../../../shared/components/ui/input/radio/radio';
-import { RadioOption } from '../../../shared/components/ui/input/input';
-import { Col, Row, RowAlign, RowJustify } from '../../../shared/components/ui/layout';
+import { Radio, RadioOption, Col, Row, RowAlign, RowJustify } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

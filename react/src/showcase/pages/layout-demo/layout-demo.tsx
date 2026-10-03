@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { LUIMainLayout } from '../../../components/layout/main-layout/main-layout';
+import { LUIMainLayout } from './main-layout';
 import './layout-demo.css';
 
 export default function LayoutDemo() {

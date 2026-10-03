@@ -14,6 +14,8 @@ node_modules/
 
 # Build output
 dist/
+dist-showcase/
+storybook-static/
 dist-ssr/
 out-tsc/
 build/
@@ -21,6 +23,8 @@ build/
 
 # Angular
 .angular/
+# Icon modules generated from icons/ by angular/scripts/generate-icons.mjs
+/angular/projects/lumen-ui/src/lib/components/ui/icon/svg/
 .nx/
 /angular/bazel-out/
 
@@ -28,6 +32,9 @@ build/
 .vite/
 vite.config.*.timestamp-*
 vite.config.ts.timestamp-*
+
+# Packed library tarballs (npm pack)
+*.tgz
 
 # Test & coverage
 coverage/

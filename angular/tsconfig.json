@@ -12,7 +12,10 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "paths": {
+      "@lumen-ui/angular": ["./projects/lumen-ui/src/public-api.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -21,6 +24,12 @@
   },
   "files": [],
   "references": [
+    {
+      "path": "./projects/lumen-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lumen-ui/tsconfig.spec.json"
+    },
     {
       "path": "./tsconfig.app.json"
     },

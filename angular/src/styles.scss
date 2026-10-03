@@ -1,6 +1,5 @@
-@forward 'app/shared/styles/colors';
-@forward 'app/shared/styles/form';
-@forward 'app/shared/styles/utils';
+// Global LumenUI styles (tokens, form classes, utilities) straight from the library source.
+@use '../projects/lumen-ui/src/lib/styles/lumen-ui';
 
 * {
   margin: 0;

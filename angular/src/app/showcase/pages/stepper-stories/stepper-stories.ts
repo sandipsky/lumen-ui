@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Button } from '../../../shared/components/ui/button/button';
-import { TextInput } from '../../../shared/components/ui/input/text-input/text-input';
-import { Step, Stepper } from '../../../shared/components/ui/stepper/stepper';
+import { Button, TextInput, Step, Stepper } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

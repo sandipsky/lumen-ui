@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Tab } from '../../../shared/components/ui/tabs/tab';
-import { Tabs } from '../../../shared/components/ui/tabs/tabs';
+import { Tab, Tabs } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

@@ -1,77 +1,79 @@
-# React + TypeScript + Vite
+# @lumen-ui/react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+LumenUI components for React 19: typed function components with `LUI*` names, shipped already compiled by the React Compiler. The Angular package, `@lumen-ui/angular`, has the same components, class names and design tokens.
 
-Currently, two official plugins are available:
+## Install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+From a tarball (run `npm pack` in the LumenUI repo's `react/` folder to build one):
 
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install ./lumen-ui-react-0.1.0.tgz
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Once the package is published to a registry, install it by name instead: `npm install @lumen-ui/react`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Peer dependencies: `react` and `react-dom` (`^19.0.0`).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Styles
 
+Import the stylesheet once, near your app's entry point. It contains the design tokens, utility classes and every component's CSS:
+
+```ts
+import '@lumen-ui/react/styles.css';
 ```
+
+The components expect a base reset like the one the LumenUI showcase uses:
+
+```css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+```
+
+## Usage
+
+Mount `LUIProvider` once near the root, so the notification, spinner, modal and drawer hooks work anywhere below it:
+
+```tsx
+import { LUIButton, LUIProvider, useLUINotification } from '@lumen-ui/react';
+import '@lumen-ui/react/styles.css';
+
+function SaveButton() {
+  const notification = useLUINotification();
+  return (
+    <LUIButton variant="primary" onClick={() => notification.success('Saved', 'Your changes were stored.')}>
+      Save
+    </LUIButton>
+  );
+}
+
+export default function App() {
+  return (
+    <LUIProvider>
+      <SaveButton />
+    </LUIProvider>
+  );
+}
+```
+
+- Text-like inputs accept native props, so they work with `react-hook-form`'s `register()` or as plain controlled inputs.
+- Inputs that hold non-DOM values (Date Input, OTP Input, Select) are controlled through `value` and `onChange(value)`. Use them with react-hook-form through `<Controller>`.
+- `LUIBreadcrumb` renders plain `<a href>` links. For client-side navigation, pass your router's link: `<LUIBreadcrumb items={items} linkComponent={Link} />`. TanStack Router's and React Router's `Link` both work as-is.
+
+## Theming
+
+Override the tokens at `:root` or on any container:
+
+```css
+:root {
+  --accent: #2563eb;
+  --accent-bg: #eff6ff;
+  --accent-dark: #1d4ed8;
+}
+```
+
+## Docs
+
+Every component has a Storybook story with live controls. Run `npm run storybook` in the LumenUI repo's `react/` folder. The repo's root README covers development.

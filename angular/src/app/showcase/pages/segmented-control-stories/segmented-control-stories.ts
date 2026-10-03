@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  SegmentedControl,
-  SegmentedOption,
-} from '../../../shared/components/ui/segmented-control/segmented-control';
+import { SegmentedControl, SegmentedOption } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

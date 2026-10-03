@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Button } from '../../../shared/components/ui/button/button';
-import { EmailInput } from '../../../shared/components/ui/input/email-input/email-input';
-import { PasswordInput } from '../../../shared/components/ui/input/password-input/password-input';
-import { TextInput } from '../../../shared/components/ui/input/text-input/text-input';
+import { Button, EmailInput, PasswordInput, TextInput } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

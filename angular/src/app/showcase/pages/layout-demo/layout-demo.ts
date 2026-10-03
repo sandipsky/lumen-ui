@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Header } from '../../../shared/components/ui/header/header';
-import { Sidebar } from '../../../shared/components/ui/sidebar/sidebar';
+import { Header, Sidebar } from '@lumen-ui/angular';
 
 @Component({
   selector: 'app-layout-demo',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Icon, L_ICON_NAMES } from '../../../shared/components/ui/icon/icon';
+import { Icon, L_ICON_NAMES } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

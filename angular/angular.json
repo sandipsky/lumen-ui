@@ -6,7 +6,62 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular-ui": {
+    "lumen-ui": {
+      "projectType": "library",
+      "root": "projects/lumen-ui",
+      "sourceRoot": "projects/lumen-ui/src",
+      "prefix": "l",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/lumen-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lumen-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/lumen-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/lumen-ui/tsconfig.spec.json"
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/lumen-ui/.storybook",
+            "browserTarget": "lumen-ui:build",
+            "tsConfig": "projects/lumen-ui/.storybook/tsconfig.json",
+            "styles": [
+              "projects/lumen-ui/.storybook/preview.scss"
+            ],
+            "compodoc": false,
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/lumen-ui/.storybook",
+            "browserTarget": "lumen-ui:build",
+            "tsConfig": "projects/lumen-ui/.storybook/tsconfig.json",
+            "styles": [
+              "projects/lumen-ui/.storybook/preview.scss"
+            ],
+            "compodoc": false,
+            "outputDir": "dist/storybook"
+          }
+        }
+      }
+    },
+    "showcase": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -43,9 +98,6 @@
                 "input": "public"
               }
             ],
-            "loader": {
-              ".svg": "text"
-            },
             "styles": [
               "src/styles.scss"
             ]
@@ -78,10 +130,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-ui:build:production"
+              "buildTarget": "showcase:build:production"
             },
             "development": {
-              "buildTarget": "angular-ui:build:development"
+              "buildTarget": "showcase:build:development"
             }
           },
           "defaultConfiguration": "development"

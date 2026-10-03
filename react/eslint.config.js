@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'dist-showcase', 'storybook-static']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -24,7 +24,7 @@ export default defineConfig([
     // constants with their components (providers export useLUIX() hooks,
     // parents export registration contexts). Fast-refresh purity does not
     // apply there the way it does to app/showcase modules.
-    files: ['src/shared/**/*.{ts,tsx}'],
+    files: ['src/components/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },

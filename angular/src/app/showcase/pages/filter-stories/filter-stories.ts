@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { Filter, FilterChange, FilterColumn } from '../../../shared/components/ui/filter/filter';
+import { Filter, FilterChange, FilterColumn } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 

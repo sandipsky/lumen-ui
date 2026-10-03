@@ -1,0 +1,6 @@
+// Global LumenUI styles: design tokens (CSS custom properties), the shared
+// form classes and the utility classes. Include once per app, either in
+// angular.json `styles` or via `@use '@lumen-ui/angular/styles';`.
+@forward 'colors';
+@forward 'form';
+@forward 'utils';

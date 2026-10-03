@@ -7,10 +7,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { map, timer } from 'rxjs';
-import { Button } from '../../../shared/components/ui/button/button';
-import { ConfirmDialog } from '../../../shared/components/ui/modal/confirm-dialog';
-import { ModalAnimation } from '../../../shared/components/ui/modal/modal.config';
-import { ModalService } from '../../../shared/components/ui/modal/modal.service';
+import { Button, ConfirmDialog, ModalAnimation, ModalService } from '@lumen-ui/angular';
 import { ApiTable, ApiTableRow } from '../../api-table/api-table';
 import { Story } from '../../story/story';
 
