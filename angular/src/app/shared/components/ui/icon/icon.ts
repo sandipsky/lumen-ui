@@ -12,90 +12,113 @@ import {
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 const ICON_NAMES = [
-  'account',
-  'accounting',
   'add',
-  'auto-code-generator',
-  'backup-restore',
-  'bde',
-  'bulk-order',
+  'attach_file',
+  'backup',
+  'bag',
+  'bank',
+  'bar_chart',
+  'bolt',
+  'bookmark',
+  'box',
+  'building',
   'calculator',
   'calendar',
-  'cancel',
+  'calendar_month',
+  'call',
+  'car',
+  'card',
   'caret',
-  'caret-down',
-  'cash-bank-voucher',
+  'caret_down',
+  'cart',
+  'cart_add',
+  'cart_return',
   'category',
-  'close',
-  'closing',
+  'checklist',
+  'checklist_alt',
+  'checkroom',
+  'clock',
   'configuration',
-  'credit-note',
+  'content_copy',
+  'controller',
   'cross',
-  'customer',
   'dashboard',
-  'debit-note',
-  'designation',
-  'dispatch',
-  'document-numbering-scheme',
+  'dashboard_alt',
+  'dislike',
+  'donut_large',
   'download',
+  'drawer',
   'edit',
+  'education',
+  'error',
+  'event_repeat',
   'eye',
-  'eye-login',
-  'eye-slash',
+  'eye_slash',
+  'factory',
+  'family',
+  'file',
+  'file_add',
+  'file_alt',
+  'files',
   'filter',
-  'finish-goods-receipt',
-  'hold',
-  'inventory',
-  'journal-entry',
+  'filter_list',
+  'fitness',
+  'flight',
+  'fuel',
+  'hand',
+  'hash',
+  'heart',
+  'help',
+  'home',
+  'hospital',
+  'image',
+  'like',
+  'list',
+  'location',
   'lock',
   'logout',
-  'manufacturing',
-  'master',
-  'material-issue',
-  'material-issue-return',
+  'mail',
+  'money',
+  'moneys',
   'more',
+  'music',
+  'notebook',
   'notification',
-  'notify',
-  'opening-balance',
-  'opening-stock',
-  'packing',
-  'payment',
-  'payment-adjustment',
-  'pending',
-  'physical-stock-master',
-  'print',
+  'notifications_alt',
+  'pie_chart',
   'printer',
-  'products',
-  'purchase',
-  'purchase-action',
-  'purchase-entry',
-  'purchase-order',
-  'purchase-return',
-  'reports',
-  'roles-permission',
-  'sales',
-  'sales-entry',
-  'sales-order',
-  'sales-return',
+  'receipt',
+  'refresh',
+  'savings',
+  'savings_alt',
   'search',
   'settings',
-  'sidebar',
-  'sms',
-  'stock-adjustment',
-  'stock-edit',
-  'taxtype',
+  'shield',
+  'star',
+  'train',
   'trash',
-  'unit',
+  'truck',
+  'undo',
+  'upload_file',
   'user',
-  'user-plus',
+  'user_add',
+  'user_card',
+  'user_config',
   'users',
-  'vendor',
+  'verified_user',
+  'view',
+  'wallet',
+  'wallet_alt',
+  'warning',
+  'wifi',
+  'work',
 ] as const;
 
 /**
- * Icon names — the file names (minus `.svg`) under `public/svg/`.
- * `(string & {})` keeps the union open so newly dropped-in files work
- * without touching this list, while existing names still autocomplete.
+ * Icon names — the file names (minus `.svg`) under the repo-root `icons/`
+ * folder shared with the React package. `(string & {})` keeps the union open
+ * so newly dropped-in files work without touching this list, while existing
+ * names still autocomplete.
  */
 export type IconName = (typeof ICON_NAMES)[number] | (string & {});
 
@@ -104,9 +127,10 @@ export const L_ICON_NAMES: readonly IconName[] = ICON_NAMES;
 
 /**
  * The source files hardcode their gray (`stroke="#646663"`, `fill="#555755"`,
- * …) and their 20px width/height. Swap the colors for `currentColor` so the
+ * …) and their width/height. Swap the colors for `currentColor` so the
  * `color` input (or the inherited text color) drives them, and drop the fixed
- * dimensions so the host's size wins.
+ * dimensions so the host's size wins. `<mask>` contents are left alone — their
+ * black/white fills are luminance cut-outs, not paint.
  */
 const normalize = (raw: string): string =>
   raw
@@ -114,9 +138,16 @@ const normalize = (raw: string): string =>
       /<svg([^>]*)>/,
       (_, attrs: string) => `<svg${attrs.replace(/\s(?:width|height)="[^"]*"/g, '')}>`,
     )
-    .replace(/\b(stroke|fill)="(?!none)[^"]*"/g, '$1="currentColor"');
+    .replace(/<mask[\s\S]*?<\/mask>|\b(stroke|fill)="(?!none)[^"]*"/g, (match, attr?: string) =>
+      attr ? `${attr}="currentColor"` : match,
+    );
 
-/** Fetches the svg files from `public/svg/`, normalized and cached per name. */
+/**
+ * Lazy-loads the svg files from the shared `icons/` folder, normalized and
+ * cached per name. The folder sits outside the Angular workspace, so instead
+ * of serving it as an asset, esbuild bundles it: the `.svg` text loader in
+ * angular.json plus the templated `import()` below emit one lazy chunk per file.
+ */
 @Injectable({ providedIn: 'root' })
 export class IconRegistry {
   private readonly _cache = new Map<string, Promise<string>>();
@@ -125,17 +156,14 @@ export class IconRegistry {
   load(name: string): Promise<string> {
     let svg = this._cache.get(name);
     if (!svg) {
-      svg = fetch(`svg/${name}.svg`)
-        .then((response) => (response.ok ? response.text() : ''))
-        .catch(() => '')
-        .then((raw) => {
-          // The dev server answers missing paths with index.html, so check the
-          // payload rather than just the status.
-          if (!raw.includes('<svg')) {
-            console.warn(`[l-icon] Unknown icon name "${name}".`);
-            return '';
-          }
-          return normalize(raw);
+      // Imported inside `then` so an unknown name — which esbuild's import
+      // map throws on synchronously — still lands in `catch`.
+      svg = Promise.resolve()
+        .then(() => import(`../../../../../../../icons/${name}.svg`))
+        .then((module: { default: string }) => normalize(module.default))
+        .catch(() => {
+          console.warn(`[l-icon] Unknown icon name "${name}".`);
+          return '';
         });
       this._cache.set(name, svg);
     }
@@ -144,7 +172,7 @@ export class IconRegistry {
 }
 
 /**
- * Inline SVG icon. Renders the named file from `public/svg/` with its colors
+ * Inline SVG icon. Renders the named file from `icons/` with its colors
  * rebound to `currentColor`, so it tints via the `color` input — defaulting
  * to `var(--text-tertiary)` (#646663), the gray the icons were drawn with.
  *
@@ -171,7 +199,7 @@ export class IconRegistry {
   },
 })
 export class Icon {
-  /** Icon to draw — an svg file name from `public/svg/` without the extension. */
+  /** Icon to draw — an svg file name from `icons/` without the extension. */
   readonly name = input.required<IconName>();
 
   /** Width/height. A number is pixels; any CSS size string works too. */

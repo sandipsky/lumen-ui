@@ -1,9 +1,10 @@
 <header class="page-header">
   <h1 class="page-header__title">Icon</h1>
   <p class="page-header__lead">
-    Inline SVG icon fed by the files in <code>public/svg/</code>. Hardcoded fills and strokes are
-    rebound to <code>currentColor</code>, so icons tint via the <code>color</code> input —
-    defaulting to <code>var(--text-tertiary)</code> (#646663), the gray they were drawn with.
+    Inline SVG icon fed by the files in <code>icons/</code> at the repo root — the same set the
+    React package uses. Hardcoded fills and strokes are rebound to <code>currentColor</code>, so
+    icons tint via the <code>color</code> input — defaulting to
+    <code>var(--text-tertiary)</code> (#646663), the gray they were drawn with.
   </p>
 </header>
 
@@ -54,9 +55,7 @@
 
   <app-story
     title="All icons"
-    description="Every file in public/svg/ ({{
-      iconNames.length
-    }}) — the name input is the file name."
+    description="Every file in icons/ ({{ iconNames.length }}) — the name input is the file name."
     code='<l-icon name="dashboard" />'
   >
     <div class="icon-gallery">
@@ -71,7 +70,7 @@
 
   <app-api-table
     component="l-icon"
-    note="Renders the svg inline inside the host element (aria-hidden by default). Dropping a new .svg file into public/svg/ makes it available immediately; L_ICON_NAMES exports the full sorted list of bundled names."
+    note="Renders the svg inline inside the host element (aria-hidden by default). Dropping a new .svg file into the shared icons/ folder makes it available immediately in both packages; add its name to ICON_NAMES in icon.ts to list it in L_ICON_NAMES (and this gallery)."
     [inputs]="apiInputs"
   />
 </div>

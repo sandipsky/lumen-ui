@@ -17,7 +17,7 @@ export class IconStories {
     {
       name: 'name',
       description:
-        'Icon to draw — an svg file name from public/svg/ without the extension. Required.',
+        'Icon to draw — an svg file name from the shared icons/ folder without the extension. Required.',
       type: 'IconName',
       default: '—',
       example: 'name="user"',

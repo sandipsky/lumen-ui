@@ -6,7 +6,7 @@ import './icon-stories.css';
 const apiInputs: ApiTableRow[] = [
   {
     name: 'name',
-    description: 'Icon to draw — an svg file name from src/assets/svg/ without the extension. Required.',
+    description: 'Icon to draw — an svg file name from the shared icons/ folder without the extension. Required.',
     type: 'LUIIconName',
     default: '—',
     example: 'name="user"',
@@ -34,8 +34,8 @@ export default function IconStories() {
       <header className="page-header">
         <h1 className="page-header__title">Icon</h1>
         <p className="page-header__lead">
-          Inline SVG icon fed by the files in src/assets/svg/. Hardcoded fills and strokes are
-          rebound to currentColor, so icons tint via the color prop — defaulting to
+          Inline SVG icon fed by the files in icons/ at the repo root — the same set the Angular
+          package uses. Hardcoded fills and strokes are rebound to currentColor, so icons tint via the color prop — defaulting to
           var(--text-tertiary) (#646663), the gray they were drawn with.
         </p>
       </header>
@@ -87,7 +87,7 @@ export default function IconStories() {
 
         <Story
           title="All icons"
-          description={`Every file in src/assets/svg/ (${LUI_ICON_NAMES.length}) — the name prop is the file name.`}
+          description={`Every file in icons/ (${LUI_ICON_NAMES.length}) — the name prop is the file name.`}
           code={'<LUIIcon name="dashboard" />'}
         >
           <div className="icon-gallery">
@@ -102,7 +102,7 @@ export default function IconStories() {
 
         <ApiTable
           component="LUIIcon"
-          note="Renders the svg inline inside a span (aria-hidden by default) — all native span props (className, style, onClick, …) pass through. Dropping a new .svg file into src/assets/svg/ makes it available immediately; LUI_ICON_NAMES exports the full sorted list."
+          note="Renders the svg inline inside a span (aria-hidden by default) — all native span props (className, style, onClick, …) pass through. Dropping a new .svg file into the shared icons/ folder makes it available immediately in both packages; LUI_ICON_NAMES exports the full sorted list."
           inputs={apiInputs}
           outputs={[]}
         />

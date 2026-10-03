@@ -2,92 +2,116 @@ import type { ComponentPropsWithRef } from 'react';
 import './icon.css';
 
 /**
- * Icon names — the file names (minus `.svg`) under `src/assets/svg/`.
- * `(string & {})` keeps the union open so newly dropped-in files work
- * without touching this type, while existing names still autocomplete.
+ * Icon names — the file names (minus `.svg`) under the repo-root `icons/`
+ * folder shared with the Angular package. `(string & {})` keeps the union
+ * open so newly dropped-in files work without touching this type, while
+ * existing names still autocomplete.
  */
 export type LUIIconName =
-  | 'account'
-  | 'accounting'
   | 'add'
-  | 'auto-code-generator'
-  | 'backup-restore'
-  | 'bde'
-  | 'bulk-order'
+  | 'attach_file'
+  | 'backup'
+  | 'bag'
+  | 'bank'
+  | 'bar_chart'
+  | 'bolt'
+  | 'bookmark'
+  | 'box'
+  | 'building'
   | 'calculator'
   | 'calendar'
-  | 'cancel'
+  | 'calendar_month'
+  | 'call'
+  | 'car'
+  | 'card'
   | 'caret'
-  | 'caret-down'
-  | 'cash-bank-voucher'
+  | 'caret_down'
+  | 'cart'
+  | 'cart_add'
+  | 'cart_return'
   | 'category'
-  | 'close'
-  | 'closing'
+  | 'checklist'
+  | 'checklist_alt'
+  | 'checkroom'
+  | 'clock'
   | 'configuration'
-  | 'credit-note'
+  | 'content_copy'
+  | 'controller'
   | 'cross'
-  | 'customer'
   | 'dashboard'
-  | 'debit-note'
-  | 'designation'
-  | 'dispatch'
-  | 'document-numbering-scheme'
+  | 'dashboard_alt'
+  | 'dislike'
+  | 'donut_large'
   | 'download'
+  | 'drawer'
   | 'edit'
+  | 'education'
+  | 'error'
+  | 'event_repeat'
   | 'eye'
-  | 'eye-login'
-  | 'eye-slash'
+  | 'eye_slash'
+  | 'factory'
+  | 'family'
+  | 'file'
+  | 'file_add'
+  | 'file_alt'
+  | 'files'
   | 'filter'
-  | 'finish-goods-receipt'
-  | 'hold'
-  | 'inventory'
-  | 'journal-entry'
+  | 'filter_list'
+  | 'fitness'
+  | 'flight'
+  | 'fuel'
+  | 'hand'
+  | 'hash'
+  | 'heart'
+  | 'help'
+  | 'home'
+  | 'hospital'
+  | 'image'
+  | 'like'
+  | 'list'
+  | 'location'
   | 'lock'
   | 'logout'
-  | 'manufacturing'
-  | 'master'
-  | 'material-issue'
-  | 'material-issue-return'
+  | 'mail'
+  | 'money'
+  | 'moneys'
   | 'more'
+  | 'music'
+  | 'notebook'
   | 'notification'
-  | 'notify'
-  | 'opening-balance'
-  | 'opening-stock'
-  | 'packing'
-  | 'payment'
-  | 'payment-adjustment'
-  | 'pending'
-  | 'physical-stock-master'
-  | 'print'
+  | 'notifications_alt'
+  | 'pie_chart'
   | 'printer'
-  | 'products'
-  | 'purchase'
-  | 'purchase-action'
-  | 'purchase-entry'
-  | 'purchase-order'
-  | 'purchase-return'
-  | 'reports'
-  | 'roles-permission'
-  | 'sales'
-  | 'sales-entry'
-  | 'sales-order'
-  | 'sales-return'
+  | 'receipt'
+  | 'refresh'
+  | 'savings'
+  | 'savings_alt'
   | 'search'
   | 'settings'
-  | 'sidebar'
-  | 'sms'
-  | 'stock-adjustment'
-  | 'stock-edit'
-  | 'taxtype'
+  | 'shield'
+  | 'star'
+  | 'train'
   | 'trash'
-  | 'unit'
+  | 'truck'
+  | 'undo'
+  | 'upload_file'
   | 'user'
-  | 'user-plus'
+  | 'user_add'
+  | 'user_card'
+  | 'user_config'
   | 'users'
-  | 'vendor'
+  | 'verified_user'
+  | 'view'
+  | 'wallet'
+  | 'wallet_alt'
+  | 'warning'
+  | 'wifi'
+  | 'work'
   | (string & {});
 
-const RAW_ICONS = import.meta.glob('../../../assets/svg/*.svg', {
+// Lives outside the Vite root — vite.config.ts adds it to server.fs.allow.
+const RAW_ICONS = import.meta.glob('../../../../../icons/*.svg', {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -95,14 +119,17 @@ const RAW_ICONS = import.meta.glob('../../../assets/svg/*.svg', {
 
 /**
  * The source files hardcode their gray (`stroke="#646663"`, `fill="#555755"`,
- * …) and their 20px width/height. Swap the colors for `currentColor` so the
+ * …) and their width/height. Swap the colors for `currentColor` so the
  * `color` prop (or the inherited text color) drives them, and drop the fixed
- * dimensions so the host span's size wins.
+ * dimensions so the host span's size wins. `<mask>` contents are left alone —
+ * their black/white fills are luminance cut-outs, not paint.
  */
 const normalize = (raw: string): string =>
   raw
     .replace(/<svg([^>]*)>/, (_, attrs: string) => `<svg${attrs.replace(/\s(?:width|height)="[^"]*"/g, '')}>`)
-    .replace(/\b(stroke|fill)="(?!none)[^"]*"/g, '$1="currentColor"');
+    .replace(/<mask[\s\S]*?<\/mask>|\b(stroke|fill)="(?!none)[^"]*"/g, (match, attr?: string) =>
+      attr ? `${attr}="currentColor"` : match,
+    );
 
 const ICONS = new Map<string, string>();
 for (const [path, raw] of Object.entries(RAW_ICONS)) {
@@ -113,7 +140,7 @@ for (const [path, raw] of Object.entries(RAW_ICONS)) {
 export const LUI_ICON_NAMES: readonly LUIIconName[] = [...ICONS.keys()].sort();
 
 export interface LUIIconProps extends ComponentPropsWithRef<'span'> {
-  /** Icon to draw — an svg file name from `src/assets/svg/` without the extension. */
+  /** Icon to draw — an svg file name from `icons/` without the extension. */
   name: LUIIconName;
   /** Width/height. A number is pixels; any CSS size string works too. */
   size?: number | string;
@@ -126,7 +153,7 @@ export interface LUIIconProps extends ComponentPropsWithRef<'span'> {
 }
 
 /**
- * Inline SVG icon. Renders the named file from `src/assets/svg/` with its
+ * Inline SVG icon. Renders the named file from `icons/` with its
  * colors rebound to `currentColor`, so it tints via the `color` prop —
  * defaulting to `var(--text-tertiary)` (#646663), the gray the icons were
  * drawn with.

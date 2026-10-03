@@ -43,6 +43,9 @@
                 "input": "public"
               }
             ],
+            "loader": {
+              ".svg": "text"
+            },
             "styles": [
               "src/styles.scss"
             ]

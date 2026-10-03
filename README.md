@@ -34,8 +34,9 @@ There is also a **Form Validation** story that shows how the inputs work with An
 
 ```
 lumen-ui/
+├── icons/                           # Shared SVG icon set used by both Icon components
+│
 ├── angular/                         # LumenUI for Angular (source of truth)
-│   ├── public/svg/                  # Icon set used by the Icon component
 │   └── src/app/
 │       ├── shared/
 │       │   ├── components/ui/       # Library components (l-* selectors)
