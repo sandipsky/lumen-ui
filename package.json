@@ -1,0 +1,17 @@
+{
+  "name": "lumen-ui-workspace",
+  "private": true,
+  "description": "Repo-level scripts for the LumenUI Angular and React packages. No dependencies; nothing to install here.",
+  "type": "module",
+  "scripts": {
+    "storybook": "node scripts/storybook.mjs",
+    "storybook:angular": "node scripts/storybook.mjs angular",
+    "storybook:react": "node scripts/storybook.mjs react",
+    "tarball": "node scripts/pack.mjs",
+    "tarball:angular": "node scripts/pack.mjs angular",
+    "tarball:react": "node scripts/pack.mjs react"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -33,8 +33,9 @@ build/
 vite.config.*.timestamp-*
 vite.config.ts.timestamp-*
 
-# Packed library tarballs (npm pack)
+# Packed library tarballs (npm pack / npm run tarball)
 *.tgz
+/tarballs/
 
 # Test & coverage
 coverage/

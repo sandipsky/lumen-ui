@@ -34,6 +34,12 @@ There is also a **Form Validation** story that shows how the inputs work with An
 
 ```
 lumen-ui/
+├── package.json                     # Repo-level scripts (no dependencies)
+├── scripts/
+│   ├── storybook.mjs                # Run both Storybooks at once
+│   └── pack.mjs                     # Build tarballs for both libraries (or one)
+├── USING-TARBALLS.txt               # Setup guide for projects that install a tarball
+├── tarballs/                        # Output of `npm run tarball` (gitignored)
 ├── icons/                           # Shared SVG icon set used by both Icon components
 │
 ├── angular/                         # Angular CLI workspace (source of truth)
@@ -77,7 +83,27 @@ Both showcases and both Storybooks import the library by its package name (`@lum
 - **Node.js**: a current LTS release (22 or 24)
 - **npm**: the Angular package pins `npm@11` through `packageManager`
 
-The two packages are independent, so install and run each one from its own folder.
+### From the repo root
+
+The root `package.json` has scripts that drive both packages at once. They're plain Node, so they work the same on Windows, macOS and Linux. There's nothing to install at the root, and the scripts run `npm install` in a package whose `node_modules` is missing.
+
+```bash
+npm run storybook          # Angular (6006) and React (6007) Storybooks side by side
+npm run tarball            # build both libraries and pack them into tarballs/
+```
+
+| Script | Description |
+| --- | --- |
+| `npm run storybook` | Start both Storybooks. Output is prefixed `[Angular]` / `[React]`, the URLs are printed once both are ready, and Ctrl+C stops both |
+| `npm run storybook:angular` / `storybook:react` | Start just one |
+| `npm run storybook -- --open` | Also open each Storybook in the browser when it's ready |
+| `npm run tarball` | Build and pack both libraries into `tarballs/`, along with a copy of [`USING-TARBALLS.txt`](./USING-TARBALLS.txt) |
+| `npm run tarball:angular` / `tarball:react` | Build and pack just one |
+| `npm run tarball -- --out <dir>` | Write the tarballs somewhere else |
+
+If a Storybook port is busy, Storybook moves to the next free one, and the ready banner shows the actual URL. You can also call the scripts directly: `node scripts/storybook.mjs react --open`, `node scripts/pack.mjs angular --out ../vendor`. Pass `--help` for the options.
+
+The two packages are otherwise independent. To work on one, install and run it from its own folder.
 
 ### Angular
 
@@ -114,7 +140,7 @@ npm run dev        # showcase app, http://localhost:5173
 | `npm run storybook` | Start Storybook (component playground) |
 | `npm run dev` | Start the Vite dev server with the showcase app |
 | `npm run build` | Build the library to `react/dist/` (JS, `styles.css`, `.d.ts`) |
-| `npm pack` | Build the library and pack it as `react/lumen-ui-react-<version>.tgz` (`npm run pack` does the same) |
+| `npm pack` | Build the library (via `prepack`) and pack it as `react/lumen-ui-react-<version>.tgz` |
 | `npm run build:showcase` | Type-check (`tsc -b`) and build the showcase app to `react/dist-showcase/` |
 | `npm run preview` | Serve the showcase build locally |
 | `npm run build-storybook` | Static Storybook build to `react/storybook-static/` |
@@ -124,22 +150,30 @@ npm run dev        # showcase app, http://localhost:5173
 
 ## Using LumenUI in another project
 
+The step-by-step guide for the other project's developers is [`USING-TARBALLS.txt`](./USING-TARBALLS.txt). `npm run tarball` puts a copy next to the tarballs, so you can hand over the whole folder. It covers installing, styles, usage, updating and troubleshooting.
+
 ### 1. Build a tarball
 
+From the repo root:
+
 ```bash
-cd angular && npm run pack   # → angular/lumen-ui-angular-0.1.0.tgz
-cd react && npm pack         # → react/lumen-ui-react-0.1.0.tgz
+npm run tarball              # both → tarballs/lumen-ui-angular-0.1.0.tgz, tarballs/lumen-ui-react-0.1.0.tgz
+npm run tarball -- angular   # just one (or: npm run tarball:angular)
 ```
+
+Each package can also be packed on its own: `cd angular && npm run pack` or `cd react && npm pack`. Those write the tarball into the package folder.
 
 ### 2. Install it in the other project
 
 ```bash
-npm install path/to/lumen-ui-angular-0.1.0.tgz
+npm install ./vendor/lumen-ui-angular-0.1.0.tgz
 # or
-npm install path/to/lumen-ui-react-0.1.0.tgz
+npm install ./vendor/lumen-ui-react-0.1.0.tgz
 ```
 
-Commit the tarball to the consuming project (e.g. under `vendor/`), or put it somewhere shared, so that project's `package.json` can refer to it with `"@lumen-ui/angular": "file:vendor/lumen-ui-angular-0.1.0.tgz"`. To ship a change, bump `version` in the package manifest, pack again and reinstall.
+Commit the tarball to the consuming project (e.g. under `vendor/`), so that project's `package.json` refers to it as `"@lumen-ui/angular": "file:vendor/lumen-ui-angular-0.1.0.tgz"`.
+
+To ship a change, bump `version` in the package manifest, run `npm run tarball` again, and in the other project run `npm install ./vendor/<new file>.tgz`. Always bump the version. If you replace a tarball with a rebuilt one of the same name, a plain `npm install` or `npm ci` keeps installing the old cached contents.
 
 ### 3. Add the global styles
 

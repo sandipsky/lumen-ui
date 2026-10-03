@@ -1,0 +1,192 @@
+LumenUI: using the tarballs in another project
+==============================================
+
+LumenUI comes as two npm packages, one per framework:
+
+  lumen-ui-angular-<version>.tgz   @lumen-ui/angular   Angular 22+
+  lumen-ui-react-<version>.tgz     @lumen-ui/react     React 19+
+
+Use the one that matches your project. Each tarball is a normal npm package,
+so npm installs it like any other dependency.
+
+
+1. Get the tarball
+------------------
+
+If someone sent you a tarball, skip to step 2.
+
+To build one, run this from the LumenUI repo root (Node 22 or newer):
+
+  npm run tarball                 both packages  -> tarballs/
+  npm run tarball -- angular      only Angular
+  npm run tarball -- react        only React
+  npm run tarball -- --out DIR    write them to DIR instead
+
+The script installs the repo's dependencies if needed, builds the
+libraries, packs them, and copies this file next to them.
+
+
+2. Put the tarball in your project
+----------------------------------
+
+Copy the .tgz into your project, for example into a vendor/ folder, and
+commit it. That way everyone on the team, and CI, installs exactly the same
+build.
+
+  my-app/
+    vendor/
+      lumen-ui-react-0.1.0.tgz
+    package.json
+
+
+3. Install it
+-------------
+
+From your project folder:
+
+  npm install ./vendor/lumen-ui-angular-0.1.0.tgz
+  (or)
+  npm install ./vendor/lumen-ui-react-0.1.0.tgz
+
+npm records it in package.json as a file dependency:
+
+  "@lumen-ui/react": "file:vendor/lumen-ui-react-0.1.0.tgz"
+
+Peer dependencies: your project must already have these, and new Angular
+or Vite React apps do.
+
+  Angular   @angular/common, @angular/core, @angular/forms,
+            @angular/platform-browser, @angular/router (^22.0.0), rxjs (^7.8.0)
+  React     react, react-dom (^19.0.0)
+
+
+4. Add the styles (once per app)
+--------------------------------
+
+Angular, either:
+
+  a) at the top of src/styles.scss:
+       @use '@lumen-ui/angular/styles';
+
+  b) or in angular.json under projects > <app> > architect > build >
+     options > styles:
+       "styles": [
+         "node_modules/@lumen-ui/angular/styles/lumen-ui.scss",
+         "src/styles.scss"
+       ]
+
+React, in your entry file (e.g. src/main.tsx):
+
+  import '@lumen-ui/react/styles.css';
+
+The components expect a base CSS reset. Add this to your global CSS if you
+don't already have one:
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+
+5. Use the components
+---------------------
+
+Angular: components are standalone, so import them where you use them.
+
+  import { Component, inject } from '@angular/core';
+  import { Button, NotificationService } from '@lumen-ui/angular';
+
+  @Component({
+    selector: 'app-example',
+    imports: [Button],
+    template: `<l-button variant="primary" (click)="save()">Save</l-button>`,
+  })
+  export class Example {
+    private readonly notification = inject(NotificationService);
+    save() {
+      this.notification.success('Saved', 'Your changes were stored.');
+    }
+  }
+
+  Notes:
+  - The services (NotificationService, ModalService, DrawerService,
+    SpinnerService) need no setup.
+  - Form inputs work with ngModel and reactive forms.
+  - <l-breadcrumb> uses routerLink, so the app needs provideRouter(...).
+
+React: mount LUIProvider once near the root, so the hooks work.
+
+  import { LUIButton, LUIProvider, useLUINotification } from '@lumen-ui/react';
+  import '@lumen-ui/react/styles.css';
+
+  function SaveButton() {
+    const notification = useLUINotification();
+    return (
+      <LUIButton onClick={() => notification.success('Saved', 'Stored.')}>
+        Save
+      </LUIButton>
+    );
+  }
+
+  export default function App() {
+    return (
+      <LUIProvider>
+        <SaveButton />
+      </LUIProvider>
+    );
+  }
+
+  Notes:
+  - Date Input, OTP Input and Select are controlled via value + onChange.
+  - <LUIBreadcrumb> renders plain <a href> links. For client-side routing,
+    pass your router's Link:
+      <LUIBreadcrumb items={items} linkComponent={Link} />
+
+To change the theme, override the CSS variables at :root:
+
+  :root { --accent: #2563eb; --accent-bg: #eff6ff; --accent-dark: #1d4ed8; }
+
+
+6. Updating to a new version
+----------------------------
+
+1. In the LumenUI repo, bump "version" in
+     angular/projects/lumen-ui/package.json   (Angular)
+     react/package.json                       (React)
+   then run: npm run tarball
+2. In your project, replace the old .tgz in vendor/ with the new one.
+3. Install the new file explicitly (a plain "npm install" won't switch):
+     npm install ./vendor/lumen-ui-react-0.2.0.tgz
+   This updates package.json and package-lock.json. Commit both, along with
+   the new tarball, and delete the old one.
+
+Bump the version for every build you hand out. If you replace a tarball
+with a rebuilt one that has the SAME file name, neither a plain
+"npm install" nor "npm ci" picks it up. npm matches the integrity hash in
+package-lock.json against its cache and quietly installs the old contents.
+If that happens, run the explicit install again, which refreshes the hash,
+and commit the updated package-lock.json:
+
+  npm install ./vendor/lumen-ui-react-0.1.0.tgz
+
+
+7. Troubleshooting
+------------------
+
+- "Could not resolve @lumen-ui/..." or an ERESOLVE peer-dependency error:
+  check that your Angular or React version meets the peer dependencies in
+  step 3.
+- Components render unstyled: the stylesheet from step 4 is missing.
+- Spacing or alignment looks off: add the CSS reset from step 4.
+- React error "useLUI... must be used within <LUI...Provider>": wrap the app
+  in <LUIProvider>.
+- Angular breadcrumb throws a NullInjectorError (a router provider is
+  missing): add provideRouter(...) to your app config.
+- Your changes to a rebuilt tarball don't show up: see the note on
+  same-name tarballs in step 6.
+
+
+More detail: the README.md inside each package (node_modules/@lumen-ui/...)
+and the LumenUI repo README. Every component has a live Storybook demo: run
+"npm run storybook" in the LumenUI repo root.

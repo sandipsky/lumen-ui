@@ -33,7 +33,6 @@
     "build:showcase": "tsc -b && vite build --outDir dist-showcase",
     "preview": "vite preview --outDir dist-showcase",
     "prepack": "npm run build",
-    "pack": "npm pack",
     "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build -o storybook-static",
     "lint": "eslint ."
