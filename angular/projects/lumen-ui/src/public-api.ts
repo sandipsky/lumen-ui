@@ -46,8 +46,6 @@ export * from './lib/components/ui/pagination';
 export * from './lib/components/ui/tabs';
 export * from './lib/components/ui/stepper';
 export * from './lib/components/ui/tree';
-export * from './lib/components/ui/sidebar/sidebar';
-export * from './lib/components/ui/header/header';
 
 /* Data display */
 export * from './lib/components/ui/table';

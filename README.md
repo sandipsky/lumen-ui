@@ -15,14 +15,14 @@ Both packages build as installable libraries (a tarball today, an npm package la
 
 ## Components
 
-35 components, available in both frameworks:
+39 components, available in both frameworks:
 
 | Category | Components |
 | --- | --- |
 | **Actions** | Button, Icon, Menu, Segmented Control |
 | **Form inputs** | Text Input, Password Input, Email Input, Username Input, Number Input, Select, Date Input (AD / BS Nepali calendar), Textarea, Toggle, Checkbox, Radio, OTP / PIN Input, File Upload |
 | **Overlays & feedback** | Modal (+ Confirm Dialog), Drawer, Notification, Tooltip, Loading Spinner, Skeleton |
-| **Navigation** | Breadcrumb, Pagination, Tabs, Stepper, Tree View, Sidebar & Header |
+| **Navigation** | Breadcrumb, Pagination, Tabs, Stepper, Tree View |
 | **Data display** | Table, Card, Avatar, Badge, Chip, Accordion, Filter |
 | **Layout** | Box, Flex, Grid, Spacer |
 
@@ -67,7 +67,6 @@ lumen-ui/
         │   ├── index.ts             # Library barrel export
         │   ├── provider/            # <LUIProvider> (all contexts + theme)
         │   ├── theme/               # LUITheme, luiThemeVars()
-        │   ├── layout/              # App shell: header, sidebar
         │   └── ui/                  # Library components (LUI* exports)
         ├── styles/                  # colors.css, utils.css
         ├── stories/                 # Storybook stories (*.stories.tsx)

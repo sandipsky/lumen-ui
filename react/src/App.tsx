@@ -22,12 +22,6 @@ const rootRoute = createRootRoute({
   ),
 });
 
-const layoutDemoRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/layout',
-  component: lazyRouteComponent(() => import('./showcase/pages/layout-demo/layout-demo')),
-});
-
 /* Pathless layout route: wraps every story page in the showcase shell. */
 const showcaseRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -77,7 +71,6 @@ const STORY_PAGES = [
   { path: '/file-upload', load: () => import('./showcase/pages/file-upload-stories/file-upload-stories') },
   { path: '/table', load: () => import('./showcase/pages/table-stories/table-stories') },
   { path: '/stepper', load: () => import('./showcase/pages/stepper-stories/stepper-stories') },
-  { path: '/sidebar', load: () => import('./showcase/pages/sidebar-stories/sidebar-stories') },
   { path: '/box', load: () => import('./showcase/pages/box-stories/box-stories') },
   { path: '/flex', load: () => import('./showcase/pages/flex-stories/flex-stories') },
   { path: '/grid', load: () => import('./showcase/pages/grid-stories/grid-stories') },
@@ -93,10 +86,7 @@ const storyRoutes = STORY_PAGES.map(({ path, load }) =>
   }),
 );
 
-const routeTree = rootRoute.addChildren([
-  layoutDemoRoute,
-  showcaseRoute.addChildren([indexRoute, ...storyRoutes]),
-]);
+const routeTree = rootRoute.addChildren([showcaseRoute.addChildren([indexRoute, ...storyRoutes])]);
 
 const router = createRouter({ routeTree });
 

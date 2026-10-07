@@ -12,11 +12,6 @@ export * from './provider/provider';
 /* Theming */
 export * from './theme/theme';
 
-/* Layout (app shell) */
-export * from './layout/header/header';
-export * from './layout/sidebar/sidebar';
-export * from './layout/sidebar/sidebar-item';
-
 /* UI */
 export * from './ui/accordion/accordion';
 export * from './ui/accordion/accordion-item';
