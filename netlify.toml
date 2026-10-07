@@ -1,0 +1,7 @@
+# One Netlify site serving both Storybooks: /angular/ and /react/ (plus a landing page).
+[build]
+  command = "npm --prefix angular ci && npm --prefix angular run build-storybook && npm --prefix react ci && npm --prefix react run build-storybook && node scripts/combine-storybooks.mjs"
+  publish = "site"
+
+[build.environment]
+  NODE_VERSION = "22"

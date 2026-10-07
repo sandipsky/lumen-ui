@@ -97,3 +97,6 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+
+# Combined Storybook output (scripts/combine-storybooks.mjs)
+/site/
