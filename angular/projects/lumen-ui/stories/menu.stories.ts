@@ -10,6 +10,7 @@ const meta: Meta<Menu> = {
     closeOnItemClick: true,
     contentMode: false,
     showActiveState: true,
+    appendBody: false,
   },
   argTypes: {
     mode: {
@@ -32,6 +33,12 @@ const meta: Meta<Menu> = {
       control: 'boolean',
       description: 'Highlight the trigger while the panel is open.',
       table: { defaultValue: { summary: 'true' } },
+    },
+    appendBody: {
+      control: 'boolean',
+      description:
+        'Render the panel under `<body>` instead of inside the component, so no ancestor can clip it.',
+      table: { defaultValue: { summary: 'false' } },
     },
   },
   // Centered so a right-aligned panel has room to open.
@@ -74,6 +81,28 @@ export const ActiveItem: Story = {
           <div dropdown-item class="active">Newest</div>
           <div dropdown-item>Oldest</div>
           <div dropdown-item>A–Z</div>
+        </l-menu>
+      </div>
+    `,
+  }),
+};
+
+/**
+ * The dashed box scrolls and has a `transform`, so a panel inside it would be clipped at the
+ * box's edge. `appendBody` renders the panel under `<body>`, where nothing can clip it — turn the
+ * control off to see the difference.
+ */
+export const AppendBody: Story = {
+  args: { appendBody: true },
+  render: (args) => ({
+    props: args,
+    template: `
+      <div style="height: 72px; padding: 16px; overflow: auto; transform: translateZ(0); border: 1px dashed var(--separator-dark); border-radius: 8px">
+        <l-menu ${argsToTemplate(args)}>
+          <l-button dropdown-display variant="outlined">Actions</l-button>
+          <div dropdown-item>Edit</div>
+          <div dropdown-item>Duplicate</div>
+          <div dropdown-item>Archive</div>
         </l-menu>
       </div>
     `,

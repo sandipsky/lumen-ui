@@ -1,4 +1,14 @@
-import { useEffect, useImperativeHandle, useRef, useState, type ReactNode, type Ref } from 'react';
+import {
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+  type ReactNode,
+  type Ref,
+} from 'react';
+import { createPortal } from 'react-dom';
+import { fixedContainingBlock } from '../../utils/fixed-containing-block';
 import './menu.css';
 
 export type MenuMode = 'left' | 'right';
@@ -34,6 +44,11 @@ export interface LUIMenuProps {
   contentMode?: boolean;
   /** Highlight the trigger while the panel is open. */
   showActiveState?: boolean;
+  /**
+   * Render the panel under `<body>` instead of inside the component, so no
+   * ancestor can clip it (e.g. a scrolling container with a `transform`).
+   */
+  appendBody?: boolean;
   /** The trigger element (Angular's `[dropdown-display]` slot). */
   dropdownDisplay?: ReactNode;
   /**
@@ -59,18 +74,24 @@ export interface LUIMenuProps {
  * The panel renders in a fixed layer anchored to the trigger, so it escapes any
  * `overflow` clipping on ancestors, flips above the trigger when there isn't
  * room below, and stays anchored while the page scrolls — mirroring the
- * `LUISelect` dropdown behavior. It closes on any click outside the component.
+ * `LUISelect` dropdown behavior. It stays anchored inside transformed or
+ * filtered ancestors too, which make `position: fixed` relative to themselves.
+ * Such an ancestor can still clip the panel when it also scrolls or hides
+ * overflow; set `appendBody` to render the panel under `<body>` instead.
+ * It closes on any click outside the component.
  */
 export function LUIMenu({
   mode = 'left',
   closeOnItemClick = true,
   contentMode = false,
   showActiveState = true,
+  appendBody = false,
   dropdownDisplay,
   children,
   ref,
 }: LUIMenuProps) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = useState(false);
   /* Reveal only after the position is applied so it never flashes at the wrong spot. */
@@ -94,23 +115,19 @@ export function LUIMenu({
     if (!host) return;
     const rect = host.getBoundingClientRect();
     const gap = 6;
-    const viewportHeight = window.innerHeight;
-    // `clientWidth` excludes the vertical scrollbar; a fixed element's `right`
-    // offset is measured from that same edge, so using `innerWidth` (which
-    // includes the scrollbar) would shift a right-anchored panel left by the
-    // scrollbar width and break the alignment.
-    const viewportWidth = document.documentElement.clientWidth;
-    const spaceBelow = viewportHeight - rect.bottom - gap;
+    const spaceBelow = window.innerHeight - rect.bottom - gap;
     const spaceAbove = rect.top - gap;
     const dropUp = spaceBelow < MIN_SPACE_BELOW && spaceAbove > spaceBelow;
+    // The fixed offsets are relative to this box, which isn't always the viewport.
+    const box = fixedContainingBlock(appendBody ? document.body : host);
 
     setPosition({
       dropUp,
       maxHeight: Math.max(120, (dropUp ? spaceAbove : spaceBelow) - 8),
-      left: mode === 'right' ? null : rect.left,
-      right: mode === 'right' ? viewportWidth - rect.right : null,
-      top: dropUp ? null : rect.bottom + gap,
-      bottom: dropUp ? viewportHeight - rect.top + gap : null,
+      left: mode === 'right' ? null : rect.left - box.left,
+      right: mode === 'right' ? box.right - rect.right : null,
+      top: dropUp ? null : rect.bottom + gap - box.top,
+      bottom: dropUp ? box.bottom - rect.top + gap : null,
     });
   };
 
@@ -128,6 +145,20 @@ export function LUIMenu({
     }
   };
 
+  /** True when the node lives in the trigger host or the (possibly body-level) panel. */
+  const isInside = (node: Node | null): boolean =>
+    !!node && (!!hostRef.current?.contains(node) || !!panelRef.current?.contains(node));
+
+  /* Trigger clicks toggle; clicks that bubbled up from the panel are the panel's business. */
+  const onTriggerClick = (event: ReactMouseEvent<HTMLDivElement>): void => {
+    if (panelRef.current?.contains(event.target as Node)) return;
+    toggle();
+  };
+
+  const onPanelClick = (): void => {
+    if (closeOnItemClick) close();
+  };
+
   useImperativeHandle(ref, () => ({ toggle, close, isOpen: open }));
 
   useEffect(() => {
@@ -135,7 +166,7 @@ export function LUIMenu({
 
     const onViewportChange = (): void => reposition();
     const onDocumentClick = (event: globalThis.MouseEvent): void => {
-      if (hostRef.current && !hostRef.current.contains(event.target as Node)) close();
+      if (!isInside(event.target as Node)) close();
     };
 
     window.addEventListener('scroll', onViewportChange, true);
@@ -152,38 +183,40 @@ export function LUIMenu({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
+  const panel = (
+    <div
+      ref={panelRef}
+      className={[
+        'dropdown-content',
+        isReady ? 'visible' : '',
+        position.dropUp ? 'is-up' : '',
+        contentMode ? 'nopadding' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={{
+        top: position.top ?? undefined,
+        bottom: position.bottom ?? undefined,
+        left: position.left ?? undefined,
+        right: position.right ?? undefined,
+        maxHeight: position.maxHeight ?? undefined,
+      }}
+      onClick={onPanelClick}
+    >
+      {children}
+    </div>
+  );
+
   return (
     <div
       ref={hostRef}
       className={['dropdown-menu', open && showActiveState ? 'active' : ''].filter(Boolean).join(' ')}
-      onClick={toggle}
+      onClick={onTriggerClick}
     >
       {dropdownDisplay}
 
-      {open && (
-        <div
-          className={[
-            'dropdown-content',
-            isReady ? 'visible' : '',
-            position.dropUp ? 'is-up' : '',
-            contentMode ? 'nopadding' : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
-          style={{
-            top: position.top ?? undefined,
-            bottom: position.bottom ?? undefined,
-            left: position.left ?? undefined,
-            right: position.right ?? undefined,
-            maxHeight: position.maxHeight ?? undefined,
-          }}
-          onClick={(event) => {
-            if (!closeOnItemClick) event.stopPropagation();
-          }}
-        >
-          {children}
-        </div>
-      )}
+      {/* Clicks inside a portaled panel still bubble to this root through React's tree. */}
+      {open && (appendBody ? createPortal(panel, document.body) : panel)}
     </div>
   );
 }

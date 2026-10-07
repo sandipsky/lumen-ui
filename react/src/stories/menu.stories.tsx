@@ -9,6 +9,7 @@ const meta = {
     closeOnItemClick: true,
     contentMode: false,
     showActiveState: true,
+    appendBody: false,
     dropdownDisplay: <LUIButton variant="outlined">Actions</LUIButton>,
     children: (
       <>
@@ -27,6 +28,7 @@ const meta = {
     closeOnItemClick: { control: 'boolean', table: { defaultValue: { summary: 'true' } } },
     contentMode: { control: 'boolean', table: { defaultValue: { summary: 'false' } } },
     showActiveState: { control: 'boolean', table: { defaultValue: { summary: 'true' } } },
+    appendBody: { control: 'boolean', table: { defaultValue: { summary: 'false' } } },
     dropdownDisplay: { control: false },
     children: { control: false },
     ref: { control: false },
@@ -64,6 +66,29 @@ export const ActiveItem: Story = {
       </>
     ),
   },
+};
+
+/**
+ * The dashed box scrolls and has a `transform`, so a panel inside it would be clipped at the
+ * box's edge. `appendBody` renders the panel under `<body>`, where nothing can clip it — turn the
+ * control off to see the difference.
+ */
+export const AppendBody: Story = {
+  args: { appendBody: true },
+  render: (args) => (
+    <div
+      style={{
+        height: 72,
+        padding: 16,
+        overflow: 'auto',
+        transform: 'translateZ(0)',
+        border: '1px dashed var(--separator-dark)',
+        borderRadius: 8,
+      }}
+    >
+      <LUIMenu {...args} />
+    </div>
+  ),
 };
 
 /**

@@ -44,7 +44,9 @@
   }
 }
 
-:host ::ng-deep [dropdown-item] {
+// Scoped to the panel rather than :host, so the rules still match when
+// `appendBody` moves the panel under <body>.
+.dropdown-content ::ng-deep [dropdown-item] {
   display: flex;
   align-items: center;
   gap: 8px;

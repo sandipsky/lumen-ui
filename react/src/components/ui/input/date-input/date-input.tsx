@@ -6,6 +6,7 @@ import type {
   MouseEvent as ReactMouseEvent,
   ReactNode,
 } from 'react';
+import { fixedContainingBlock } from '../../../utils/fixed-containing-block';
 import NepaliDate from './lib/nepali-date-converter';
 import { dateConfigMap } from './lib/date-config';
 import { format as formatBs, formatObj, parse as parseDateString } from './lib/nepali-date-helper';
@@ -473,14 +474,17 @@ export function LUIDateInput({
     const spaceBelow = window.innerHeight - rect.bottom - gap;
     const spaceAbove = rect.top - gap;
     const up = spaceBelow < PANEL_HEIGHT && spaceAbove > spaceBelow;
+    // The fixed offsets are relative to this box, which isn't always the viewport.
+    const box = fixedContainingBlock(el);
+    const left = Math.max(8, Math.min(rect.left, window.innerWidth - PANEL_WIDTH - 8));
 
     setDropUp(up);
-    setPanelLeft(Math.max(8, Math.min(rect.left, window.innerWidth - PANEL_WIDTH - 8)));
+    setPanelLeft(left - box.left);
     if (up) {
       setPanelTop(null);
-      setPanelBottom(window.innerHeight - rect.top + gap);
+      setPanelBottom(box.bottom - rect.top + gap);
     } else {
-      setPanelTop(rect.bottom + gap);
+      setPanelTop(rect.bottom + gap - box.top);
       setPanelBottom(null);
     }
   };

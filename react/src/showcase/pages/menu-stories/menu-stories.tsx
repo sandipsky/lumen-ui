@@ -35,6 +35,14 @@ const apiInputs: ApiTableRow[] = [
     example: 'showActiveState={false}',
   },
   {
+    name: 'appendBody',
+    description:
+      'Render the panel under <body> instead of inside the component, so no ancestor can clip it (e.g. a scrolling container with a transform).',
+    type: 'boolean',
+    default: 'false',
+    example: 'appendBody',
+  },
+  {
     name: 'dropdownDisplay',
     description: "The trigger element (Angular's [dropdown-display] slot).",
     type: 'ReactNode',

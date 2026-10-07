@@ -1,8 +1,13 @@
-<div class="dropdown-menu" [class.active]="isOpen() && showActiveState()" (click)="toggle()">
+<div
+  class="dropdown-menu"
+  [class.active]="isOpen() && showActiveState()"
+  (click)="_onTriggerClick($event)"
+>
   <ng-content select="[dropdown-display]" />
 
   @if (isOpen()) {
     <div
+      #panel
       class="dropdown-content"
       [class.visible]="_isReady()"
       [class.is-up]="_dropUp()"
@@ -12,7 +17,7 @@
       [style.left.px]="_left()"
       [style.right.px]="_right()"
       [style.max-height.px]="_maxHeight()"
-      (click)="!closeOnItemClick() && $event.stopPropagation()"
+      (click)="_onPanelClick()"
     >
       <ng-content select="[dropdown-item]" />
       <ng-content select="[dropdown-content]" />

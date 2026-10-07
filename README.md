@@ -52,6 +52,7 @@ lumen-ui/
 │   │   │   ├── directives/          # FormValidation directive
 │   │   │   ├── services/            # Spinner service
 │   │   │   ├── theme/               # Theme type, provideTheme, ThemeService
+│   │   │   ├── utils/               # Internal helpers (popup positioning)
 │   │   │   └── styles/              # lumen-ui.scss → _colors, _form, _utils
 │   │   ├── stories/                 # Storybook stories (*.stories.ts)
 │   │   └── .storybook/              # Storybook config
@@ -67,6 +68,7 @@ lumen-ui/
         │   ├── index.ts             # Library barrel export
         │   ├── provider/            # <LUIProvider> (all contexts + theme)
         │   ├── theme/               # LUITheme, luiThemeVars()
+        │   ├── utils/               # Internal helpers (popup positioning)
         │   └── ui/                  # Library components (LUI* exports)
         ├── styles/                  # colors.css, utils.css
         ├── stories/                 # Storybook stories (*.stories.tsx)

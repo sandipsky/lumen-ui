@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { FormValidation } from '../../../../directives/form-validation';
+import { fixedContainingBlock } from '../../../../utils/fixed-containing-block';
 import { provideInputValueAccessor } from '../input';
 import NepaliDate from './lib/nepali-date-converter';
 import { dateConfigMap } from './lib/date-config';
@@ -642,14 +643,17 @@ export class DateInput implements ControlValueAccessor {
     const spaceBelow = window.innerHeight - rect.bottom - gap;
     const spaceAbove = rect.top - gap;
     const dropUp = spaceBelow < PANEL_HEIGHT && spaceAbove > spaceBelow;
+    // The fixed offsets are relative to this box, which isn't always the viewport.
+    const box = fixedContainingBlock(el);
+    const left = Math.max(8, Math.min(rect.left, window.innerWidth - PANEL_WIDTH - 8));
 
     this._dropUp.set(dropUp);
-    this._panelLeft.set(Math.max(8, Math.min(rect.left, window.innerWidth - PANEL_WIDTH - 8)));
+    this._panelLeft.set(left - box.left);
     if (dropUp) {
       this._panelTop.set(null);
-      this._panelBottom.set(window.innerHeight - rect.top + gap);
+      this._panelBottom.set(box.bottom - rect.top + gap);
     } else {
-      this._panelTop.set(rect.bottom + gap);
+      this._panelTop.set(rect.bottom + gap - box.top);
       this._panelBottom.set(null);
     }
   }
