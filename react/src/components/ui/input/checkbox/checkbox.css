@@ -30,7 +30,7 @@
 .check-input:checked + .check-box {
   background: var(--accent);
   border-color: var(--accent);
-  color: var(--text-white);
+  color: var(--accent-contrast);
 }
 
 .check-input:focus-visible + .check-box {

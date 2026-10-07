@@ -51,6 +51,7 @@ lumen-ui/
 │   │   │   ├── components/ui/       # Library components (l-* selectors)
 │   │   │   ├── directives/          # FormValidation directive
 │   │   │   ├── services/            # Spinner service
+│   │   │   ├── theme/               # Theme type, provideTheme, ThemeService
 │   │   │   └── styles/              # lumen-ui.scss → _colors, _form, _utils
 │   │   ├── stories/                 # Storybook stories (*.stories.ts)
 │   │   └── .storybook/              # Storybook config
@@ -64,7 +65,8 @@ lumen-ui/
         ├── index.ts                 # Library entry: global CSS + components
         ├── components/
         │   ├── index.ts             # Library barrel export
-        │   ├── provider/            # <LUIProvider> (all contexts in one)
+        │   ├── provider/            # <LUIProvider> (all contexts + theme)
+        │   ├── theme/               # LUITheme, luiThemeVars()
         │   ├── layout/              # App shell: header, sidebar
         │   └── ui/                  # Library components (LUI* exports)
         ├── styles/                  # colors.css, utils.css
@@ -283,17 +285,88 @@ Inputs that hold non-DOM values (Date Input, OTP Input, custom Select) are contr
 
 ## Theming
 
-Colours are CSS custom properties defined in `angular/projects/lumen-ui/src/lib/styles/_colors.scss` and `react/src/styles/colors.css`, and both packages share the same token names. To re-theme LumenUI, override the variables at `:root` or on a container:
+Every colour in LumenUI comes from a CSS custom property (a design token). Both packages use the same token names, defined in `angular/projects/lumen-ui/src/lib/styles/_colors.scss` and `react/src/styles/colors.css`. You can override tokens in code or in CSS.
+
+### In code
+
+**Angular**: `provideTheme()` applies a theme before the first render, and `ThemeService` changes it at runtime.
+
+```ts
+// app.config.ts
+import { provideTheme } from '@lumen-ui/angular';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideTheme({ accent: '#2563eb' })],
+};
+```
+
+```ts
+// later, e.g. once a tenant's branding has loaded
+inject(ThemeService).set({ accent: tenant.brandColor, bgLight: '#f8fafc' });
+```
+
+**React**: pass `theme` to `LUIProvider`. Changing the prop re-themes the app.
+
+```tsx
+<LUIProvider theme={{ accent: '#2563eb' }}>
+  <App />
+</LUIProvider>
+```
+
+Both apply the tokens on `<html>`, so overlays rendered under `<body>` (modals, drawers, notifications, select menus) get them too. Tokens that a theme leaves out keep their defaults.
+
+### In CSS
 
 ```css
 :root {
-  --accent: #2563eb;       /* brand colour (default green #4cb139) */
-  --accent-bg: #eff6ff;
-  --accent-dark: #1d4ed8;
+  --accent: #2563eb;
 }
 ```
 
-Other tokens cover status colours (`--success`, `--error`, `--warn`, `--info`, each with a `-bg` variant), text (`--text-primary` … `--text-quaternary`) and separators. Components use the same class names in both frameworks, so style overrides work in either one.
+### Tokens
+
+Theme keys are the token names in camelCase: `accentBg` sets `--accent-bg`.
+
+| Key | CSS variable | Default | Used for |
+| --- | --- | --- | --- |
+| `accent` | `--accent` | `#4cb139` | Brand colour: primary buttons, checked inputs, active tab, page and step, focus borders |
+| `accentBg` | `--accent-bg` | 9% tint of `accent` | Primary chips, hovers, selected items, focus rings |
+| `accentDark` | `--accent-dark` | `accent` mixed with 22% black | Primary button hover and bottom border |
+| `accentContrast` | `--accent-contrast` | `var(--text-white)` | Text and icons on an accent fill |
+| `success`, `error`, `warn`, `info`, `premium`, `cancel` | `--success`, … | | Status colours, each with a `…Bg` tint (`successBg` → `--success-bg`) |
+| `textPrimary` … `textQuaternary`, `textWhite` | `--text-primary`, … | | Text, from strongest to faintest, and light text on coloured fills |
+| `separator`, `separatorLight`, `separatorDark` | `--separator`, … | | Borders and dividers |
+| `bgLightest`, `bgLight`, `bgSemiLight`, `bgDark` | `--bg-lightest`, … | | Backgrounds. `bgLightest` is the surface of inputs, cards, menus and modals |
+
+**You only need the base colour.** `--accent-bg` and `--accent-dark` are computed from `--accent` with `color-mix()`, so setting the accent alone re-themes every component. The theme API goes a step further: any colour you pass without its `…Bg` partner also gets a matching tint. In plain CSS the status tints are fixed values, so if you change a status colour there, set its `-bg` as well.
+
+**Light accents need dark text.** Text on accent fills is white by default. For a light accent such as yellow or lime, set `accentContrast` (`--accent-contrast`) to a dark colour.
+
+### Theming part of a page
+
+`themeVars()` (Angular) and `luiThemeVars()` (React) turn a theme into a style object, with the derived tints and shades filled in:
+
+```ts
+// Angular component
+protected readonly dangerZone = themeVars({ accent: 'var(--error)' });
+```
+
+```html
+<section [style]="dangerZone">…</section>
+```
+
+```tsx
+// React
+<section style={luiThemeVars({ accent: 'var(--error)' })}>…</section>
+```
+
+Overlays render under `<body>`, outside the section, so they keep the page-wide theme. If you override tokens on a container in your own CSS (`.brand { --accent: … }`), set `--accent-bg` and `--accent-dark` there too, because the derived values are computed once, at `:root`.
+
+With server-side rendering in React, `LUIProvider` applies its theme after hydration. To theme the first paint, put the tokens on `<html>` yourself: `<html style={luiThemeVars(theme)}>`.
+
+Both Storybooks have a **Theme** menu in the toolbar that applies sample themes to every story: blue, violet, rose, and amber with dark text.
+
+Components use the same class names in both frameworks, so style overrides work in either one.
 
 ---
 
@@ -311,6 +384,7 @@ Other tokens cover status colours (`--success`, `--error`, `--warn`, `--info`, e
 - File and folder names are kebab-case and mirror each other across both packages (`ui/<name>/<name>.ts` ↔ `ui/<name>/<name>.tsx`).
 - Keep public API surfaces aligned: same input/prop names, defaults, types and doc comments.
 - Library code imports only its peer dependencies. Router-, form- or app-specific packages belong to the showcases and stories.
+- Colours: use the tokens (`var(--accent)`, `var(--bg-lightest)`, …) rather than literal colours, so themes reach the component. Text or icons on an accent fill use `var(--accent-contrast)`. A new token goes in both colour files and in the theme type (`Theme` / `LUITheme`).
 - Icons: drop an `.svg` into `icons/`. React picks it up automatically. Angular picks it up the next time any script runs (or run `npm run icons`).
 - React: write plain function components (the React Compiler handles memoisation), pass `ref` as a normal prop (no `forwardRef`), and use one `.css` file per component.
 - Angular: use standalone components, signals (`input()`, `computed()`), `OnPush` change detection and SCSS.

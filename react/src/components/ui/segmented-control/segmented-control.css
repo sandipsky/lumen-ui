@@ -5,7 +5,7 @@
   --l-seg-item-hover-color: rgba(0, 0, 0, 0.88);
   --l-seg-item-hover-bg: rgba(0, 0, 0, 0.06);
   --l-seg-selected-color: rgba(0, 0, 0, 0.88);
-  --l-seg-thumb-bg: #fff;
+  --l-seg-thumb-bg: var(--bg-lightest);
   --l-seg-disabled-color: rgba(0, 0, 0, 0.25);
 
   position: relative;

@@ -25,14 +25,14 @@ const meta = {
     name: 'Ada Lovelace',
     size: '40px',
     color: 'var(--accent)',
-    textColor: 'var(--text-white)',
+    textColor: 'var(--accent-contrast)',
   },
   argTypes: {
     imageUrl: { control: 'text', table: { defaultValue: { summary: "''" } } },
     name: { control: 'text', table: { defaultValue: { summary: "''" } } },
     size: { control: 'text', table: { defaultValue: { summary: "'32px'" } } },
     color: { control: 'text', table: { defaultValue: { summary: "'var(--accent)'" } } },
-    textColor: { control: 'text', table: { defaultValue: { summary: "'var(--text-white)'" } } },
+    textColor: { control: 'text', table: { defaultValue: { summary: "'var(--accent-contrast)'" } } },
   },
 } satisfies Meta<typeof LUIAvatar>;
 

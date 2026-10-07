@@ -67,7 +67,7 @@
 
   &.active {
     background-color: var(--accent);
-    color: var(--text-white) !important;
+    color: var(--accent-contrast) !important;
   }
 
   &.disabled {

@@ -154,7 +154,7 @@
     top: 1px;
     width: 4px;
     height: 8px;
-    border: solid var(--text-white);
+    border: solid var(--accent-contrast);
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
   }
@@ -166,7 +166,7 @@
     top: 6px;
     width: 8px;
     height: 2px;
-    background: var(--text-white);
+    background: var(--accent-contrast);
     border-radius: 1px;
   }
 

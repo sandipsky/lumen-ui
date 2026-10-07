@@ -6,8 +6,11 @@
  * are re-exported through it so internal pieces (containers, date libs) stay private.
  */
 
-/* All-in-one provider (notification + spinner + modal + drawer) */
+/* All-in-one provider (notification + spinner + modal + drawer + theme) */
 export * from './provider/provider';
+
+/* Theming */
+export * from './theme/theme';
 
 /* Layout (app shell) */
 export * from './layout/header/header';

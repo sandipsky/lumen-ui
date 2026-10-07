@@ -38,7 +38,7 @@ const apiInputs: ApiTableRow[] = [
     name: 'textColor',
     description: 'Text color of the initials chip.',
     type: 'string',
-    default: "'var(--text-white)'",
+    default: "'var(--accent-contrast)'",
     example: 'textColor="#ffffff"',
   },
 ];

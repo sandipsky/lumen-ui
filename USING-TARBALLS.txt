@@ -143,9 +143,24 @@ React: mount LUIProvider once near the root, so the hooks work.
     pass your router's Link:
       <LUIBreadcrumb items={items} linkComponent={Link} />
 
-To change the theme, override the CSS variables at :root:
+To change the theme (brand color, backgrounds, text colors), set it in code:
 
-  :root { --accent: #2563eb; --accent-bg: #eff6ff; --accent-dark: #1d4ed8; }
+  Angular, in app.config.ts:
+    import { provideTheme } from '@lumen-ui/angular';
+    providers: [provideTheme({ accent: '#2563eb' })]
+  To change it at runtime: inject(ThemeService).set({ accent: '#7c3aed' })
+
+  React:
+    <LUIProvider theme={{ accent: '#2563eb' }}>
+
+or override the CSS variables in your global stylesheet:
+
+  :root { --accent: #2563eb; }
+
+The accent alone is enough: its tint (--accent-bg) and hover shade
+(--accent-dark) follow it. For a light accent such as yellow, also set dark
+text for it: accentContrast: '#07090f' (CSS: --accent-contrast). The README
+inside each package lists every token.
 
 
 6. Updating to a new version

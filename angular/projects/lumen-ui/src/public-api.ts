@@ -5,6 +5,9 @@
  * pieces (containers, date libs) stay private.
  */
 
+/* Theming */
+export * from './lib/theme/theme';
+
 /* Actions */
 export * from './lib/components/ui/button/button';
 export * from './lib/components/ui/icon/icon';

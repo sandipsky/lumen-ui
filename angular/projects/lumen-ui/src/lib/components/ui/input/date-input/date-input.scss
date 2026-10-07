@@ -261,7 +261,7 @@
 
   &.is-selected {
     background: var(--accent);
-    color: var(--text-white);
+    color: var(--accent-contrast);
     font-weight: 600;
 
     &:hover {
@@ -307,7 +307,7 @@
 
   &.is-selected {
     background: var(--accent);
-    color: var(--text-white);
+    color: var(--accent-contrast);
     font-weight: 600;
   }
 

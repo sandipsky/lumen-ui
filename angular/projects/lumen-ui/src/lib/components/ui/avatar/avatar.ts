@@ -25,7 +25,7 @@ export class Avatar {
   /** Background color of the initials chip. */
   readonly color = input<string>('var(--accent)');
   /** Text color of the initials chip. */
-  readonly textColor = input<string>('var(--text-white)');
+  readonly textColor = input<string>('var(--accent-contrast)');
 
   protected readonly _initials = computed(() => {
     const value = this.name()?.trim();

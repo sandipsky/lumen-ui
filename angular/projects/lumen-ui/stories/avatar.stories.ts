@@ -23,7 +23,7 @@ const meta: Meta<Avatar> = {
     name: 'Ada Lovelace',
     size: '40px',
     color: 'var(--accent)',
-    textColor: 'var(--text-white)',
+    textColor: 'var(--accent-contrast)',
   },
   argTypes: {
     imageUrl: {
@@ -50,7 +50,7 @@ const meta: Meta<Avatar> = {
     textColor: {
       control: 'text',
       description: 'Text color of the initials chip.',
-      table: { defaultValue: { summary: "'var(--text-white)'" } },
+      table: { defaultValue: { summary: "'var(--accent-contrast)'" } },
     },
   },
   render: (args) => ({

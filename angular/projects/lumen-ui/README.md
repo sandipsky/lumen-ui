@@ -67,15 +67,46 @@ export class Example {
 
 ## Theming
 
-Override the tokens at `:root` or on any container:
+Every color comes from a CSS custom property (a design token). Set a theme when the app starts:
+
+```ts
+// app.config.ts
+import { provideTheme } from '@lumen-ui/angular';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideTheme({ accent: '#2563eb' })],
+};
+```
+
+Change it at runtime with `ThemeService`. `set()` replaces the current overrides, and `reset()` restores the defaults:
+
+```ts
+inject(ThemeService).set({ accent: tenant.brandColor, bgLight: '#f8fafc' });
+```
+
+The theme is applied on `<html>`, so it also reaches modals, drawers, notifications and select menus. Tokens it leaves out keep their defaults. The same tokens can be overridden in CSS instead:
 
 ```css
 :root {
   --accent: #2563eb;
-  --accent-bg: #eff6ff;
-  --accent-dark: #1d4ed8;
 }
 ```
+
+Theme keys are the token names in camelCase (`accentBg` → `--accent-bg`):
+
+| Keys | Used for |
+| --- | --- |
+| `accent` | Brand color (default `#4cb139`): primary buttons, checked inputs, active tab, page and step |
+| `accentBg`, `accentDark` | Accent tint (chips, hovers, focus rings) and hover shade. Derived from `accent` |
+| `accentContrast` | Text and icons on an accent fill. Default `var(--text-white)` |
+| `success`, `error`, `warn`, `info`, `premium`, `cancel` | Status colors, each with a `…Bg` tint |
+| `textPrimary`, `textSecondary`, `textTertiary`, `textQuaternary`, `textWhite` | Text colors |
+| `separator`, `separatorLight`, `separatorDark` | Borders and dividers |
+| `bgLightest`, `bgLight`, `bgSemiLight`, `bgDark` | Backgrounds. `bgLightest` is the surface of inputs, cards, menus and modals |
+
+- The accent alone is enough: `--accent-bg` and `--accent-dark` follow it. In a theme, a status color passed without its `…Bg` gets a matching tint too. In plain CSS, set both.
+- For a light accent such as yellow, set `accentContrast` to a dark color so text on accent fills stays readable.
+- To theme one part of a page, bind `themeVars()` with `[style]`: `<section [style]="vars">`, where `vars = themeVars({ accent: 'var(--error)' })`. Overlays render under `<body>`, so they keep the page-wide theme.
 
 ## Docs
 

@@ -1,8 +1,16 @@
+/* Design tokens. Override any of them at :root (or pass LUIProvider a theme)
+   to re-theme every component; see "Theming" in the README. */
 :root {
+    /* ================= Accent (brand) ================= */
     --accent: #4CB139;
-    --accent-bg: #EEF9EC;
-    --accent-dark: #3B8A2D;
+    /* Tint and hover shade follow --accent, so setting --accent alone re-themes.
+       Keep the mix ratios in sync with tint()/shade() in components/theme/theme.ts. */
+    --accent-bg: color-mix(in srgb, var(--accent) 9%, var(--bg-lightest));
+    --accent-dark: color-mix(in srgb, var(--accent) 78%, black);
+    /* Text and icons drawn on an accent background. Use a dark color for light accents. */
+    --accent-contrast: var(--text-white);
 
+    /* ================= Status ================= */
     --success: #36B37E;
     --success-bg: #EBF7F2;
 
@@ -17,6 +25,9 @@
 
     --premium: #AB20A9;
     --premium-bg: #FBCEFA;
+
+    --cancel: var(--text-tertiary);
+    --cancel-bg: var(--bg-dark);
 
     /* ================= Text Colors ================= */
     --text-primary: #07090F;

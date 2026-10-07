@@ -26,7 +26,7 @@ export function LUIAvatar({
   name = '',
   size = '32px',
   color = 'var(--accent)',
-  textColor = 'var(--text-white)',
+  textColor = 'var(--accent-contrast)',
 }: LUIAvatarProps) {
   if (imageUrl) {
     return (
